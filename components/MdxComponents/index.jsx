@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const MDXComponents = {
   a: Link,
-  Image
+  img: Image
 };
 
 export default MDXComponents;

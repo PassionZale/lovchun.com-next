@@ -3,6 +3,7 @@ export const meta = {
 };
 
 import TestComponent from "@/components/TestComponent";
+import Layout from "@/components/Layout";
 
 # My MDX page
 
@@ -15,3 +16,9 @@ This is a list in markdown:
 Checkout my React component:
 
 <TestComponent />
+
+I **love** using [Next.js](https://nextjs.org/)
+
+I **love** using [Abc.js](#abc)
+
+export default ({ children }) => <Layout meta={meta}>{children}</Layout>
