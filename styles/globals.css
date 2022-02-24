@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.remark-highlight-code-line {
+  display: block;
+  background-color: aquamarine;
+  margin: 3px 0;
+}
+
+.line-numbers-rows > span {
+  display: block;
+  counter-increment: linenumber;
+  line-height: 1.2rem;
+}

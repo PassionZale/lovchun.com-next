@@ -25,6 +25,10 @@ export default function Layout({ meta = {}, children }) {
         <meta property="og:description" content={metaData.description} />
         <meta property="og:title" content={metaData.title} />
         <meta property="og:image" content={metaData.cardImage} />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/dracula-prism/dist/css/dracula-prism.css"
+          ></link>
         {/* <link
           rel="preload"
           href="https://unpkg.com/prismjs@0.0.1/themes/prism-tomorrow.css"
