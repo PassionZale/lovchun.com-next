@@ -1,7 +1,7 @@
 const WEBSITE = {
   author: 'Lei Zhang',
   title: 'Lei Zhang - lovchun.com',
-  description: "Hi, I'm Lei Zhang. It's My personal website",
+  description: "Hi, I'm Lei Zhang. It's My personal portfolio",
   summary: '一个被卷来卷去的前端开发。',
   lang: 'zh-cn',
 

@@ -1,0 +1,31 @@
+---
+title: 'Blog child One🚀🚀🚀🚀'
+publishedAt: '2017-07-15'
+description: 'Learn how to build a Next.js blog with MDX and Contentlayer!'
+cover: '/optimized/articles/blog-one/hero.webp'
+---
+
+```js {3} showLineNumbers
+export async function getStaticPaths() {
+  return {
+    paths: Array<string | { params: { [key: string]: string } }>,
+    fallback: boolean
+  }
+}
+```
+
+
+```js
+// pages/blog/[slug].js
+export async function getStaticPaths() {
+  return {
+    paths: [
+      // String variant:
+      '/blog/first-post',
+      // Object variant:
+      { params: { slug: 'second-post' } },
+    ],
+    fallback: true,
+  }
+}
+```

@@ -1,9 +1,13 @@
-export const meta = {
-  author: "Rich Haines",
-};
+---
+title: 'Blog Two🚀'
+publishedAt: '2017-07-15'
+description: 'Learn how to build a Next.js blog with MDX and Contentlayer!'
+cover: '/optimized/articles/blog-one/hero.webp'
+---
 
-import TestComponent from "@/components/TestComponent";
-import Layout from "@/components/Layout";
+Hey There👋
+
+Welcome to Blog One✨ Let's learn together!
 
 # My MDX page
 
@@ -13,9 +17,7 @@ This is a list in markdown:
 - Two
 - Three
 
-Checkout my React component:
-
-<TestComponent />
+啊啊啊啊啊
 
 I **love** using [Next.js](https://nextjs.org/)
 
@@ -27,11 +29,9 @@ Layers. Onions have layers. Ogres have layers. Onions have layers. You get it? W
 
 Oh, you both have layers. Oh. You know, not everybody like onions.
 
-```js[class="line-numbers-rows"]{2} 
+```js {2}
 const year = "2001";
 const movie = "Shrek";
 
 console.log(`${movie}, ${year}`);
 ```
-
-export default ({ children }) => <Layout meta={meta}>{children}</Layout>

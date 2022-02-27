@@ -1,9 +1,19 @@
 {
-    "compilerOptions": {
-      "baseUrl": ".",
-      "paths": {
-        "@/components/*": ["components/*"],
-        "@/styles/*": ["styles/*"],
-      }
+  "compilerOptions": {
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/styles/*": ["styles/*"],
+      "contentlayer/generated": ["./.contentlayer/generated"]
     }
-  }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.tsx",
+    "**/*.ts",
+    "**/*.jsx",
+    "**/*.js",
+    ".contentlayer/generated"
+  ]
+}

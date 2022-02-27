@@ -1,0 +1,28 @@
+---
+title: 'Blog Three🚀'
+publishedAt: '2017-07-15'
+description: 'Learn how to build a Next.js blog with MDX and Contentlayer!'
+cover: '/optimized/articles/blog-one/hero.webp'
+---
+
+Hey There👋
+
+Welcome to Blog One✨ Let's learn together!
+
+```js
+import { BlogProps } from './types'
+
+export default function Blog(props: BlogProps) {
+  return (
+    <article>
+      <h1>{props.title}</h1>
+      <h2>{props.description}</h2>
+      <p>
+        {props.publishedAt}
+      </p>
+      <img alt={props.title} src={props.cover} width="100%" loading="lazy" />
+      {props.children}
+    </article>
+  )
+}
+```

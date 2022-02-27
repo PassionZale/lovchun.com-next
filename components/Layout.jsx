@@ -3,8 +3,9 @@ import Link from 'next/link'
 
 const defaultMeta = {
   title: 'Lei Zhangle',
+  publishedAt: '',
   description: 'personal website',
-  cardImage: ''
+  cover: '',
 }
 
 export default function Layout({ meta = {}, children }) {
@@ -24,35 +25,7 @@ export default function Layout({ meta = {}, children }) {
         <meta property="og:site_name" content={metaData.title} />
         <meta property="og:description" content={metaData.description} />
         <meta property="og:title" content={metaData.title} />
-        <meta property="og:image" content={metaData.cardImage} />
-        <link
-            rel="stylesheet"
-            href="https://unpkg.com/dracula-prism/dist/css/dracula-prism.css"
-          ></link>
-        {/* <link
-          rel="preload"
-          href="https://unpkg.com/prismjs@0.0.1/themes/prism-tomorrow.css"
-          as="script"
-        />
-        <link
-          rel="preload"
-          href="https://unpkg.com/prismjs@0.0.1/themes/prism-coy.css"
-          as="script"
-        />
-        <link
-          rel="preload"
-          href="https://unpkg.com/prismjs@0.0.1/themes/prism-okaidia.css"
-          as="script"
-        />
-        <link
-          rel="preload"
-          href="https://unpkg.com/prismjs@0.0.1/themes/prism-funky.css"
-          as="script"
-        />
-        <link
-          href={`https://unpkg.com/prismjs@0.0.1/themes/prism-${theme}.css`}
-          rel="stylesheet"
-        /> */}
+        <meta property="og:image" content={metaData.cover} />
       </Head>
       <nav>
         <a href="#skip" className="sr-only focus:not-sr-only">
@@ -102,13 +75,9 @@ export default function Layout({ meta = {}, children }) {
         </div>
       </nav>
       <div id="skip">
-        <article className="prose m-auto my-4 px-8 sm:my-16 lg:prose-xl">
+        <article className="prose m-auto my-4 px-8 sm:my-16">
           {children}
         </article>
-        {/* <article
-          className="prose m-auto my-4 px-8 sm:my-16 lg:prose-xl"
-          dangerouslySetInnerHTML={{ __html: children }}
-        /> */}
       </div>
     </>
   )

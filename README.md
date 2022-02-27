@@ -1,34 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Lei Zhang's Personal Portfolio
+
+This site is built with
+
+- [Next.js](https://nextjs.org/)
+- [MDX](https://mdxjs.com/)
+- [Prism themes](https://github.com/PrismJS/prism-themes)
+- [Contentlayer](https://www.contentlayer.dev)
+- [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app)
+
+## Versions
+
+- v1.0.0: [Source code](https://github.com/PassionZale/lovchun.com-next)
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies
+
+```bash
+npm install
+```
+
+and run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Available Scripts
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+#### `npm run dev`
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+to start development server
 
-## Learn More
+#### `npm run start`
 
-To learn more about Next.js, take a look at the following resources:
+to start production server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### `npm run build`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+to generate production build. The built assets will be in under `/.next` directory.
 
-## Deploy on Vercel
+#### `npm run export`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+to export the app to static HTML, which can be run standalone without the need of a Node.js server.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### `npm run deploy`
+
+to deploy the static app from `npm run export` to github pages. The deployment is triggered by merging into `gh-pages` branch.

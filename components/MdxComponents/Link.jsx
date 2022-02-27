@@ -1,17 +1,18 @@
 import Link from "next/link";
 
-const CustomLink = ({ as, href, ...others }) => {
+const CustomLink = props => {
+  const href = props.href;
   const isInternalLink = href && (href.startsWith("/") || href.startsWith("#"));
 
   if (isInternalLink) {
     return (
-      <Link as={as} href={href}>
-        <a {...others} />
+      <Link href={href}>
+        <a {...props}>{props.children}</a>
       </Link>
     );
   }
 
-  return <a target="_blank" href={href} rel="noopener noreferrer" {...others} />;
+  return <a target="_blank" rel="noopener noreferrer" {...props} />;
 };
 
 export default CustomLink;

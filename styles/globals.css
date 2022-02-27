@@ -2,14 +2,137 @@
 @tailwind components;
 @tailwind utilities;
 
-.remark-highlight-code-line {
-  display: block;
-  background-color: aquamarine;
-  margin: 3px 0;
+body {
+  --white: #ffffff;
+  --black: #000000;
+  --text-disabled-color: rgba(0, 0, 0, 0.38);
+  --code-block-color: #e7e7e7;
 }
 
-.line-numbers-rows > span {
+body.dark {
+  --text-disabled-color: rgba(255, 255, 255, 0.5);
+  --code-block-color: #022a4b;
+}
+
+.prose .anchor {
+  @apply absolute invisible;
+
+  margin-left: -1em;
+  padding-right: 0.5em;
+  width: 80%;
+  max-width: 700px;
+  cursor: pointer;
+}
+
+.anchor:hover {
+  @apply visible no-underline;
+}
+
+.prose a {
+  @apply transition-all;
+}
+
+.prose .anchor:after {
+  @apply text-stone-300 dark:text-stone-700;
+  content: '#';
+}
+
+.prose *:hover > .anchor {
+  @apply visible no-underline;
+}
+
+pre {
+  overflow-x: auto;
+}
+
+/*
+ * overriding code block styles in "prism-themes/themes/prism-night-owl.css" 
+ */
+ code[class*='language-'],
+ pre[class*='language-'] {
+   font-size: 0.85rem !important;
+ }
+ 
+ .token {
+   font-style: initial !important;
+ }
+ 
+ pre {
+   border-radius: 0.5rem;
+ }
+ 
+ .rehype-code-title {
+   border-top-left-radius: 0.5rem;
+   border-top-right-radius: 0.5rem;
+   background-color: #022a4b;
+   color: var(--white);
+   padding: 0.75rem 1rem;
+   margin-top: 0.5rem;
+ }
+ 
+ .rehype-code-title + pre[class*='language-'] {
+   margin-top: 0;
+   border-top-left-radius: 0;
+   border-top-right-radius: 0;
+ }
+ 
+ :not(pre) > code {
+   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+   font-size: 0.85rem;
+   background: var(--code-block-color);
+   border-radius: 0.25rem;
+   padding: 0.125rem 0.25rem;
+ }
+ 
+ blockquote {
+   border-left: 6px solid var(--text-disabled-color);
+   margin: 1rem 0;
+   padding: 0 1rem;
+ }
+ 
+
+/**
+ * Inspired by gatsby remark prism - https://www.gatsbyjs.com/plugins/gatsby-remark-prismjs/
+ * 1. Make the element just wide enough to fit its content.
+ * 2. Always fill the visible space in .code-highlight.
+ */
+.code-highlight {
+  float: left; /* 1 */
+  min-width: 100%; /* 2 */
+}
+
+.code-line {
   display: block;
-  counter-increment: linenumber;
-  line-height: 1.2rem;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-left: -16px;
+  margin-right: -16px;
+  border-left-width: 4px;
+  border-left-color: rgba(31, 41, 55, 0); /* Set code block color */
+}
+
+.code-line.inserted {
+  background-color: rgba(16, 185, 129, 0.2); /* Set inserted line (+) color */
+}
+
+.code-line.deleted {
+  background-color: rgba(239, 68, 68, 0.2); /* Set deleted line (-) color */
+}
+
+.highlight-line {
+  margin-left: -16px;
+  margin-right: -16px;
+  background-color: rgba(55, 65, 81, 0.5); /* Set highlight bg color */
+  border-left-width: 4px;
+  border-left-color: rgb(59, 130, 246); /* Set highlight accent border color */
+}
+
+.line-number::before {
+  display: inline-block;
+  width: 1rem;
+  text-align: right;
+  margin-right: 16px;
+  margin-left: -8px;
+  color: rgb(156, 163, 175); /* Line number color */
+  content: attr(line);
 }

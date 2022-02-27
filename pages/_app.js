@@ -1,14 +1,8 @@
-import { MDXProvider } from '@mdx-js/react'
-import MDXComponents from '@/components/MdxComponents'
 import '@/styles/globals.css'
-
+import 'prism-themes/themes/prism-atom-dark.css'
 
 function MyApp({ Component, pageProps }) {
-  return (
-    <MDXProvider components={MDXComponents}>
-      <Component {...pageProps} />
-    </MDXProvider>
-  )
+  return <Component {...pageProps} />
 }
 
 export default MyApp
