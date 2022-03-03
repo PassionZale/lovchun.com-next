@@ -2,18 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  --white: #ffffff;
-  --black: #000000;
-  --text-disabled-color: rgba(0, 0, 0, 0.38);
-  --code-block-color: #e7e7e7;
-}
-
-body.dark {
-  --text-disabled-color: rgba(255, 255, 255, 0.5);
-  --code-block-color: #022a4b;
-}
-
 .prose .anchor {
   @apply absolute invisible;
 
@@ -33,7 +21,6 @@ body.dark {
 }
 
 .prose .anchor:after {
-  @apply text-stone-300 dark:text-stone-700;
   content: '#';
 }
 
