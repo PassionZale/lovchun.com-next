@@ -7,7 +7,6 @@ const WEBSITE = {
 
   email: 'whouu@qq.com',
   github: 'PassionZale',
-  twitter: 'echo_witt',
   domain: 'lovchun.com',
 }
 
