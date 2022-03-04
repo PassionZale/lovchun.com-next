@@ -6,8 +6,9 @@ class MyDocument extends Document {
     return (
       <Html lang={websiteConfigs.lang} className="scroll-smooth">
         <Head>
+          <meta name="google" content="notranslate" />
           <meta name="theme-color" content="#000000" />
-          <meta content="width=device-width, initial-scale=1" name="viewport" />
+          {/* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"></link> */}
         </Head>
         <body className="bg-white text-black antialiased dark:bg-gray-900 dark:text-white">
           <script
