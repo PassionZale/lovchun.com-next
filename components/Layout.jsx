@@ -75,7 +75,7 @@ export default function Layout({ meta = {}, children }) {
         </div>
       </nav>
       <div id="skip">
-        <article className="prose dark:prose-invert prose-img:rounded-xl mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
+        <article className="prose dark:prose-invert prose-sm mx-auto max-w-3xl px-4 sm:px-6">
           {children}
         </article>
       </div>
