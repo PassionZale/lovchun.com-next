@@ -12,12 +12,45 @@ export const Post = defineDocumentType(() => ({
   filePathPattern: 'posts/**/*.mdx',
   contentType: 'mdx',
   fields: {
-    title: { type: 'string', required: true },
-    publishedAt: { type: 'string', required: true },
-    description: { type: 'string', required: true },
-    cover: { type: 'string', required: true },
+    title: { type: 'string', description: '标题', required: true },
+    createdAt: { type: 'date', description: '创建时间', required: true },
+    publishedAt: { type: 'date', description: '发布时间' },
+    updatedAt: { type: 'date', description: '最后更新时间' },
+    draft: {
+      type: 'boolean',
+      description: '是否为草稿, 草稿不会被展示',
+      default: true,
+    },
+    summary: { type: 'string', description: '概括' },
+    tags: {
+      type: 'list',
+      of: { type: 'string' },
+      description: '标签',
+      required: true,
+    },
   },
   computedFields: {
+    frontMatter: {
+      type: 'object',
+      resolve: ({
+        title,
+        createdAt,
+        publishedAt,
+        updatedAt,
+        draft,
+        summary,
+        tags,
+      }) => ({
+        title,
+        createdAt,
+        publishedAt,
+        updatedAt,
+        draft,
+        summary,
+        tags,
+      }),
+    },
+
     readingTime: {
       type: 'json',
       resolve: (doc) => readingTime(doc.body.raw),
@@ -55,8 +88,8 @@ export default makeSource({
         rehypePrismPlus,
         {
           ignoreMissing: true,
-          showLineNumbers: false
-        }
+          showLineNumbers: false,
+        },
       ],
       rehypeAccessibleEmojis,
     ],

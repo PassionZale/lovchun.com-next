@@ -49,3 +49,33 @@ to export the app to static HTML, which can be run standalone without the need o
 #### `npm run deploy`
 
 to deploy the static app from `npm run export` to github pages. The deployment is triggered by merging into `gh-pages` branch.
+
+### MDX Frontmatter Example
+
+Frontmatter follows [Hugo's standards](https://gohugo.io/content-management/front-matter/).
+
+Currently 7 fields are supported.
+
+```
+title (required)
+createdAt (required)
+publishedAt (optional)
+updatedAt (optional, last modify date)
+draft (optional)
+summary (optional)
+tags (required, can be empty array)
+```
+
+Here's an example of a mdx's frontmatter:
+
+```
+---
+title: 'Introducing MDX File Example'
+createdAt: '2022-03-01'
+publishedAt: '2022-03-07'
+updatedAt: '2022-03-10'
+draft: false
+summary: 'mdx file summary.'
+tags: ['next-js', 'tailwind', 'guide']
+---
+```
