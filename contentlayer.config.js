@@ -14,14 +14,14 @@ export const Post = defineDocumentType(() => ({
   fields: {
     title: { type: 'string', description: '标题', required: true },
     createdAt: { type: 'date', description: '创建时间', required: true },
-    publishedAt: { type: 'date', description: '发布时间' },
-    updatedAt: { type: 'date', description: '最后更新时间' },
+    publishedAt: { type: 'date', description: '发布时间', default: null },
+    updatedAt: { type: 'date', description: '最后更新时间', default: null },
     draft: {
       type: 'boolean',
       description: '是否为草稿, 草稿不会被展示',
       default: true,
     },
-    summary: { type: 'string', description: '概括' },
+    summary: { type: 'string', description: '概括', default: null },
     tags: {
       type: 'list',
       of: { type: 'string' },

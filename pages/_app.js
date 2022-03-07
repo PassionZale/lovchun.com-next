@@ -3,6 +3,7 @@ import '@/styles/prism.css'
 import 'prism-themes/themes/prism-atom-dark.css'
 
 import Head from 'next/head'
+import BaseLayout from '@/components/BaseLayout'
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -13,7 +14,9 @@ function MyApp({ Component, pageProps }) {
           content="initial-scale=1, maximum-scale=5, minimum-scale=1, viewport-fit=cover"
         />
       </Head>
-      <Component {...pageProps} />
+      <BaseLayout>
+        <Component {...pageProps} />
+      </BaseLayout>
     </>
   )
 }

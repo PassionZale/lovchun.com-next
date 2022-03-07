@@ -23,9 +23,12 @@ export default function Page({ post }) {
   return (
     <Layout meta={{ title: post.title }}>
       <h1>{post.title}</h1>
-      <time dateTime={post.publishedAt}>
-        {format(parseISO(post.publishedAt), 'LLLL d, yyyy')}
-      </time>
+      {post.publishedAt && (
+        <time dateTime={post.publishedAt}>
+          {post.publishedAt}
+        </time>
+      )}
+
       <p>
         {post.readingTime.text} {post.wordCount}字数
       </p>

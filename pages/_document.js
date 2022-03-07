@@ -5,11 +5,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang={websiteConfigs.lang} className="scroll-smooth">
-        <Head>
-          <meta name="google" content="notranslate" />
-          <meta name="theme-color" content="#000000" />
-          {/* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"></link> */}
-        </Head>
+        <Head />
         <body className="bg-white text-black antialiased dark:bg-gray-900 dark:text-white">
           <script
             dangerouslySetInnerHTML={{

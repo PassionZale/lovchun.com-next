@@ -10,7 +10,6 @@ export const CommonSEO = ({ title, description, ogType, ogImage }) => {
       <title>{title}</title>
       <meta charSet="utf-8" />
       <meta content="IE=edge" httpEquiv="X-UA-Compatible" />
-      <meta content="width=device-width, initial-scale=1" name="viewport" />
       <meta name="robots" content="follow, index" />
       <meta name="google" content="notranslate" />
       <meta name="theme-color" content="#000000" />

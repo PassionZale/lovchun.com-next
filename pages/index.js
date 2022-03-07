@@ -1,12 +1,14 @@
 import Link from 'next/link'
 import { format, parseISO } from 'date-fns'
-import Layout from '@/components/Layout'
 import { allPosts } from 'contentlayer/generated'
 import { pick } from '@contentlayer/client'
+import Header from '@/components/Header'
+import { SiteSEO } from '@/components/SEO'
 
 export function getStaticProps() {
   const posts = allPosts
-    .map((post) => pick(post, ['slug', 'title', 'publishedAt', 'description']))
+    .filter((post) => !post.draft)
+    .map((post) => pick(post, ['publishedAt', 'title', 'slug', 'frontMatter']))
     .sort(
       (a, b) =>
         Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
@@ -15,7 +17,7 @@ export function getStaticProps() {
   return { props: { posts } }
 }
 
-function PostCard(post) {
+function PostItem(post) {
   return (
     <div>
       <time dateTime={post.publishedAt}>
@@ -32,12 +34,16 @@ function PostCard(post) {
 
 export default function Home({ posts }) {
   return (
-    <Layout>
-      <h1>Contentlayer Podcast Example</h1>
+    <>
+      <SiteSEO />
 
-      {posts.map((post, idx) => (
-        <PostCard key={idx} {...post} />
-      ))}
-    </Layout>
+      <Header />
+
+      <div className="">
+        {posts.map((post, idx) => (
+          <PostItem key={idx} {...post} />
+        ))}
+      </div>
+    </>
   )
 }
