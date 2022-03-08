@@ -1,4 +1,4 @@
-import Link from '@/components/MdxComponents/Link'
+import Link from '@/components/MDXComponents/Link'
 import websiteConfigs from '@/configs/website.config'
 
 export default function Footer() {

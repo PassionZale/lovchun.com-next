@@ -1,6 +1,5 @@
 import { format, parseISO } from 'date-fns'
-import components from '@/components/MDXComponents'
-import { useMDXComponent } from 'next-contentlayer/hooks'
+import { MDXLayoutRenderer } from '@/components/MDXComponents'
 import { allPosts } from 'contentlayer/generated'
 import Layout from '@/components/Layout'
 
@@ -18,21 +17,17 @@ export async function getStaticProps({ params }) {
 }
 
 export default function Page({ post }) {
-  const Component = useMDXComponent(post.body.code)
-
   return (
     <Layout meta={{ title: post.title }}>
       <h1>{post.title}</h1>
       {post.publishedAt && (
-        <time dateTime={post.publishedAt}>
-          {post.publishedAt}
-        </time>
+        <time dateTime={post.publishedAt}>{post.publishedAt}</time>
       )}
 
       <p>
         {post.readingTime.text} {post.wordCount}字数
       </p>
-      <Component components={components} />
+      <MDXLayoutRenderer mdxSource={post.body.code} />
     </Layout>
   )
 }
