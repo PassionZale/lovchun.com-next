@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Profile from '@/components/Profile'
+import ThemeSwitch from '@/components/ThemeSwitch'
 
 export default function Header() {
   return (
@@ -11,6 +12,8 @@ export default function Header() {
               <h1 className="mb-0">Hi 👋</h1>
             </a>
           </Link>
+
+          <ThemeSwitch />
         </div>
       </nav>
 

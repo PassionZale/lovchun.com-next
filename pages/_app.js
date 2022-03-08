@@ -3,6 +3,7 @@ import '@/styles/prism.css'
 import 'prism-themes/themes/prism-atom-dark.css'
 
 import Head from 'next/head'
+import { ThemeProvider } from 'next-themes'
 import BaseLayout from '@/components/BaseLayout'
 
 function MyApp({ Component, pageProps }) {
@@ -14,9 +15,14 @@ function MyApp({ Component, pageProps }) {
           content="initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover"
         />
       </Head>
-      <BaseLayout>
-        <Component {...pageProps} />
-      </BaseLayout>
+      <ThemeProvider
+        attribute="class"
+        forcedTheme={Component.theme || null}
+      >
+        <BaseLayout>
+          <Component {...pageProps} />
+        </BaseLayout>
+      </ThemeProvider>
     </>
   )
 }

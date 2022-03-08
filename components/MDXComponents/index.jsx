@@ -1,6 +1,6 @@
 import { useMDXComponent } from 'next-contentlayer/hooks'
-import Link from './Link'
 import Image from './Image'
+import Link from './Link'
 
 export const MDXComponents = {
   a: Link,

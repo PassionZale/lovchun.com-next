@@ -6,7 +6,7 @@ const WEBSITE = {
   lang: 'zh-cn',
 
   email: 'whouu@qq.com',
-  github: 'PassionZale',
+  github: 'https://github.com/PassionZale',
   domain: 'https://lovchun.com',
 }
 

@@ -7,7 +7,7 @@ class MyDocument extends Document {
       <Html lang={websiteConfigs.lang} className="scroll-smooth">
         <Head />
         <body className="bg-white text-black antialiased dark:bg-gray-900 dark:text-white">
-          <script
+          {/* <script
             dangerouslySetInnerHTML={{
               __html: `
                 (function(){
@@ -25,7 +25,7 @@ class MyDocument extends Document {
                 })()
               `,
             }}
-          />
+          /> */}
           <Main />
           <NextScript />
         </body>
