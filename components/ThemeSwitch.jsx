@@ -1,24 +1,46 @@
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
+import NextImage from 'next/image'
+import { RiSunLine, RiMoonClearLine } from 'react-icons/ri'
+
+const ThemedIcon = () => {
+  const { resolvedTheme } = useTheme()
+
+  switch (resolvedTheme) {
+    case 'light':
+      return <RiSunLine />
+    case 'dark':
+      return <RiMoonClearLine />
+    default:
+      return (
+        <NextImage
+          src={
+            'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+          }
+          width={30}
+          height={30}
+        />
+      )
+  }
+}
 
 const ThemeSwitch = () => {
   const [mounted, setMounted] = useState(false)
-  const { theme, setTheme, resolvedTheme } = useTheme()
+  const { setTheme, resolvedTheme } = useTheme()
 
   useEffect(() => setMounted(true), [])
 
   if (!mounted) return null
 
   return (
-    <div>
-      The current theme is: {theme}
-      <br />
-      The resolvedTheme theme is: {resolvedTheme}
-      <div style={{ color: resolvedTheme === 'dark' ? 'white' : 'black' }}>111</div>
-      <button onClick={() => setTheme('light')}>Light Mode</button>
-      <br />
-      <button onClick={() => setTheme('dark')}>Dark Mode</button>
-    </div>
+      <button
+        className="font-semibold no-underline"
+        onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+      >
+        <h1 className="mb-0">
+          <ThemedIcon />
+        </h1>
+      </button>
   )
 }
 
