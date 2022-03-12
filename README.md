@@ -82,6 +82,9 @@ tags: ['next-js', 'tailwind', 'guide']
 
 ### TODO
 
+- `npm run export`
+- `npm run deploy`
+- dotenv
 - tags render and `/tags` router
 - rss
 - previous and next `<NavFooter />`
