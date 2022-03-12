@@ -50,7 +50,7 @@ export const Page = ({ posts }) => {
     <>
       <SiteSEO />
 
-      <header className="my-5 sm:mt-20 sm:mb-10">
+      <header className="mt-10 sm:mt-20">
         <div className="flex items-center justify-between">
           <Link href="/">
             <a className="font-semibold no-underline">

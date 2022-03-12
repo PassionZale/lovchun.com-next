@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import {
+  RiHome3Fill,
   RiHistoryFill,
   RiQuestionFill,
   RiMailFill,
@@ -45,6 +46,10 @@ export const Socials = () => {
           <RiGithubFill />
         </Link>
       )}
+
+      <Link title="首页" aria-label="home" href={'/'}>
+        <RiHome3Fill />
+      </Link>
 
       <Link title="时间轴" aria-label="timeline" href={'/timeline'}>
         <RiHistoryFill />

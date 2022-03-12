@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import Image from 'next/image'
 
 import Socials from '@/components/Contact'
@@ -6,7 +5,7 @@ import websiteConfigs from '@/configs/website.config'
 
 export const Profile = () => {
   return (
-    <div className="mb-10">
+    <div className="my-10">
       <div className="flex">
         <div className="mr-4 h-10  w-10 overflow-hidden rounded-full">
           <Image
