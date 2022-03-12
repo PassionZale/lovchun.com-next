@@ -1,4 +1,4 @@
-# Lei Zhang's Personal Portfolio
+# Lei Zhang's Personal Website
 
 This site is built with
 
@@ -79,3 +79,10 @@ summary: 'mdx file summary.'
 tags: ['next-js', 'tailwind', 'guide']
 ---
 ```
+
+### TODO
+
+- tags render and `/tags` router
+- rss
+- previous and next `<NavFooter />`
+- github issuse comment
