@@ -10,7 +10,7 @@ import { SiteSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
 import { ICP } from '@/components/Contact'
 
-export function getStaticProps() {
+export const getStaticProps = () => {
   const posts = allPosts
     .filter((post) => !post.draft)
     .map((post) => pick(post, ['publishedAt', 'title', 'slug', 'summary']))
@@ -45,7 +45,7 @@ const PostItem = ({ title, publishedAt, slug, summary }) => {
   )
 }
 
-export default function Home({ posts }) {
+export const Page = ({ posts }) => {
   return (
     <>
       <SiteSEO />
@@ -70,3 +70,5 @@ export default function Home({ posts }) {
     </>
   )
 }
+
+export default Page
