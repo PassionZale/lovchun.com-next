@@ -1,24 +1,24 @@
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import NextImage from 'next/image'
-import { RiSunLine, RiMoonClearLine } from 'react-icons/ri'
+import { RiSunFill, RiMoonClearFill } from 'react-icons/ri'
 
 const ThemedIcon = () => {
   const { resolvedTheme } = useTheme()
 
   switch (resolvedTheme) {
     case 'light':
-      return <RiSunLine />
+      return <RiSunFill />
     case 'dark':
-      return <RiMoonClearLine />
+      return <RiMoonClearFill />
     default:
       return (
         <NextImage
           src={
             'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
           }
-          width={30}
-          height={30}
+          width={16}
+          height={16}
         />
       )
   }
@@ -33,14 +33,13 @@ const ThemeSwitch = () => {
   if (!mounted) return null
 
   return (
-      <button
-        className="font-semibold no-underline"
-        onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-      >
-        <h1 className="mb-0">
-          <ThemedIcon />
-        </h1>
-      </button>
+    <button
+      type="button"
+      title='切换主题'
+      onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+    >
+      <ThemedIcon />
+    </button>
   )
 }
 

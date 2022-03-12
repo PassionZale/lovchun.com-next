@@ -1,4 +1,5 @@
 import { useMDXComponent } from 'next-contentlayer/hooks'
+
 import Image from './Image'
 import Link from './Link'
 
@@ -13,4 +14,4 @@ export const MDXLayoutRenderer = ({ mdxSource }) => {
   return <Component components={MDXComponents} />
 }
 
-export default MDXComponents
+export default MDXLayoutRenderer

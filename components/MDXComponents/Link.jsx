@@ -1,6 +1,6 @@
-import NextLink from "next/link";
+import NextLink from 'next/link'
 
-const Link = ({ href, ...rest }) => {
+export const Link = ({ href, ...rest }) => {
   const isInternalLink = href && href.startsWith('/')
   const isAnchorLink = href && href.startsWith('#')
 
@@ -17,6 +17,6 @@ const Link = ({ href, ...rest }) => {
   }
 
   return <a target="_blank" rel="noopener noreferrer" href={href} {...rest} />
-};
+}
 
-export default Link;
+export default Link

@@ -6,6 +6,7 @@
       "@/components/*": ["components/*"],
       "@/configs/*": ["configs/*"],
       "@/styles/*": ["styles/*"],
+      "@/lib/*": ["lib/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },

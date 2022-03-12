@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+
 import websiteConfigs from '@/configs/website.config'
 
 export const CommonSEO = ({ title, description, ogType, ogImage }) => {

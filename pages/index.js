@@ -1,14 +1,19 @@
+import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { format, parseISO } from 'date-fns'
+import { useCallback } from 'react'
+
 import { allPosts } from 'contentlayer/generated'
 import { pick } from '@contentlayer/client'
-import Header from '@/components/Header'
+
+import { getDateString } from '@/lib/utils'
 import { SiteSEO } from '@/components/SEO'
+import Profile from '@/components/Profile'
+import { ICP } from '@/components/Contact'
 
 export function getStaticProps() {
   const posts = allPosts
     .filter((post) => !post.draft)
-    .map((post) => pick(post, ['publishedAt', 'title', 'slug', 'frontMatter']))
+    .map((post) => pick(post, ['publishedAt', 'title', 'slug', 'summary']))
     .sort(
       (a, b) =>
         Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
@@ -17,17 +22,25 @@ export function getStaticProps() {
   return { props: { posts } }
 }
 
-function PostItem(post) {
+const PostItem = ({ title, publishedAt, slug, summary }) => {
+  const router = useRouter()
+
+  const handlePostTitleClick = useCallback(() => {
+    router.push(`/posts/${slug}`)
+  }, [])
+
   return (
-    <div>
-      <time dateTime={post.publishedAt}>
-        {format(parseISO(post.publishedAt), 'LLLL d, yyyy')}
-      </time>
-      <h2>
-        <Link href={`/posts/${post.slug}`}>
-          <a>{post.title}</a>
-        </Link>
+    <div className="mb-10">
+      <small dangerouslySetInnerHTML={{ __html: getDateString(publishedAt) }} />
+
+      <h2
+        className="mt-0 mb-2 cursor-pointer hover:underline hover:underline-offset-8"
+        onClick={handlePostTitleClick}
+      >
+        {title}
       </h2>
+
+      <p className="my-0">{summary}</p>
     </div>
   )
 }
@@ -37,13 +50,23 @@ export default function Home({ posts }) {
     <>
       <SiteSEO />
 
-      <Header />
+      <header className="my-5 sm:mt-20 sm:mb-10">
+        <div className="flex items-center justify-between">
+          <Link href="/">
+            <a className="font-semibold no-underline">
+              <h2 className="my-0">Hi 👋</h2>
+            </a>
+          </Link>
+        </div>
+      </header>
 
-      <div className="">
-        {posts.map((post, idx) => (
-          <PostItem key={idx} {...post} />
-        ))}
-      </div>
+      <Profile />
+
+      {posts.map((post) => (
+        <PostItem key={post.slug} {...post} />
+      ))}
+
+      <ICP />
     </>
   )
 }

@@ -4,9 +4,11 @@ import 'prism-themes/themes/prism-atom-dark.css'
 
 import Head from 'next/head'
 import { ThemeProvider } from 'next-themes'
+import { IconContext } from 'react-icons'
+
 import BaseLayout from '@/components/BaseLayout'
 
-function MyApp({ Component, pageProps }) {
+const App = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
@@ -15,16 +17,16 @@ function MyApp({ Component, pageProps }) {
           content="initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover"
         />
       </Head>
-      <ThemeProvider
-        attribute="class"
-        forcedTheme={Component.theme || null}
-      >
-        <BaseLayout>
-          <Component {...pageProps} />
-        </BaseLayout>
+      <ThemeProvider attribute="class" forcedTheme={Component.theme || null}>
+        <IconContext.Provider value={{ className: 'icon111' }}>
+          <BaseLayout>
+            <Component {...pageProps} />
+          </BaseLayout>
+        </IconContext.Provider>
+
       </ThemeProvider>
     </>
   )
 }
 
-export default MyApp
+export default App
