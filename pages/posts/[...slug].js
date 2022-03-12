@@ -1,11 +1,8 @@
 import { allPosts } from 'contentlayer/generated'
 
-import Layout from '@/components/Layout'
-
 import { PageSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
-import { getDateString } from '@/lib/utils'
 
 export const getStaticPaths = async () => {
   return {
@@ -20,27 +17,10 @@ export const getStaticProps = async ({ params }) => {
   return { props: { post } }
 }
 
-export const _Page = ({ post }) => {
-  return (
-    <Layout meta={{ title: post.title }}>
-      <h1>{post.title}</h1>
-      {post.publishedAt && (
-        <time dateTime={post.publishedAt}>{post.publishedAt}</time>
-      )}
-
-      <p>
-        {post.readingTime.text} {post.wordCount}字数
-      </p>
-      <MDXLayoutRenderer mdxSource={post.body.code} />
-    </Layout>
-  )
-}
-
 export const Page = ({ post }) => {
   const {
     frontMatter,
-    frontMatter: { title, publishedAt, updatedAt, summary },
-    readingTime: { minutes },
+    readingTime,
     body: { code: mdxSource },
   } = post
 
@@ -50,9 +30,11 @@ export const Page = ({ post }) => {
 
       <Profile />
 
-      <h1>{title}</h1>
-
-      <MDXLayoutRenderer mdxSource={mdxSource} />
+      <MDXLayoutRenderer
+        frontMatter={frontMatter}
+        readingTime={readingTime}
+        mdxSource={mdxSource}
+      />
     </>
   )
 }

@@ -6,7 +6,7 @@ const cdnPrefix = process.env.CDN_PREFIX || ''
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  swcMinify: true,
+  swcMinify: isProd,
   reactStrictMode: true,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   assetPrefix: isProd ? cdnPrefix : '',

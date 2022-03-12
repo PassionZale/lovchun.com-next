@@ -5,7 +5,7 @@ import { useCallback } from 'react'
 import { allPosts } from 'contentlayer/generated'
 import { pick } from '@contentlayer/client'
 
-import { getDateString } from '@/lib/utils'
+import { getDateString } from '@/lib/dataTransform'
 import { SiteSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
 import { ICP } from '@/components/Contact'
