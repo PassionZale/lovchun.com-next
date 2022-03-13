@@ -10,8 +10,9 @@ const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   assetPrefix: isProd ? cdnPrefix : '',
-  env: {
-    VERSION: packages.version,
+  serverRuntimeConfig: {},
+  publicRuntimeConfig: {
+    version: packages.version,
   },
   webpack: function (config) {
     config.module.rules.push({

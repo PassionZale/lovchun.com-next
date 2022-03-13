@@ -12,7 +12,7 @@ import websiteConfigs from '@/configs/website.config'
 
 const Link = dynamic(() => import('@/components/MDXComponents/Link'))
 
-export const ICP = () => {
+export const ICP = (props) => {
   return (
     <>
       {websiteConfigs.icp && (
@@ -20,6 +20,7 @@ export const ICP = () => {
           title={websiteConfigs.icp}
           aria-label="icp"
           href={'https://beian.miit.gov.cn'}
+          {...props}
         >
           {websiteConfigs.icp}
         </Link>

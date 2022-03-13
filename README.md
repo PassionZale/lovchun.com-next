@@ -82,6 +82,7 @@ tags: ['next-js', 'tailwind', 'guide']
 
 ### TODO
 
+- <Footer />
 - `npm run export`
 - `npm run deploy`
 - dotenv

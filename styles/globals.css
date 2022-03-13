@@ -20,12 +20,14 @@
   @apply transition-all;
 }
 
-.prose .anchor:after {
-  content: '#';
-}
-
 .prose *:hover > .anchor {
   @apply visible no-underline;
+}
+
+@media screen(md) {
+  .prose .anchor:after {
+    content: '#';
+  }
 }
 
 .icon {

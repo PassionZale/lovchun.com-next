@@ -8,7 +8,6 @@ import { pick } from '@contentlayer/client'
 import { getDateString } from '@/lib/dataTransform'
 import { SiteSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
-import { ICP } from '@/components/Contact'
 
 export const getStaticProps = () => {
   const posts = allPosts
@@ -50,7 +49,7 @@ export const Page = ({ posts }) => {
     <>
       <SiteSEO />
 
-      <header className="mt-10 sm:mt-20">
+      <header className="mt-10">
         <div className="flex items-center justify-between">
           <Link href="/">
             <a className="font-semibold no-underline">
@@ -65,8 +64,6 @@ export const Page = ({ posts }) => {
       {posts.map((post) => (
         <PostItem key={post.slug} {...post} />
       ))}
-
-      <ICP />
     </>
   )
 }

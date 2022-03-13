@@ -9,6 +9,7 @@ const WEBSITE = {
   email: 'whouu@qq.com',
   github: 'https://github.com/PassionZale',
   domain: 'https://lovchun.com',
+  repo: 'https://github.com/PassionZale/lovchun.com-next'
 }
 
 export default WEBSITE

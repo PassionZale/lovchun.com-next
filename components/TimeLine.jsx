@@ -13,7 +13,7 @@ const Year = ({ children }) => {
 const Story = ({ title, children }) => {
   return (
     <>
-      <div className="mb-2 flex items-center text-green-700 dark:text-green-300">
+      <div className="flex items-center text-green-700 dark:text-green-300">
         <span className="sr-only">Check</span>
         <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
           <g
@@ -27,7 +27,7 @@ const Story = ({ title, children }) => {
             <path d="M22 4L12 14.01l-3-3" />
           </g>
         </svg>
-        <p className="font-bold text-gray-900 dark:text-gray-100">{title}</p>
+        <p className="font-bold my-4 text-gray-900 dark:text-gray-100">{title}</p>
       </div>
       <div className="ml-6 text-gray-700 dark:text-gray-400">{children}</div>
     </>
