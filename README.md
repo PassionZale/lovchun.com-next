@@ -80,6 +80,81 @@ tags: ['next-js', 'tailwind', 'guide']
 ---
 ```
 
+### PrismPlus
+
+#### codeblock
+
+```shell
+MDX ----> remark AST ------> rehype AST --------> HTML
+    parse            convert            stringify
+```
+
+#### rehypeCodeTitles
+
+```js:pages/posts/[...slug.js]
+export async function getStaticPaths() {
+  return {
+    // dynamic paths
+    paths: allPosts.map((post) => ({ params: { slug: post.slug.split('/') } })),
+    // fallback set false
+    fallback: false,
+  }
+}
+```
+
+#### highlight line
+
+```js:pages/posts/[...slug.js] {1,3-4}
+export async function getStaticPaths() {
+  return {
+    // dynamic paths
+    paths: allPosts.map((post) => ({ params: { slug: post.slug.split('/') } })),
+    // fallback set false
+    fallback: false,
+  }
+}
+```
+
+#### showLineNumbers
+
+```js:pages/posts/[...slug.js] {1,3-4} showLineNumbers
+export async function getStaticPaths() {
+  return {
+    // dynamic paths
+    paths: allPosts.map((post) => ({ params: { slug: post.slug.split('/') } })),
+    // fallback set false
+    fallback: false,
+  }
+}
+```
+
+#### diff
+```diff:contentlayer.config.js
++ import remarkGfm from 'remark-gfm'
++ import rehypeSlug from 'rehype-slug'
++ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
++ import rehypeCodeTitles from 'rehype-code-titles'
++ import rehypePrism from 'rehype-prism-plus'
++ import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
+
+// ...
+
+export default makeSource({
+  mdx: {
+-    remarkPlugins: [],
++    remarkPlugins: [remarkGfm],
+-    rehypePlugins: [],
++    rehypePlugins: [
++      rehypeSlug,
++      rehypeCodeTitles,
++      rehypePrism,
++      rehypeAutolinkHeadings,
++      rehypeAccessibleEmojis,
+    ],
+  },
+})
+```
+
 ### TODO
 
 - <Footer />
