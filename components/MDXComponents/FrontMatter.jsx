@@ -1,20 +1,10 @@
-import { useMemo } from 'react'
-
-import { msToString } from '@/lib/dataTransform'
+import { getDateString, msToString } from '@/lib/dataTransform'
 import useMounted from '@/lib/hooks/useMounted'
 
 const DisplayPublishDateAndReadingTime = ({ publishedAt, readTime }) => {
-  const publishedTime = useMemo(() => new Date(publishedAt), [])
-
-  if (`${publishedTime}` === 'Invalid Date') {
-    return null
-  }
-
-  const publishedBeforeNow = Date.now() - publishedTime.getTime()
-
   return (
-    <div className="flex mt-2 space-x-1 text-xs text-gray-500 font-normal">
-      <span>{msToString({ time: publishedBeforeNow, suffix: '之前' })}</span>
+    <div className="mt-2 flex space-x-1 text-xs font-normal text-gray-500">
+      <small dangerouslySetInnerHTML={{ __html: getDateString(publishedAt) }} />
       <span>•</span>
       <span>{msToString({ time: readTime })}</span>
     </div>

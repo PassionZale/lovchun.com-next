@@ -22,6 +22,7 @@ export const Page = ({ post }) => {
     frontMatter,
     readingTime,
     body: { code: mdxSource },
+    remotePath,
   } = post
 
   return (
@@ -34,6 +35,7 @@ export const Page = ({ post }) => {
         frontMatter={frontMatter}
         readingTime={readingTime}
         mdxSource={mdxSource}
+        mdxRemote={remotePath}
       />
     </>
   )
