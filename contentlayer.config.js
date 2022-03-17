@@ -6,6 +6,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeCodeTitles from 'rehype-code-titles'
 import rehypePrismPlus from 'rehype-prism-plus'
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
+import websiteConfigs from './configs/website.config'
 
 const CommonFields = {
   title: { type: 'string', description: '标题', required: true },
@@ -26,7 +27,7 @@ const CommonFields = {
   },
 }
 
-const CommonComputedFields =  {
+const CommonComputedFields = {
   frontMatter: {
     type: 'object',
     resolve: ({
@@ -51,6 +52,12 @@ const CommonComputedFields =  {
   readingTime: {
     type: 'json',
     resolve: (doc) => readingTime(doc.body.raw),
+  },
+
+  remotePath: {
+    type: 'string',
+    resolve: (doc) =>
+      `${websiteConfigs.repo}/edit/main/data/${doc._raw.sourceFilePath}`,
   },
 }
 
@@ -77,9 +84,9 @@ export const About = defineDocumentType(() => ({
     ...CommonComputedFields,
     slug: {
       type: 'string',
-      resolve: (doc) => doc._raw.flattenedPath
-    }
-  }
+      resolve: (doc) => doc._raw.flattenedPath,
+    },
+  },
 }))
 
 export const TimeLine = defineDocumentType(() => ({
@@ -91,9 +98,9 @@ export const TimeLine = defineDocumentType(() => ({
     ...CommonComputedFields,
     slug: {
       type: 'string',
-      resolve: (doc) => doc._raw.flattenedPath
-    }
-  }
+      resolve: (doc) => doc._raw.flattenedPath,
+    },
+  },
 }))
 
 export default makeSource({
