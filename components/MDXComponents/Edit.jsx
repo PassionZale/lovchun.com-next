@@ -5,7 +5,7 @@ import { RiEdit2Fill } from 'react-icons/ri'
 import { msToString } from '@/lib/dataTransform'
 
 const Edit = ({ link, date }) => {
-  const time = useMemo(() => new Date(date), [])
+  const time = useMemo(() => new Date(date), [date])
 
   if (`${time}` === 'Invalid Date') {
     return null

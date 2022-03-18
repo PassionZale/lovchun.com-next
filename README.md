@@ -157,11 +157,5 @@ export default makeSource({
 
 ### TODO
 
-- <Footer />
-- `npm run export`
-- `npm run deploy`
-- dotenv
 - tags render and `/tags` router
 - rss
-- previous and next `<NavFooter />`
-- github issuse comment
