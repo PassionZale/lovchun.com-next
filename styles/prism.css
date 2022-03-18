@@ -19,7 +19,7 @@
 }
 
 .code-line {
-  @apply -mx-4 block border-l-4 border-transparent pl-4 pr-4;
+  @apply -mx-2 block border-l-4 border-transparent pl-4 pr-4;
 }
 
 .code-line.inserted {
@@ -31,7 +31,7 @@
 }
 
 .highlight-line {
-  @apply -mx-4 border-l-4 border-teal-500  bg-gray-700 bg-opacity-50;
+  @apply -mx-2 border-l-4 border-teal-500  bg-gray-700 bg-opacity-50;
 }
 
 .line-number::before {

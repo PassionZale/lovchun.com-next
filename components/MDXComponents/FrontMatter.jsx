@@ -1,3 +1,4 @@
+import Tag from '@/components/Tag'
 import { getDateString, msToString } from '@/lib/dataTransform'
 import useMounted from '@/lib/hooks/useMounted'
 
@@ -20,10 +21,18 @@ export const FrontMatter = ({ frontMatter, readingTime }) => {
     <>
       <h1>
         <title className="block">{frontMatter.title}</title>
+
         <DisplayPublishDateAndReadingTime
           publishedAt={frontMatter.publishedAt}
           readTime={readingTime.time}
         />
+        {frontMatter.tags.length && (
+          <div className="mt-2 flex space-x-2">
+            {frontMatter.tags.map((item, index) => (
+              <Tag key={index}>#{item}</Tag>
+            ))}
+          </div>
+        )}
       </h1>
     </>
   )
