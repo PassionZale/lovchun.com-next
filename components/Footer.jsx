@@ -2,6 +2,7 @@ import Image from 'next/image'
 import getConfig from 'next/config'
 
 import { ICP } from '@/components/Contact'
+import Tag from '@/components/Tag'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -15,9 +16,7 @@ const Footer = () => {
       />
       <span className="">&copy;</span>
       <span>{new Date().getFullYear()}</span>
-      <button className="rounded-full bg-cyan-500 px-2 font-semibold text-white shadow-sm">
-        v{publicRuntimeConfig.version}
-      </button>
+      <Tag>v{publicRuntimeConfig.version}</Tag>
       <ICP className="text-xs text-gray-500" />
     </footer>
   )
