@@ -26,7 +26,7 @@ const PostItem = ({ title, publishedAt, slug, summary }) => {
 
   const handlePostTitleClick = useCallback(() => {
     router.push(`/posts/${slug}`)
-  }, [])
+  }, [router, slug])
 
   return (
     <div className="mb-10">
