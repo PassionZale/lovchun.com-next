@@ -12,6 +12,20 @@ const DisplayPublishDateAndReadingTime = ({ publishedAt, readTime }) => {
   )
 }
 
+const DisplayTags = ({ tags }) => {
+  if (tags.length) {
+    return (
+      <div className="mt-2 flex space-x-2">
+        {tags.map((item, index) => (
+          <Tag key={index}>#{item}</Tag>
+        ))}
+      </div>
+    )
+  }
+
+  return null
+}
+
 export const FrontMatter = ({ frontMatter, readingTime }) => {
   const mounted = useMounted()
 
@@ -26,13 +40,8 @@ export const FrontMatter = ({ frontMatter, readingTime }) => {
           publishedAt={frontMatter.publishedAt}
           readTime={readingTime.time}
         />
-        {frontMatter.tags.length && (
-          <div className="mt-2 flex space-x-2">
-            {frontMatter.tags.map((item, index) => (
-              <Tag key={index}>#{item}</Tag>
-            ))}
-          </div>
-        )}
+
+        <DisplayTags tags={frontMatter.tags} />
       </h1>
     </>
   )
