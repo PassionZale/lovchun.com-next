@@ -4,6 +4,7 @@ import { pick } from '@contentlayer/client'
 import { PageSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
+import Comment from '@/components/Comment'
 
 const posts = allPosts
   .filter((post) => !post.draft)
@@ -55,6 +56,8 @@ export const Page = ({ previous, post, next }) => {
         frontMatter={frontMatter}
         readingTime={readingTime}
       />
+
+      <Comment />
     </>
   )
 }
