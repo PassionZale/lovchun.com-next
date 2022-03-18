@@ -24,12 +24,13 @@ export const getStaticProps = async ({ params }) => {
     (post) => post.slug === params.slug.join('/')
   )
 
-  // https://nextjs.org/docs/messages/large-page-data
-  const previous = pick(posts[foundIndex - 1], ['slug', 'title']) || null
-
+  const previousPost = posts[foundIndex - 1]
   const post = posts[foundIndex]
+  const nextPost = posts[foundIndex + 1]
 
-  const next = pick(posts[foundIndex + 1], ['slug', 'title']) || null
+  // https://nextjs.org/docs/messages/large-page-data
+  const previous = previousPost ? pick(previousPost, ['slug', 'title']) : null
+  const next = nextPost ? pick(nextPost, ['slug', 'title']) : null
 
   return { props: { previous, post, next } }
 }
