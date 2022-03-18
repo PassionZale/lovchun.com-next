@@ -1,4 +1,5 @@
 import { allPosts } from 'contentlayer/generated'
+import { pick } from '@contentlayer/client'
 
 import { PageSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
@@ -22,11 +23,12 @@ export const getStaticProps = async ({ params }) => {
     (post) => post.slug === params.slug.join('/')
   )
 
-  const previous = posts[foundIndex - 1] || null
+  // https://nextjs.org/docs/messages/large-page-data
+  const previous = pick(posts[foundIndex - 1], ['slug', 'title']) || null
 
   const post = posts[foundIndex]
 
-  const next = posts[foundIndex + 1] || null
+  const next = pick(posts[foundIndex + 1], ['slug', 'title']) || null
 
   return { props: { previous, post, next } }
 }
