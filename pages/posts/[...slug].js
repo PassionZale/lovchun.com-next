@@ -4,20 +4,34 @@ import { PageSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
 
+const posts = allPosts
+  .filter((post) => !post.draft)
+  .sort(
+    (a, b) => Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
+  )
+
 export const getStaticPaths = async () => {
   return {
-    paths: allPosts.map((post) => ({ params: { slug: post.slug.split('/') } })),
+    paths: posts.map((post) => ({ params: { slug: post.slug.split('/') } })),
     fallback: false,
   }
 }
 
 export const getStaticProps = async ({ params }) => {
-  const post = allPosts.find((post) => post.slug === params.slug.join('/'))
+  const foundIndex = posts.findIndex(
+    (post) => post.slug === params.slug.join('/')
+  )
 
-  return { props: { post } }
+  const previous = posts[foundIndex - 1] || null
+
+  const post = posts[foundIndex]
+
+  const next = posts[foundIndex + 1] || null
+
+  return { props: { previous, post, next } }
 }
 
-export const Page = ({ post }) => {
+export const Page = ({ previous, post, next }) => {
   const {
     frontMatter,
     readingTime,
@@ -32,10 +46,12 @@ export const Page = ({ post }) => {
       <Profile />
 
       <MDXLayoutRenderer
-        frontMatter={frontMatter}
-        readingTime={readingTime}
         mdxSource={mdxSource}
         mdxRemote={remotePath}
+        previous={previous}
+        next={next}
+        frontMatter={frontMatter}
+        readingTime={readingTime}
       />
     </>
   )

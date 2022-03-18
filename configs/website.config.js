@@ -2,7 +2,7 @@ const WEBSITE = {
   author: 'Lei Zhang',
   avatar: '/static/images/avatar.jpg',
   title: 'Lei Zhang - lovchun.com',
-  description: "just a minimalist, personal blog ",
+  description: "A front-end development that always has bugs...",
   lang: 'zh-cn',
 
   icp: '粤ICP备16020962号-1',
