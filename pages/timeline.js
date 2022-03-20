@@ -18,7 +18,6 @@ export const getStaticProps = () => {
 export const Page = ({ post }) => {
   const {
     frontMatter,
-    readingTime,
     body: { code: mdxSource },
     remotePath,
   } = post
@@ -34,7 +33,6 @@ export const Page = ({ post }) => {
         mdxRemote={remotePath}
         mdxComponents={mdxComponents}
         frontMatter={frontMatter}
-        readingTime={readingTime}
       />
     </>
   )

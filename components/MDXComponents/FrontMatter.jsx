@@ -6,8 +6,12 @@ const DisplayPublishDateAndReadingTime = ({ publishedAt, readTime }) => {
   return (
     <div className="mt-2 flex space-x-1 text-xs font-normal text-gray-500">
       <span dangerouslySetInnerHTML={{ __html: getDateString(publishedAt) }} />
-      <span>•</span>
-      <span>{msToString({ time: readTime })}</span>
+      {readTime && (
+        <>
+          <span>•</span>
+          <span>{msToString({ time: readTime })}</span>
+        </>
+      )}
     </div>
   )
 }
@@ -38,7 +42,7 @@ export const FrontMatter = ({ frontMatter, readingTime }) => {
 
         <DisplayPublishDateAndReadingTime
           publishedAt={frontMatter.publishedAt}
-          readTime={readingTime.time}
+          readTime={readingTime?.time}
         />
 
         <DisplayTags tags={frontMatter.tags} />
