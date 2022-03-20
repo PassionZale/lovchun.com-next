@@ -59,15 +59,15 @@ tags: []
 
 现在网站部署于[Vercel](https://vercel.com)，只需要每年续费域名（¥68），即可拥有一个**独立域名的静态网站**，此外还能免费构建，免费的 PV/UV 统计等等。
 
-~~不用在续费阿里云 ECS，一年省下 ¥700 倒是可以加几箱油了...~~
+不用再续费阿里云 ECS，一年省下 ¥700+ 倒是可以加几箱油 🎉 
 
 ### Tailwind CSS
 
-最近几年，原子样式的趋势越来越好，这次整站`CSS`都是基于 `Tailwind CSS`，例如主题切换，试试 👉 <ThemeSwitch className="px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">切换主题</ThemeSwitch>
+最近几年，原子样式的趋势越来越好，这次整站`CSS`都是基于 `Tailwind CSS`，例如主题切换，试试点击 👉 <ThemeSwitch className="ml-2 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">切换主题</ThemeSwitch>
 
 ### MDX
 
-这次站点的重构，基于 `mdx`，手动把以前 `Mysql` 中富文本录入的文章数据转换为 `mdx` 是个很费劲的工作，再加上以前的文章质量没那么高，所以删除了很多旧文章。
+这次站点的重构，基于 `mdx`，手动把 `Mysql` 中富文本录入的旧文章转换为 `mdx` 是个很费劲的工作，再加上以前的文章质量没那么高，所以几乎删除了大部分旧数据。
 
 ### Contentlayer
 
@@ -231,5 +231,10 @@ export default makeSource({
   },
 })
 ```
+
+## TODO
+
+1. [ ] RSS / SiteMap 支持
+2. [ ] Tags 路由支持
 
 **感谢访问我的站点!**

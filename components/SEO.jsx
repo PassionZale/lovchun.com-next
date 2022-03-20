@@ -24,7 +24,7 @@ export const CommonSEO = ({ title, description, ogType, ogImage }) => {
         property="og:url"
         content={`${websiteConfigs.domain}${router.asPath}`}
       />
-      <link href="/favicon.ico" rel="shortcut icon" />
+      <link href="/staitc/favicons/favicon.ico" rel="shortcut icon" />
     </Head>
   )
 }
