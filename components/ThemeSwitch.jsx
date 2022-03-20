@@ -25,7 +25,7 @@ const ThemedIcon = () => {
   }
 }
 
-const ThemeSwitch = () => {
+const ThemeSwitch = ({ children, className }) => {
   const mounted = useMounted()
   const { setTheme, resolvedTheme } = useTheme()
 
@@ -33,11 +33,12 @@ const ThemeSwitch = () => {
 
   return (
     <button
+      className={className}
       type="button"
       title="切换主题"
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
     >
-      <ThemedIcon />
+      {children || <ThemedIcon />}
     </button>
   )
 }

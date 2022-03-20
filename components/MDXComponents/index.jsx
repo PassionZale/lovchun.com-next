@@ -6,7 +6,7 @@ import FrontMatter from './FrontMatter'
 import Edit from './Edit'
 import Pagination from './Pagination'
 
-export const MDXComponents = {
+export const DefaultMDXComponents = {
   a: Link,
   Image,
 }
@@ -14,6 +14,7 @@ export const MDXComponents = {
 export const MDXLayoutRenderer = ({
   mdxSource,
   mdxRemote,
+  mdxComponents = {},
   previous,
   next,
   ...rest
@@ -23,7 +24,7 @@ export const MDXLayoutRenderer = ({
   return (
     <article className="mb-10">
       <FrontMatter {...rest} />
-      <Component components={MDXComponents} />
+      <Component components={{ ...DefaultMDXComponents, ...mdxComponents }} />
       <Edit link={mdxRemote} date={rest.frontMatter.updatedAt} />
       <Pagination previous={previous} next={next} />
     </article>

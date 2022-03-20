@@ -32,7 +32,7 @@ export const ScrollToTop = () => {
       }`}
     >
       <button onClick={handleScrollTop} aria-label="回到顶部" type="button">
-        <RiArrowUpCircleFill className="h-10 w-10" />
+        <RiArrowUpCircleFill className="large" />
       </button>
     </div>
   )

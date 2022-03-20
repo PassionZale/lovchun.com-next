@@ -2,7 +2,7 @@
 title: '关于'
 createdAt: '2019-03-16'
 publishedAt: '2019-03-16'
-updatedAt: '2019-03-16'
+updatedAt: '2022-03-20'
 draft: false
 summary: 'about me... about website...'
 tags: []
@@ -10,60 +10,226 @@ tags: []
 
 ## lovchun.com
 
-是的，这个域名，少了字母 e，不过没关系，我仍然很珍惜它，
+🥰 纯
 
-人无完人，域名也是一样。
+## 站点由哪些所构建
 
-其实当时如果能弄到 luv 应该会更棒！
+- [Nextjs](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [MDX](https://mdxjs.com/)
+- [Prism Themes](https://github.com/PrismJS/prism-themes)
+- [Contentlayer](https://www.contentlayer.dev)
+- [create-next-app](https://github.com/vercel/next.js/tree/canary/packages/create-next-app)
 
-## 搭博客是为什么
+## 我曾使用过的技术栈
 
-最初的目的，只是为了给简历加分。
+### 客户端
 
-通常我都会将日常开发中的疑难杂症写成 Basic Tutorial，万一对你也有用呢；
+- `Gulp`
+- `Webpack`
+- `Nodejs`
+- `Vuejs`
+- `Reactjs`
+- `Nextjs`
+- `Typescript`
+- `Miniprogram`
 
-写博客强化表达能力、文字组织能力，锻炼撰写文档的能力；
+### 服务端
 
-加入统计点，PV/UV 升高，能让我保持编码的激情；
+- `PHP` : Codeigniter、Laravel、ThinkPHP、Phalcon
+- `Python` : Flask、Django
+- `Nestjs`
+- `Docker`
+- `Nginx`
+- `Mysql`
+- `Memcache`
+- `Supervisor`
 
-偶尔我也会翻译一些很棒的教程，扩充一下自己不太厉害的 English。
+## 我这几年的工作
 
-## 这5年在做什么
+涉及过金融、邮箱、网站、新零售等业务。
 
-有大半时间在做公众号开发，
+早先 `PHP` + `Require.js` + `jQuery` + `Bootstrap` 全栈工作了三年，后面 `Angular` 横空出世，再到 `Reactjs` 和 `Vuejs`，前后端分离趋势流行后，便一直在前端领域摸爬滚打，精通基于 `Json Web Token` 的前后端分离。
 
-因此在简历中，这也是我唯一敢写上“精通”二字的经验。
+最近两年主要工作从 B 端 转换到了 C 端， 擅长`微信/企业微信小程序`的相关开发和一些营促销 `H5` 的开发。
 
-除此之外，金融、网站、商城、邮箱等相关业务也有所涉及。
+## 新特性
 
-## 技术栈有哪些
+### Vercel
 
-### 服务端相关：
+现在网站部署于[Vercel](https://vercel.com)，只需要每年续费域名（¥68），即可拥有一个**独立域名的静态网站**，此外还能免费构建，免费的 PV/UV 统计等等。
 
-- PHP（Codeigniter、Laravel、ThinkPHP、Phalcon）
+~~不用在续费阿里云 ECS，一年省下 ¥700 倒是可以加几箱油了...~~
 
-- Python（Flask、Django）
+### Tailwind CSS
 
-- Nginx、Mysql、Memcache、Redis、Supervisor
+最近几年，原子样式的趋势越来越好，这次整站`CSS`都是基于 `Tailwind CSS`，例如主题切换，试试 👉 <ThemeSwitch className="px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">切换主题</ThemeSwitch>
 
-### 客户端相关：
+### MDX
 
-- Javascript（Vuejs、jQuery、Requirejs、Npm、Webpack、Gulp）
+这次站点的重构，基于 `mdx`，手动把以前 `Mysql` 中富文本录入的文章数据转换为 `mdx` 是个很费劲的工作，再加上以前的文章质量没那么高，所以删除了很多旧文章。
 
-- CSS（Less、Bootstrap等常用预编译工具和框架）
+### Contentlayer
 
-## 近期计划
+最开始使用 `mdx-loader`+`fs` 读取文件，转换 `modules`， 创建 `async router path`，但是有个弊端，整个 `hotreload` 又卡又慢，这个完全无法忍受。
 
-- 存钱买车
+无意中看到了 [Contentlayer](https://www.contentlayer.dev)，它的运行原理大概如下：
 
-- 怀个宝宝
+<Image
+  src="/static/images/contentlayer.png"
+  width={1233}
+  height={587}
+/>
 
-## 联系方式
+这个库还是 `ALPHA`，能很好的处理 `fiels` => `modules`，编译和转换都非常非常的快，完美解决上面的弊端。
 
-- 邮箱：[whouu@qq.com](mailto:whouu@qq.com)
+### FrontMatter
 
-- 博客：[lovchun.com](/)
+每一份 `.mdx` 文件都支持以下 7 个字段:
 
-- Github: [https://github.com/PassionZale](https://github.com/PassionZale)
+```js
+const CommonFields = {
+  title: {
+    type: 'string',
+    description: '标题',
+    required: true,
+  },
 
-**感谢访问我的站点**
+  createdAt: {
+    type: 'date',
+    description: '创建时间',
+    required: true,
+  },
+
+  publishedAt: {
+    type: 'date',
+    description: '发布时间',
+    default: null,
+  },
+
+  updatedAt: {
+    type: 'date',
+    description: '最后更新时间',
+    default: null,
+  },
+
+  draft: {
+    type: 'boolean',
+    description: '是否为草稿, 草稿不会被展示',
+    default: true,
+  },
+
+  summary: {
+    type: 'string',
+    description: '概括',
+    default: null,
+  },
+
+  tags: {
+    type: 'list',
+    of: { type: 'string' },
+    description: '标签',
+    required: true,
+  },
+}
+```
+
+`frontmatter` 示例：
+
+```markdown
+---
+title: '文章标题'
+createdAt: '2022-03-01'
+publishedAt: '2022-03-07'
+updatedAt: '2022-03-10'
+draft: false
+summary: '文章概况'
+tags: ['next-js', 'tailwind', 'guide']
+---
+```
+
+### PrismPlus
+
+静态的 `Markdown` 当然少不了代码块的支持，这次引入了 `PrismPlus` 来实现代码块相关的高亮等功能，效果如下：
+
+#### 代码块
+
+```shell
+MDX ----> remark AST ------> rehype AST --------> HTML
+    parse            convert            stringify
+```
+
+#### 代码标题
+
+```js:pages/posts/[...slug.js]
+export async function getStaticPaths() {
+  return {
+    // dynamic paths
+    paths: allPosts.map(() => ({
+      params: { slug: post.slug.split('/') }
+    }))
+    // fallback set false
+    fallback: false,
+  }
+}
+```
+
+#### 高亮行
+
+```js:pages/posts/[...slug.js] {1,3-4}
+export async function getStaticPaths() {
+  return {
+    // dynamic paths
+    paths: allPosts.map(() => ({
+      params: { slug: post.slug.split('/') }
+    }))
+    // fallback set false
+    fallback: false,
+  }
+}
+```
+
+#### 显示行号
+
+```js:pages/posts/[...slug.js] {1,3-4} showLineNumbers
+export async function getStaticPaths() {
+  return {
+    // dynamic paths
+    paths: allPosts.map(() => ({
+      params: { slug: post.slug.split('/') }
+    }))
+    // fallback set false
+    fallback: false,
+  }
+}
+```
+
+#### 显示差异
+
+```diff:contentlayer.config.js
++ import remarkGfm from 'remark-gfm'
++ import rehypeSlug from 'rehype-slug'
++ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
++ import rehypeCodeTitles from 'rehype-code-titles'
++ import rehypePrism from 'rehype-prism-plus'
++ import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
+
+// ...
+
+export default makeSource({
+  mdx: {
+-    remarkPlugins: [],
++    remarkPlugins: [remarkGfm],
+-    rehypePlugins: [],
++    rehypePlugins: [
++      rehypeSlug,
++      rehypeCodeTitles,
++      rehypePrism,
++      rehypeAutolinkHeadings,
++      rehypeAccessibleEmojis,
+    ],
+  },
+})
+```
+
+**感谢访问我的站点!**

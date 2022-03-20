@@ -129,6 +129,7 @@ export async function getStaticPaths() {
 ```
 
 #### diff
+
 ```diff:contentlayer.config.js
 + import remarkGfm from 'remark-gfm'
 + import rehypeSlug from 'rehype-slug'
@@ -154,8 +155,3 @@ export default makeSource({
   },
 })
 ```
-
-### TODO
-
-- tags render and `/tags` router
-- rss

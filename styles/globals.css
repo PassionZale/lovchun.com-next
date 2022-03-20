@@ -33,3 +33,7 @@
 .icon {
   @apply h-4 w-4 font-semibold;
 }
+
+.icon.large {
+  @apply h-10 w-10;
+}

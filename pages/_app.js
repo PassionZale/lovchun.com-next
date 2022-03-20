@@ -18,12 +18,11 @@ const App = ({ Component, pageProps }) => {
         />
       </Head>
       <ThemeProvider attribute="class" forcedTheme={Component.theme || null}>
-        <IconContext.Provider value={{ className: 'icon111' }}>
+        <IconContext.Provider value={{ className: 'icon' }}>
           <BaseLayout>
             <Component {...pageProps} />
           </BaseLayout>
         </IconContext.Provider>
-
       </ThemeProvider>
     </>
   )
