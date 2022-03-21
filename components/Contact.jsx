@@ -4,6 +4,7 @@ import {
   RiHistoryFill,
   RiQuestionFill,
   RiMailFill,
+  RiRssFill,
   RiGithubFill,
 } from 'react-icons/ri'
 
@@ -58,6 +59,10 @@ export const Socials = () => {
 
       <Link title="关于" aria-label="about" href={'/about'}>
         <RiQuestionFill />
+      </Link>
+
+      <Link title="RSS" aria-label="rss" href={'/feed.xml'}>
+        <RiRssFill />
       </Link>
 
       <ThemeSwitch />

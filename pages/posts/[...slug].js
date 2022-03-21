@@ -1,3 +1,4 @@
+import fs from 'fs'
 import { allPosts } from 'contentlayer/generated'
 import { pick } from '@contentlayer/client'
 
@@ -5,6 +6,7 @@ import { PageSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
 import Comment from '@/components/Comment'
+import generateRss from '@/lib/generateRss'
 
 const posts = allPosts
   .filter((post) => !post.draft)
@@ -31,6 +33,10 @@ export const getStaticProps = async ({ params }) => {
   // https://nextjs.org/docs/messages/large-page-data
   const previous = previousPost ? pick(previousPost, ['slug', 'title']) : null
   const next = nextPost ? pick(nextPost, ['slug', 'title']) : null
+
+  // rss
+  const rss = generateRss(posts)
+  fs.writeFileSync('./public/feed.xml', rss)
 
   return { props: { previous, post, next } }
 }
