@@ -1,6 +1,7 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files'
 import readingTime from 'reading-time'
 import remarkGfm from 'remark-gfm'
+import remarkGemoji from 'remark-gemoji'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeCodeTitles from 'rehype-code-titles'
@@ -107,7 +108,7 @@ export default makeSource({
   contentDirPath: 'data',
   documentTypes: [Post, About, TimeLine],
   mdx: {
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [remarkGfm, remarkGemoji],
     rehypePlugins: [
       rehypeSlug,
       [
