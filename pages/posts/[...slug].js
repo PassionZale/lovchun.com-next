@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { InView } from 'react-intersection-observer'
 import { allPosts } from 'contentlayer/generated'
 import { pick } from '@contentlayer/client'
 
@@ -38,7 +39,7 @@ export const getStaticProps = async ({ params }) => {
   const rss = generateRss(posts)
   fs.writeFileSync('./public/feed.xml', rss)
 
-  return { props: { previous, post, next } }
+  return { props: { previous, post, next, key: params.slug } }
 }
 
 export const Page = ({ previous, post, next }) => {
@@ -64,7 +65,13 @@ export const Page = ({ previous, post, next }) => {
         readingTime={readingTime}
       />
 
-      <Comment />
+      <InView rootMargin="140px" triggerOnce fallbackInView>
+        {({ inView, ref }) => (
+          <div id="comments" ref={ref}>
+            {inView && <Comment title={frontMatter.title} />}
+          </div>
+        )}
+      </InView>
     </>
   )
 }

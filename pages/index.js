@@ -54,8 +54,8 @@ export const Page = ({ posts }) => {
           <Link href="/">
             <a className="font-semibold no-underline">
               <h2 className="my-0 flex items-center">
-                <span className='mr-1'>Hi</span>
-                <img className='my-0' src="/static/images/wave.gif" width="28px" />
+                Hi
+                <span className='wave'>👋</span>
               </h2>
             </a>
           </Link>
