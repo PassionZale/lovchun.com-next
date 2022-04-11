@@ -19,7 +19,7 @@ export const CommonSEO = ({ title, description, ogType, ogImage }) => {
       <meta property="og:site_name" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:title" content={title} />
-      {ogImage && <meta property="og:image" content={ogImage} />}
+      <meta property="og:image" content={ogImage || websiteConfigs.avatar} />
       <meta
         property="og:url"
         content={`${websiteConfigs.domain}${router.asPath}`}
