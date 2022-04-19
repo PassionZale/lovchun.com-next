@@ -18,7 +18,7 @@ export const Profile = () => {
 
         <div className="flex-1">
           <p className="my-0 font-bold">{websiteConfigs.author}</p>
-          <p className="my-0 font-light">{websiteConfigs.description}</p>
+          <p className="my-0 text-sm">{websiteConfigs.description}</p>
 
           <div className="mt-2">
             <Socials />
