@@ -2,7 +2,7 @@ const WEBSITE = {
   author: 'Lei Zhang',
   avatar: '/static/images/avatar.jpg',
   title: 'Lei Zhang - lovchun.com',
-  description: "A front-end development that always has bugs...",
+  description: "希望2022，三餐四季温素有趣。",
   lang: 'zh-cn',
 
   icp: '粤ICP备16020962号-1',
