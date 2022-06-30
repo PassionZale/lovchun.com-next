@@ -24,7 +24,9 @@ export const MDXLayoutRenderer = ({
   return (
     <article className="mb-10">
       <FrontMatter {...rest} />
-      <Component components={{ ...DefaultMDXComponents, ...mdxComponents }} />
+      <div className="min-h-[30rem]">
+        <Component components={{ ...DefaultMDXComponents, ...mdxComponents }} />
+      </div>
       <Edit link={mdxRemote} date={rest.frontMatter.updatedAt} />
       <Pagination previous={previous} next={next} />
     </article>

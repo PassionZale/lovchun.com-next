@@ -8,6 +8,11 @@ import Profile from '@/components/Profile'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
 import Comment from '@/components/Comment'
 import generateRss from '@/lib/generateRss'
+import QuitSmoking from '@/components/MDXComponents/QuitSmoking'
+
+const mdxComponents = {
+  QuitSmoking
+}
 
 const posts = allPosts
   .filter((post) => !post.draft)
@@ -59,6 +64,7 @@ export const Page = ({ previous, post, next }) => {
       <MDXLayoutRenderer
         mdxSource={mdxSource}
         mdxRemote={remotePath}
+        mdxComponents={mdxComponents}
         previous={previous}
         next={next}
         frontMatter={frontMatter}

@@ -5,7 +5,7 @@ import websiteConfigs from '@/configs/website.config'
 
 export const Profile = () => {
   return (
-    <div className="my-10">
+    <div className="py-10">
       <div className="flex">
         <div className="mr-4 h-10  w-10 overflow-hidden rounded-full">
           <Image
