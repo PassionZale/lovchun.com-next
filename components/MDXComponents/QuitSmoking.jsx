@@ -37,81 +37,53 @@ const QuitSmoking = () => {
   }, [])
 
   return counter ? (
-    <div className="relative overflow-x-auto rounded-md bg-base-300">
-      <div
-        className="preview min-h-[6rem]  min-w-[18rem] max-w-4xl flex-wrap items-center justify-center gap-2 overflow-x-hidden rounded-md border border-base-300 bg-base-200 bg-cover bg-top p-4"
-        style={{ backgroundSize: '5px 5px' }}
-      >
-        <style jsx>{`
-          .preview {
-            background-image: radial-gradient(
-              hsla(var(--bc) / 0.2) 0.5px,
-              hsla(var(--b2) / 1) 0.5px
-            );
-          }
-        `}</style>
-
-        {/* 年 */}
-        <div className="grid auto-cols-max grid-flow-col justify-center gap-5 text-center">
-          {counter.years > 0 && (
-            <div className="flex flex-col text-black">
-              <span className="countdown font-mono text-5xl">
-                <span style={{ '--value': counter.years }} />
-              </span>
-              years
-            </div>
-          )}
-
-          {/* 月 */}
-          {counter.months > 0 && (
-            <div className="flex flex-col text-black">
-              <span className="countdown font-mono text-5xl">
-                <span style={{ '--value': counter.months }} />
-              </span>
-              months
-            </div>
-          )}
-
-          {/* 日 */}
-          {counter.days > 0 && (
-            <div className="flex flex-col text-black">
-              <span className="countdown font-mono text-5xl">
-                <span style={{ '--value': counter.days }} />
-              </span>
-              days
-            </div>
-          )}
-
-          {/* 时 */}
-          {counter.hours > 0 && (
-            <div className="flex flex-col text-black">
-              <span className="countdown font-mono text-5xl">
-                <span style={{ '--value': counter.hours }} />
-              </span>
-              hours
-            </div>
-          )}
-
-          {/* 分 */}
-          {counter.minutes > 0 && (
-            <div className="flex flex-col text-black">
-              <span className="countdown font-mono text-5xl">
-                <span style={{ '--value': counter.minutes }} />
-              </span>
-              min
-            </div>
-          )}
-
-          {/* 秒 */}
-          {counter.seconds > 0 && (
-            <div className="flex flex-col text-black">
-              <span className="countdown font-mono text-5xl">
-                <span style={{ '--value': counter.seconds }} />
-              </span>
-              sec
-            </div>
-          )}
+    <div className="flex gap-5">
+      {/* 年 */}
+      {counter.years > 0 && (
+        <div>
+          <span className="font-mono text-2xl">{counter.years}</span>
+          years
         </div>
+      )}
+
+      {/* 月 */}
+      {counter.months > 0 && (
+        <div>
+          <span className="font-mono text-2xl">{counter.months}</span>
+          months
+        </div>
+      )}
+
+      {/* 天 */}
+      <div>
+        <span className="font-mono text-2xl">
+          {counter.days > 0 ? counter.days : 0}
+        </span>
+        days
+      </div>
+
+      {/* 时 */}
+      <div>
+        <span className="font-mono text-2xl">
+          {counter.hours > 0 ? counter.hours : 0}
+        </span>
+        hours
+      </div>
+
+      {/* 分 */}
+      <div>
+        <span className="font-mono text-2xl">
+          {counter.minutes > 0 ? counter.minutes : 0}
+        </span>
+        min
+      </div>
+
+      {/* 秒 */}
+      <div>
+        <span className="font-ßmono text-2xl">
+          {counter.seconds > 0 ? counter.seconds : 0}
+        </span>
+        sec
       </div>
     </div>
   ) : null
