@@ -67,6 +67,8 @@ export const Page = ({ posts }) => {
       {posts.map((post) => (
         <PostItem key={post.slug} {...post} />
       ))}
+
+      <div className="border-t"/>
     </>
   )
 }

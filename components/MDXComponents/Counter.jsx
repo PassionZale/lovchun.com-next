@@ -1,18 +1,16 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 
 dayjs.extend(duration)
 
-const THE_DAY_STOP_SMOKING = '2022-06-30 00:00:00'
-
-const QuitSmoking = () => {
+const Counter = React.memo((props) => {
   const [counter, setCounter] = useState(null)
 
   useEffect(() => {
     const timmer = setInterval(() => {
       setCounter(() => {
-        const startTime = dayjs(THE_DAY_STOP_SMOKING)
+        const startTime = dayjs(props.startTime)
         const duration = dayjs.duration(dayjs().diff(startTime))
 
         const years = duration.years()
@@ -34,14 +32,14 @@ const QuitSmoking = () => {
     }, 1000)
 
     return () => clearInterval(timmer)
-  }, [])
+  }, [props.startTime])
 
   return counter ? (
-    <div className="flex gap-5">
+    <div className="inline-flex gap-2">
       {/* 年 */}
       {counter.years > 0 && (
         <div>
-          <span className="font-mono text-2xl">{counter.years}</span>
+          <span className="font-mono text-xl">{counter.years}</span>
           years
         </div>
       )}
@@ -49,14 +47,14 @@ const QuitSmoking = () => {
       {/* 月 */}
       {counter.months > 0 && (
         <div>
-          <span className="font-mono text-2xl">{counter.months}</span>
+          <span className="font-mono text-xl">{counter.months}</span>
           months
         </div>
       )}
 
       {/* 天 */}
       <div>
-        <span className="font-mono text-2xl">
+        <span className="font-mono text-xl">
           {counter.days > 0 ? counter.days : 0}
         </span>
         days
@@ -64,7 +62,7 @@ const QuitSmoking = () => {
 
       {/* 时 */}
       <div>
-        <span className="font-mono text-2xl">
+        <span className="font-mono text-xl">
           {counter.hours > 0 ? counter.hours : 0}
         </span>
         hours
@@ -72,7 +70,7 @@ const QuitSmoking = () => {
 
       {/* 分 */}
       <div>
-        <span className="font-mono text-2xl">
+        <span className="font-mono text-xl">
           {counter.minutes > 0 ? counter.minutes : 0}
         </span>
         min
@@ -80,13 +78,17 @@ const QuitSmoking = () => {
 
       {/* 秒 */}
       <div>
-        <span className="font-ßmono text-2xl">
+        <span className="font-mono text-xl">
           {counter.seconds > 0 ? counter.seconds : 0}
         </span>
         sec
       </div>
     </div>
-  ) : null
-}
+  ) : (
+    <span className="font-mono">calculating...</span>
+  )
+})
 
-export default QuitSmoking
+Counter.displayName = 'Counter'
+
+export default Counter

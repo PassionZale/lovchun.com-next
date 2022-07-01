@@ -4,7 +4,7 @@ import { RiEdit2Fill } from 'react-icons/ri'
 
 import { msToString } from '@/lib/dataTransform'
 
-const Edit = ({ link, date }) => {
+const Edit = React.memo(({ link, date }) => {
   const time = useMemo(() => new Date(date), [date])
 
   if (`${time}` === 'Invalid Date') {
@@ -32,6 +32,8 @@ const Edit = ({ link, date }) => {
       <div>最后更新于{msToString({ time: timeBeforeNow, suffix: '之前' })}</div>
     </div>
   )
-}
+})
+
+Edit.displayName = 'Edit'
 
 export default Edit

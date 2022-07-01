@@ -8,7 +8,7 @@ const { publicRuntimeConfig } = getConfig()
 
 const Footer = () => {
   return (
-    <footer className="flex items-center space-x-1 border-t py-5 text-xs font-normal text-gray-500">
+    <footer className="flex items-center space-x-1 py-5 text-xs font-normal text-gray-500">
       <Image
         src="/static/favicons/apple-touch-icon.png"
         alt={'icon'}
