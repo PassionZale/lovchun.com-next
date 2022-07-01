@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import Link from 'next/link'
 import { RiEdit2Fill } from 'react-icons/ri'
 
