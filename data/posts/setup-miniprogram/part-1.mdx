@@ -1,22 +1,159 @@
 ---
 title: 'Setup Miniprgram - PART 1'
-createdAt: '2022-06-20'
-publishedAt: '2022-06-20'
-updatedAt: '2022-06-20'
+createdAt: '2022-07-01'
+publishedAt: '2022-07-01'
+updatedAt: '2022-07-01'
 draft: false
-summary: ''
+summary: 'VSCode 插件、目录结构、Lint、Scripts'
 tags: ['guide']
 ---
 
+export const structure = [
+  {
+    type: 'folder',
+    name: 'src',
+    childrens: [
+      {
+        type: 'folder',
+        name: 'Components',
+        childrens: [
+          { type: 'file', name: 'Modal.js' },
+          { type: 'file', name: 'Modal.css' },
+        ],
+      },
+      { type: 'file', name: 'index.js' },
+      { type: 'file', name: 'index.html' },
+    ],
+  },
+  { type: 'file', name: 'package.json' },
+  { type: 'file', name: 'package.json' },
+  { type: 'file', name: 'package.json' },
+  { type: 'file', name: 'package.json' },
+  { type: 'file', name: 'package.json' },
+]
+
+import Tree from '@/components/MDXComponents/Tree'
+
+<Tree data={structure} />
+
 > - [《Setup Miniprgram - PART 1》](/posts/setup-miniprogram/part-1)
->   - 小程序开发缺少什么，有什么问题，我们需要为其扩展什么能力才能提高开发效率？
+>
+>   - VSCode 插件、目录结构、Lint、Scripts
+>
 > - [《Setup Miniprgram - PART 2》](/posts/setup-miniprogram/part-2)
+>
 >   - TODO
+>
 > - [《Setup Miniprgram - PART 3》](/posts/setup-miniprogram/part-3)
+>
 >   - TODO
+>
 > - [《Setup Miniprgram - PART 4》](/posts/setup-miniprogram/part-4)
+>
 >   - TODO
+>
 > - [《Setup Miniprgram - PART 5》](/posts/setup-miniprogram/part-5)
 >   - TODO
 
-## 
+## VSCode 插件
+
+- **ESLint**
+
+  > 提供全局的语法检查
+
+- **stylelint**
+
+  > 提供 `*.scss` `*.wxss` 样式文件检查
+
+- **Prettier**
+
+  > 提供统一的全局代码格式化
+
+- **wxml**
+
+  > 提供 jsx 风格的代码格式化
+
+- **小程序开发助手**
+
+  > 提供 wxml 的语法高亮
+
+## 目录结构
+
+### 主包或分包
+
+```bash
+├── home (主包或分包入口目录)
+│   ├── components
+│   ├── images
+│   ├── pages
+│   │   ├── index
+│   │   │   ├── index.wxml
+│   │   │   ├── index.scss
+│   │   │   ├── index.json
+│   │   │   ├── index.js
+└───├── ├── //...其他页面
+```
+
+### 完成目录
+
+```bash
+├── .vscode
+│   ├── settings.json (各个插件等配置项)
+│
+├── dist (开发模式时，指定的 miniprogramRoot)
+│
+├── node_modules
+│
+├── scripts
+│   ├── ci (ci 脚本: 打包、预览、上传)
+│   ├── generator (生成器脚本：创建组件、页面、分包等)
+│   ├── gulp (gulp tasks)
+│   └── lib (一些辅助函数或类库)
+│
+├── src
+│   ├── _shared (需要被全局共享的模块: sass 变量、图片、组件、配置、常量等等)
+│   ├── (参考主包或分包)
+│   ├── app.js
+│   ├── app.json
+│   ├── app.scss
+│   └── sitemap.json
+│
+├── _project.config.json
+│
+├── .env.dev
+├── .env.sit
+├── .env.uat
+├── .env.prod
+│
+├── .editorconfig
+├── jsconfig.json
+│
+├── .eslintignore
+├── .eslintrc.js
+│
+├── .prettierignore
+├── .prettierrc.js
+│
+├── .stylelintignore
+├── .stylelintrc.js
+│
+├── .cz-config.js
+├── commitlint.config.js
+│
+├── gulpfile.js
+│
+├── .npmrc
+├── package.json
+│
+├── .gitattributes
+├── .gitignore
+│
+└── README.md
+```
+
+<Image
+  src={'/static/images/setup-miniprogram/banner.jpeg'}
+  width={1417}
+  height={667}
+  alt="架构、框架、组件"
+/>

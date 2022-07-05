@@ -161,3 +161,16 @@ export default makeSource({
 
 - [Emojipedia](https://emojipedia.org/)
 - [markdown-it emoji](https://github.com/markdown-it/markdown-it-emoji/blob/master/lib/data/full.json)
+
+## Node 16+
+
+**fix react-ioncs error**
+
+[Deprecation - Invalid Main Field](https://github.com/react-icons/react-icons/issues/509)
+
+```diff:node_modules/react-icons/package.json
+"license": "MIT",
+-"main": "lib",
++"main": "./lib/cjs/index.js",
+"types": "./lib/esm/index.d.ts",
+```
