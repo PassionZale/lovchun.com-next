@@ -4,15 +4,18 @@ import { DiJavascript1, DiCss3Full, DiHtml5, DiReact } from 'react-icons/di'
 import { generateUnid } from '@/lib/dataTransform'
 
 const FILE_ICONS = {
-  
+  js: <DiJavascript1 />,
+  css: <DiCss3Full />,
+  html: <DiHtml5 />,
+  jsx: <DiReact />,
 }
 
 const File = ({ name, fileType }) => {
   const ext = fileType ? fileType : name.split('.')[1]
 
   return (
-    <div className="flex items-center pl-5 cursor-pointer">
-      {FILE_ICONS[ext] || AiOutlineFile}
+    <div className="flex cursor-pointer items-center pl-5">
+      {AiOutlineFile}
 
       <span className="ml-1.5 select-none">{name}</span>
     </div>
@@ -20,7 +23,7 @@ const File = ({ name, fileType }) => {
 }
 
 const Folder = ({ name, children }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
 
   const handleToggle = (e) => {
     setIsOpen(!isOpen)
@@ -34,7 +37,7 @@ const Folder = ({ name, children }) => {
     <div className="pl-5">
       <div className="flex cursor-pointer items-center" onClick={handleToggle}>
         <AiOutlineFolder />
-        <span className="ml-1.5 select-none">{name}{isOpen}</span>
+        <span className="ml-1.5 select-none">{name}</span>
       </div>
       <div className={`ml-1.5 overflow-hidden ${toggeClassName}`}>
         {children}
@@ -45,22 +48,32 @@ const Folder = ({ name, children }) => {
 
 const TreeRecursive = ({ data }) => {
   // loop through the data
-  return data.map(item => {
-    // if its a file render <File />
-    if (item.type === "file") {
-      return <File key={generateUnid()} name={item.name} fileType={item.fileType} />;
-    }
-    // if its a folder render <Folder />
-    if (item.type === "folder") {
-      return (
-        <Folder key={generateUnid()} name={item.name}>
-          {/* Call the <TreeRecursive /> component with the current item.childrens */}
-          <TreeRecursive data={item.childrens || []} />
-        </Folder>
-      );
-    }
-  });
-};
+  return (
+    <>
+      {data.map((item) => {
+        // if its a file render <File />
+        if (item.type === 'file') {
+          return (
+            <File
+              key={generateUnid()}
+              name={item.name}
+              fileType={item.fileType}
+            />
+          )
+        }
+        // if its a folder render <Folder />
+        if (item.type === 'folder') {
+          return (
+            <Folder key={generateUnid()} name={item.name}>
+              {/* Call the <TreeRecursive /> component with the current item.childrens */}
+              <TreeRecursive data={item.childrens || []} />
+            </Folder>
+          )
+        }
+      })}
+    </>
+  )
+}
 
 const Tree = ({ data, children }) => {
   const isImparative = data && !children
