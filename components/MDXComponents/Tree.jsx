@@ -34,7 +34,7 @@ const FILE_ICONS = {
 
 const Help = ({ children }) => {
   return children ? (
-    <span className="ml-1.5 text-xs italic text-[#7c7c7c] underline select-none">
+    <span className="pl-2 select-none text-xs italic text-[#7c7c7c] underline">
       {children}
     </span>
   ) : null
@@ -42,6 +42,10 @@ const Help = ({ children }) => {
 
 const File = ({ name, help, disabled, icon }) => {
   const ext = icon || name.split('.')[1]
+
+  const hoverClassName = useMemo(() => {
+    return disabled ? '' : 'hover:bg-[#333]'
+  }, [disabled])
 
   const cursorClassName = useMemo(() => {
     return disabled ? 'cursor-not-allowed' : 'cursor-pointer'
@@ -52,10 +56,12 @@ const File = ({ name, help, disabled, icon }) => {
   }, [disabled])
 
   return (
-    <div className={`mt-2 flex items-center pl-5 ${cursorClassName}`}>
+    <div
+      className={`flex items-center py-2 pl-2 ${cursorClassName} ${hoverClassName}`}
+    >
       {FILE_ICONS[ext] || FILE_ICONS.default}
 
-      <span className={`ml-1.5 select-none ${textClassName}`}>{name}</span>
+      <span className={`pl-2 select-none ${textClassName}`}>{name}</span>
       <Help>{help}</Help>
     </div>
   )
@@ -63,6 +69,10 @@ const File = ({ name, help, disabled, icon }) => {
 
 const Folder = ({ name, expand, help, disabled, children }) => {
   const [isOpen, setIsOpen] = useState(expand || false)
+
+  const hoverClassName = useMemo(() => {
+    return disabled ? '' : 'hover:bg-[#333]'
+  }, [disabled])
 
   const cursorClassName = useMemo(() => {
     return disabled ? 'cursor-not-allowed' : 'cursor-pointer'
@@ -77,19 +87,19 @@ const Folder = ({ name, expand, help, disabled, children }) => {
   }, [isOpen])
 
   return (
-    <div className="mt-2 pl-5">
+    <>
       <div
-        className={`flex items-center ${cursorClassName}`}
+        className={`flex items-center py-2 pl-2 ${cursorClassName} ${hoverClassName}`}
         onClick={() => (disabled ? '' : setIsOpen(!isOpen))}
       >
         {isOpen ? <VscFolderOpened /> : <VscFolder />}
-        <span className={`ml-1.5 select-none ${textClassName}`}>{name}</span>
+        <span className={`pl-2 select-none ${textClassName}`}>{name}</span>
         <Help>{help}</Help>
       </div>
-      <div className={`ml-1.5 overflow-hidden ${toggeClassName}`}>
+      <div className={`pl-4 overflow-hidden ${toggeClassName}`}>
         {children}
       </div>
-    </div>
+    </>
   )
 }
 
