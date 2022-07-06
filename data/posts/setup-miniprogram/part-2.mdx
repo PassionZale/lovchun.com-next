@@ -4,7 +4,7 @@ createdAt: '2022-07-01'
 publishedAt: '2022-07-02'
 updatedAt: '2022-07-02'
 draft: false
-summary: ''
+summary: '自定义异常、通讯、缓存、SDK 封装'
 tags: ['guide']
 ---
 
@@ -21,7 +21,7 @@ tags: ['guide']
 >
 > - [《Setup Miniprgram - PART 2》](/posts/setup-miniprogram/part-2)
 >
->   - TODO
+>   - 自定义异常、通讯、缓存、SDK 封装
 >
 > - [《Setup Miniprgram - PART 3》](/posts/setup-miniprogram/part-3)
 >
@@ -33,3 +33,191 @@ tags: ['guide']
 >
 > - [《Setup Miniprgram - PART 5》](/posts/setup-miniprogram/part-5)
 >   - TODO
+
+## 自定义异常
+
+联调接口时，通常后端会有一套通用的 `ResponseDTO`:
+
+```ts
+interface IBaseResponse<T = any> {
+  /**
+   * 业务状态码
+   */
+  code: number
+  /**
+   * 响应数据
+   */
+  data: T
+  /**
+   * 响应消息
+   */
+  message: string
+  /**
+   * 响应时间戳
+   */
+  timestamp: number
+  /**
+   * 自定义属性，如: path: string
+   */
+  [propName: string]: any
+}
+```
+
+在开发过程中，可能会有某些场景，期望 `Promise` 或者 `async function` 抛出一个异常：
+
+```js
+throw new Error('请求失败')
+// 或
+return Promise.reject('请求失败')
+```
+
+但是这样会导致我们自定义的异常和 API 的返回数据结构不一致，那么，我们就封装一个**自定义异常**进行统一:
+
+### CustomException
+
+```js
+const EXCEPTION_ERROR_MESSAGE = '网络开小差~'
+
+/**
+ * 自定义异常, 数据结构与 IBaseResponse 相似
+ * {
+ *  "code": => 可选字段，非 200 的整数，默认为 5000
+ *  "data": => 可选字段，用于自定义数据
+ *  "message" => 必填字段，用于错误原因说明
+ *  "timestamp" => 默认填充 当前时间戳（毫秒）
+ *  "name" => 默认填充 'CustomException'
+ * }
+ */
+class CustomException {
+  constructor({ code = 5000, data, message }) {
+    this.code = code
+    this.data = data
+    this.message = message || EXCEPTION_ERROR_MESSAGE
+    this.timestamp = +new Date()
+    this.name = 'CustomException'
+  }
+}
+
+// ✅
+throw new CustomException({ message: '自定义错误' })
+// ❌
+throw new Error('请求失败')
+```
+
+### SDKException
+
+使用开发小程序时，SDK 所给的 `error` 是这样的:
+
+```json
+{
+	"errMsg": "openBluetoothAdapter:fail:not available",
+	"errCode": 10001,
+	"errno": 1500102
+}
+```
+
+和 `IBaseResponse` 又有很大的差异，那么，我们就封装一个**SDK 异常**进行统一:
+
+```js
+const EXCEPTION_ERROR_MESSAGE = '网络开小差~'
+
+/**
+ * 自定义微信或企微 SDK 异常
+ * https://developers.weixin.qq.com/miniprogram/dev/framework/usability/PublicErrno.html
+ * {
+ *  "errMsg": "openBluetoothAdapter:fail:not available",
+ *  "errCode": 10001,
+ *  "errno": 1500102,
+ *  "code": => 可选字段，非 200 的整数，若设置了值，"errno" 和 "errCode" 会失效
+ *  "data": => 可选字段，用于自定义数据
+ *  "message": => 可选字段，用于捕获其他 js 错误，或自定义错误信息
+ *  "timestamp" => 默认填 充当前时间戳（毫秒）
+ *  "name" => 默认填充 'SDKException'
+ * }
+ */
+class SDKException {
+  constructor({ errMsg, errCode, errno, code, message, data }) {
+    this.code = code || errno || errCode || 5000
+    this.data = data
+    this.message = message || errMsg || EXCEPTION_ERROR_MESSAGE
+    this.timestamp = +new Date()
+    this.name = 'SDKException'
+  }
+}
+```
+
+### 判断异常来源
+
+**通过`instanceof`判断（👍 推荐）**
+
+```js
+async function foo() {
+  try {
+    await bar()
+  } catch (exception) {
+    if (exception instanceof CustomException) {
+      // 是我的自定义异常
+    } else {
+      // 不是我的自定义异常 <= Uncaught ReferenceError: bar is not defined
+    }
+  }
+}
+```
+
+**通过`name`判断**
+
+```js
+async function foo() {
+  try {
+    await bar()
+  } catch (exception) {
+    if (exception.name === 'CustomException') {
+      // 是我的自定义异常
+    } else {
+      // 不是我的自定义异常 <= Uncaught ReferenceError: bar is not defined
+    }
+  }
+}
+```
+
+### :zap: 额外小心
+
+小程序的 SDK 比较会返回所有的错误，**包括取消**，在捕获 `SDKException` 需要过滤掉这类场景:
+
+```js {12,13}
+/**
+ * 拨打电话
+ * @param {string} phoneNumber 电话号码
+ */
+export async function makePhoneCall(phoneNumber) {
+  if (typeof phoneNumber !== 'string')
+    throw new SDKException({ message: 'phoneNumber must be string' })
+
+  try {
+    await wx.makePhoneCall({ phoneNumber })
+  } catch (error) {
+    // exclude "取消" 的场景
+    if (!error.errMsg || error.errMsg.indexOf('fail cancel') === -1) {
+      wx.showToast({ title: error.errMsg, icon: 'none' })
+
+      throw new SDKException(error)
+    }
+  }
+}
+```
+
+## 通讯
+
+**pageA** `navigateTo` **pageB**
+
+### query 传参
+
+```js:pageA.js
+Page({
+  methods: {
+    handleTap() {
+      wx.navigateTo({ url: `pageB?foo=bar` })
+    }
+  }
+})
+```
