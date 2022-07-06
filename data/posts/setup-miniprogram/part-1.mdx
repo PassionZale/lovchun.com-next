@@ -4,7 +4,7 @@ createdAt: '2022-07-01'
 publishedAt: '2022-07-01'
 updatedAt: '2022-07-01'
 draft: false
-summary: 'VSCode 插件、目录设计、配置文件说明、Packages'
+summary: 'VSCode 插件、目录设计、微信开发者工具、配置文件、Packages'
 tags: ['guide']
 ---
 
@@ -20,7 +20,7 @@ import { RiAlarmWarningLine } from 'react-icons/ri'
 
 > - [《Setup Miniprgram - PART 1》](/posts/setup-miniprogram/part-1)
 >
->   - VSCode 插件、目录设计、配置文件说明、Packages
+>   - VSCode 插件、目录设计、微信开发者工具、配置文件、Packages
 >
 > - [《Setup Miniprgram - PART 2》](/posts/setup-miniprogram/part-2)
 >
@@ -69,7 +69,7 @@ import { RiAlarmWarningLine } from 'react-icons/ri'
 
 针对这两点，只需要开启或关闭对应配置项即可。
 
-```diff:./_project.config.json
+```diff:_project.config.json
 {
     # 开启这3种配置项即可 ES6 => ES5
     # 开启后，我们便可在 *.js 文件中直接使用 ES6 语法
@@ -215,7 +215,6 @@ module.exports = {
     ]
   },
 }
-
 ```
 
 ```json:jsconfig.json {3,6} showLineNumbers
@@ -275,6 +274,8 @@ export const API_BASEPATH = '/* @echo API_BASEPATH */' || ''
 
 ### :point_right: [`gulp-alias`](https://github.com/pengzhanbo/gulp-miniprogram-path-alias)
 
+#### 注入 alias 配置
+
 ```js:./scripts/gulp/context.js showLineNumbers
 // 声明 alias 配置
 const aliasConfig = {
@@ -290,15 +291,38 @@ module.exports = () =>
     .pipe(gulp.dest(args.output))
 ```
 
-```js:./src/app.js showLineNumbers
-import customerHelper from '@/_shared/helpers/customer'
+#### 通过 alias 引入模块
+
+**`*.js`**
+
+```js
+import userHelper from '@/_shared/helper/user'
+```
+
+**`*.wxs`**
+
+```js
+const userHelper = require('@/_shared/helper/user')
+```
+
+**`*.scss`**
+
+```css
+@import "@/_shared/styles/flex.scss";
+```
+
+**`*.wxml`**
+
+```html
+<import src="@/common/test.wxml" />
+<image src="@/_shared/images/test.png" />
 ```
 
 ### :point_right: [`gulp-dart-sass`](https://github.com/mattdsteele/gulp-dart-sass)
 
 使用 `dart-sass` 来处理 `*.scss`，并迁移为 `*.wxss`
 
-```js:./scripts/gulp/tasks/scss.task.js {4,5} showLineNumbers
+```js:./scripts/gulp/tasks/scss.task.js {4,5,8} showLineNumbers
 module.exports = () =>
   gulp
     .src(['./src/**/*.scss', '!./src/_shared/styles/*.scss'])
