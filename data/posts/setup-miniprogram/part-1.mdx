@@ -4,7 +4,7 @@ createdAt: '2022-07-01'
 publishedAt: '2022-07-01'
 updatedAt: '2022-07-01'
 draft: false
-summary: 'VSCode 插件、目录结构、Lint、Scripts'
+summary: 'VSCode 插件、目录设计、配置文件说明、Packages'
 tags: ['guide']
 ---
 
@@ -20,7 +20,7 @@ import { RiAlarmWarningLine } from 'react-icons/ri'
 
 > - [《Setup Miniprgram - PART 1》](/posts/setup-miniprogram/part-1)
 >
->   - VSCode 插件、目录结构、Lint、Scripts
+>   - VSCode 插件、目录设计、配置文件说明、Packages
 >
 > - [《Setup Miniprgram - PART 2》](/posts/setup-miniprogram/part-2)
 >
@@ -59,9 +59,258 @@ import { RiAlarmWarningLine } from 'react-icons/ri'
 
   > 提供 wxml 的语法高亮
 
-## 目录结构
+## 目录设计
 
 <Tree data={structure} />
+
+## 微信开发者工具
+
+经过数次迭代后，微信开发者工具已经能够支持 `ES6 => ES5` 的转换了，此外，开发者工具在某个版本开启了文件依赖分析，导致`预览`或`上传`时会自动忽略动态引用的模块文件。
+
+针对这两点，只需要开启或关闭对应配置项即可。
+
+```diff:./_project.config.json
+{
+    # 开启这3种配置项即可 ES6 => ES5
+    # 开启后，我们便可在 *.js 文件中直接使用 ES6 语法
+    # 注意！*.wxs 文件中仍然只能使用 ES6 语法
++   "es6": true,
++   "es7": true,
++   "enhance": true,
+
+    # 禁用上传忽略
++   "ignoreUploadUnusedFiles": false,
+    # 禁用预览忽略
++   "ignoreDevUnusedFiles": false
+}
+```
+
+## 配置文件说明
+
+由于小程序文件名的特殊性，在结合 `plugins` 和 `lint packages` 时，需要针对 `*.wxs` `*.wxss` `*.wxml` 等文件进行额外的配置。
+
+```json:.vscode/settings.json {7,8,12,14-23} showLineNumbers
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.autoClosingQuotes": "always",
+  "javascript.preferences.quoteStyle": "single",
+  "files.associations": {
+    "*.wxss": "css",
+    "*.wxs": "javascript"
+  },
+  "files.eol": "\n",
+  "emmet.includeLanguages": {
+    "wxml": "html"
+  },
+  "wxmlConfig.onSaveFormat": true,
+  "wxmlConfig.format": {
+    "indent_char": " ",
+    "indent_size": 2,
+    "indent_with_tabs": false,
+    "wrap_attributes_count": 4,
+    "wrap_attributes": "force-expand-multiline"
+  },
+  "minapp-vscode.formatMaxLineCharacters": 80,
+  "minapp-vscode.documentSelector": ["none"]
+}
+```
+
+```js:.eslintrc.js {3-10,12} showLineNumbers
+module.exports = {
+  globals: {
+    App: true,
+    getApp: true,
+    Page: true,
+    wx: true,
+    getCurrentPages: true,
+    Component: true,
+    Behavior: true,
+    getDate: true,
+    // *.wxs 中只能 getRegExp() 来创建正则
+    getRegExp: true
+  },
+  // ... other configs
+}
+```
+
+```diff:.gitignore
+# 保留 .vscode/settings.json
+# 应用配置给每位开发同事
++ .vscode/*
++ !.vscode/settings.json
+
+# 排除工程文件，避免相互修改导致文件冲突
+
+# 1. project.config.json 会通过脚本动态创建
++ project.config.json
+# 2. 由微信开发者工具自动创建
++ project.private.config.json
+```
+
+```js:.prettierrc.js {4-9, 11-16} showLineNumbers
+module.exports = {
+  overrides: [
+    // *.wxss 使用 css 规则进行美化
+    {
+      files: '*.wxss',
+      options: {
+        parser: 'css'
+      }
+    },
+    // *.wxs 使用 babel 按照 js 规则进行美化
+    {
+      files: '*.wxs',
+      options: {
+        parser: 'babel'
+      }
+    }
+  ],
+  // ...other configs
+}
+```
+
+```js:.stylelintrc.js {7} showLineNumbers
+module.exports = {
+  rules: {
+    'selector-type-no-unknown': [
+      true,
+      {
+        // 忽略 page view 小程序原生标签
+        ignoreTypes: ['page', 'view', 'string']
+      }
+    ]
+  }
+  // ...other configs
+}
+```
+
+```diff:package.json showLineNumbers
+{
+  "config": {
+    "commitizen": {
++      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
++      "config": ".cz-config.js"
+    }
+  },
+  "husky": {
+    "hooks": {
++      "pre-commit": "lint-staged",
++      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
++    "src/**/*.{js,wxs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
++    "src/**/*.{scss,less,wxss}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "src/**/*.json": [
+      "prettier --write"
+    ]
+  },
+}
+
+```
+
+```json:jsconfig.json {3,6} showLineNumbers
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    // 增加 alias 配置
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "build", "dist", "...等非源码目录"]
+}
+```
+
+```bash:env.* showLineNumbers
+# 当前环境的小程序 APPID
+# APPID 会被读取，而后会通过脚本注入并创建 project.config.json
+APPID=${YOUR_MINIPROGRAM_APPID}
+
+# 当前环境的 API BASEPATH
+# 例如: https://sit-api.example.com
+# 类似 axios.basePath，会被应用在 wx.request 的封装中
+API_BASEPATH=${YOUR_API_PATH}
+```
+
+## Packages
+
+小程序实际开发过程中，有部分问题会严重的影响代码整洁和开发效率：
+
+1. 没有**进程环境变量**，更换环境时，总是需要手动修改 `appid` 和 `域名`；
+2. 没有 `alias`，在引入模块时，需要写很长的相对路径，如：`../../../../_shared/utils/index.js`；
+3. 不支持 css 预处理；
+4. `Commonjs` 最大弊端 “循环加载”，会导致你必须在使用处进行 `require(module)`，而不能在代码首行引入模块；
+5. `project.config.json` 是非常重要的工程配置，不仅会影响本地开发者工具，还会影响小程序的发布上传，通常该文件被追踪提交，开发成员相互篡改、相互覆盖，没有标准化；
+
+### :point_right: [`gulp-preprocess`](https://github.com/pioug/gulp-preprocess)
+
+通过读取并收集 `env.*`，在 Gulp Task 中注入环境变量，便可在 `runtime` 期间通过脚本读取不通的环境来切换对应的环境变量。
+
+```js:./scripts/gulp/tasks/js.task.js {6} showLineNumbers
+const context = { APPID: 'appid', API_BASEPATH: 'API_BASEPATH' }
+
+module.exports = () =>
+  gulp
+    .src(['./src/**/*.js'])
+    .pipe($.preprocess({ context, type: 'js' }))
+    .pipe(gulp.dest(args.output))
+```
+
+```js:./src/_shared/configs/env.js showLineNumbers
+export const APPID = '/* @echo APPID */' || ''
+
+export const API_BASEPATH = '/* @echo API_BASEPATH */' || ''
+```
+
+### :point_right: [`gulp-alias`](https://github.com/pengzhanbo/gulp-miniprogram-path-alias)
+
+```js:./scripts/gulp/context.js showLineNumbers
+// 声明 alias 配置
+const aliasConfig = {
+  '@': path.resolve(process.cwd(), 'src')
+}
+```
+
+```js:./scripts/gulp/tasks/js.task.js {4} showLineNumbers
+module.exports = () =>
+  gulp
+    .src(['./src/**/*.js'])
+    .pipe($.miniprogramPathAlias(aliasConfig))
+    .pipe(gulp.dest(args.output))
+```
+
+```js:./src/app.js showLineNumbers
+import customerHelper from '@/_shared/helpers/customer'
+```
+
+### :point_right: [`gulp-dart-sass`](https://github.com/mattdsteele/gulp-dart-sass)
+
+使用 `dart-sass` 来处理 `*.scss`，并迁移为 `*.wxss`
+
+```js:./scripts/gulp/tasks/scss.task.js {4,5} showLineNumbers
+module.exports = () =>
+  gulp
+    .src(['./src/**/*.scss', '!./src/_shared/styles/*.scss'])
+    .pipe($.dartSass.sync({ outputStyle: 'compressed' }))
+    .on('error', $.dartSass.logError)
+    .pipe(
+      $.rename({
+        extname: '.wxss'
+      })
+    )
+    .pipe(gulp.dest(args.output))
+```
 
 export const structure = [
   {
@@ -71,6 +320,12 @@ export const structure = [
     childrens: [
       { type: 'file', name: 'settings.json', help: '各个插件等配置项' },
     ],
+  },
+  {
+    type: 'folder',
+    name: 'build',
+    disabled: true,
+    help: '打包时的 output folder',
   },
   {
     type: 'folder',
@@ -91,19 +346,147 @@ export const structure = [
         type: 'folder',
         name: 'ci',
         help: 'ci 脚本: 打包、预览、上传',
-        childrens: [{ type: 'file', name: '**/*.js' }],
+        childrens: [
+          {
+            type: 'folder',
+            name: 'keys',
+            help: '小程序上传秘钥',
+            childrens: [
+              { type: 'file', name: 'private.${APPID_DEV}.key', icon: 'key' },
+              { type: 'file', name: 'private.${APPID_SIT}.key', icon: 'key' },
+              { type: 'file', name: 'private.${APPID_UAT}.key', icon: 'key' },
+              { type: 'file', name: 'private.${APPID_PROD}.key', icon: 'key' },
+            ],
+          },
+          { type: 'file', name: '**/*.js' },
+        ],
       },
       {
         type: 'folder',
         name: 'generator',
         help: '生成器：创建组件、页面、分包等',
-        childrens: [{ type: 'file', name: '**/*.js' }],
+        childrens: [
+          {
+            type: 'folder',
+            name: 'tmp',
+            childrens: [
+              {
+                type: 'folder',
+                name: 'component',
+                help: '组件模板',
+                childrens: [
+                  { type: 'file', name: 'tpl.js' },
+                  { type: 'file', name: 'tpl.json' },
+                  { type: 'file', name: 'tpl.md' },
+                  { type: 'file', name: 'tpl.scss' },
+                  { type: 'file', name: 'tpl.wxml' },
+                ],
+              },
+              {
+                type: 'folder',
+                name: 'page',
+                help: '页面模板',
+                childrens: [
+                  { type: 'file', name: 'tpl.js' },
+                  { type: 'file', name: 'tpl.json' },
+                  { type: 'file', name: 'tpl.scss' },
+                  { type: 'file', name: 'tpl.wxml' },
+                ],
+              },
+            ],
+          },
+          { type: 'file', name: 'index.js' },
+        ],
       },
       {
         type: 'folder',
         name: 'gulp',
-        help: 'gulp tasks',
-        childrens: [{ type: 'file', name: '**/*.js' }],
+        help: 'Gulp 任务',
+        childrens: [
+          {
+            type: 'folder',
+            name: 'tasks',
+            childrens: [
+              {
+                type: 'file',
+                name: 'clean.task.js',
+                icon: 'js',
+                help: 'clean ./dist or ./build',
+              },
+              {
+                type: 'file',
+                name: 'js.task.js',
+                icon: 'js',
+                help: 'migrate ./src/**/*.js',
+              },
+              {
+                type: 'file',
+                name: 'json.task.js',
+                icon: 'js',
+                help: 'migrate ./src/**/*.json',
+              },
+              {
+                type: 'file',
+                name: 'others.task.js',
+                icon: 'js',
+                help: 'migrate ./src/**/*.!(scss|wxss|js|wxs|json|wxml|md)',
+              },
+              {
+                type: 'file',
+                name: 'projectBuild.task.js',
+                icon: 'js',
+                help: '打包构建时，以 _project.config.json 创建 project.config.json',
+              },
+              {
+                type: 'file',
+                name: 'projectMake.task.js',
+                icon: 'js',
+                help: '开发运行时，对比 project.config.json 判断是否要重新创建',
+              },
+              {
+                type: 'file',
+                name: 'scss.task.js',
+                icon: 'js',
+                help: 'migrate ./src/**/*.scss',
+              },
+              {
+                type: 'file',
+                name: 'watch.task.js',
+                icon: 'js',
+                help: '开发运行时文件变化监听',
+              },
+              {
+                type: 'file',
+                name: 'wxml.task.js',
+                icon: 'js',
+                help: 'migrate ./src/**/*.wxml',
+              },
+              {
+                type: 'file',
+                name: 'wxs.task.js',
+                icon: 'js',
+                help: 'migrate ./src/**/*.wxs',
+              },
+              {
+                type: 'file',
+                name: 'wxss.task.js',
+                icon: 'js',
+                help: 'migrate ./src/**/*.wxss',
+              },
+              {
+                type: 'file',
+                name: 'zip.task.js',
+                icon: 'js',
+                help: './build => ${buildId}.zip',
+              },
+            ],
+          },
+          {
+            type: 'file',
+            name: 'context.js',
+            help: 'gulp runtime 时的上下文',
+          },
+        ],
       },
       {
         type: 'folder',
@@ -393,5 +776,36 @@ export const structure = [
   { type: 'file', name: 'package.json' },
   { type: 'file', name: '.gitattributes', icon: 'git' },
   { type: 'file', name: '.gitignore', icon: 'git' },
-  { type: 'file', name: 'README.md', icon: 'md' },
+  { type: 'file', name: 'README.md' },
+  {
+    type: 'file',
+    name: 'project.config.json',
+    disabled: true,
+    icon: 'json',
+    help: (
+      <div className="flex items-center text-red-500 underline decoration-red-500">
+        <RiAlarmWarningLine />
+        .gitignore 忽略
+      </div>
+    ),
+  },
+  {
+    type: 'file',
+    name: 'project.private.config.json',
+    disabled: true,
+    icon: 'json',
+    help: (
+      <div className="flex items-center text-red-500 underline decoration-red-500">
+        <RiAlarmWarningLine />
+        .gitignore 忽略
+      </div>
+    ),
+  },
+  {
+    type: 'file',
+    name: '${buildId}.zip',
+    icon: 'zip',
+    disabled: true,
+    help: '打包产物, 提测包',
+  },
 ]

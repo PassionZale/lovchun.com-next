@@ -15,6 +15,8 @@ import {
   VscFolderOpened,
   VscFileCode,
   VscJson,
+  VscKey,
+  VscFileZip
 } from 'react-icons/vsc'
 import { generateUnid } from '@/lib/dataTransform'
 
@@ -29,6 +31,8 @@ const FILE_ICONS = {
   git: <DiGit />,
   config: <DiAptana className="text-blue-500" />,
   md: <DiMarkdown />,
+  key: <VscKey />,
+  zip: <VscFileZip />,
   default: <VscFileCode />,
 }
 
@@ -57,7 +61,7 @@ const File = ({ name, help, disabled, icon }) => {
 
   return (
     <div
-      className={`flex items-center py-2 pl-2 ${cursorClassName} ${hoverClassName}`}
+      className={`flex flex-wrap items-center py-2 pl-2 ${cursorClassName} ${hoverClassName}`}
     >
       {FILE_ICONS[ext] || FILE_ICONS.default}
 
@@ -89,7 +93,7 @@ const Folder = ({ name, expand, help, disabled, children }) => {
   return (
     <>
       <div
-        className={`flex items-center py-2 pl-2 ${cursorClassName} ${hoverClassName}`}
+        className={`flex flex-wrap items-center py-2 pl-2 ${cursorClassName} ${hoverClassName}`}
         onClick={() => (disabled ? '' : setIsOpen(!isOpen))}
       >
         {isOpen ? <VscFolderOpened /> : <VscFolder />}
