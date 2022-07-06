@@ -8,33 +8,15 @@ summary: 'VSCode 插件、目录结构、Lint、Scripts'
 tags: ['guide']
 ---
 
-export const structure = [
-  {
-    type: 'folder',
-    name: 'src',
-    childrens: [
-      {
-        type: 'folder',
-        name: 'Components',
-        childrens: [
-          { type: 'file', name: 'Modal.js' },
-          { type: 'file', name: 'Modal.css' },
-        ],
-      },
-      { type: 'file', name: 'index.js' },
-      { type: 'file', name: 'index.html' },
-    ],
-  },
-  { type: 'file', name: 'package.json' },
-  { type: 'file', name: 'package.json' },
-  { type: 'file', name: 'package.json' },
-  { type: 'file', name: 'package.json' },
-  { type: 'file', name: 'package.json' },
-]
-
 import Tree from '@/components/MDXComponents/Tree'
+import { RiAlarmWarningLine } from 'react-icons/ri'
 
-<Tree data={structure} />
+<Image
+  src={'/static/images/setup-miniprogram/banner.jpeg'}
+  width={1417}
+  height={667}
+  alt="架构、框架、组件"
+/>
 
 > - [《Setup Miniprgram - PART 1》](/posts/setup-miniprogram/part-1)
 >
@@ -79,81 +61,336 @@ import Tree from '@/components/MDXComponents/Tree'
 
 ## 目录结构
 
-### 主包或分包
+<Tree data={structure} />
 
-```bash
-├── home (主包或分包入口目录)
-│   ├── components
-│   ├── images
-│   ├── pages
-│   │   ├── index
-│   │   │   ├── index.wxml
-│   │   │   ├── index.scss
-│   │   │   ├── index.json
-│   │   │   ├── index.js
-└───├── ├── //...其他页面
-```
-
-### 完成目录
-
-```bash
-├── .vscode
-│   ├── settings.json (各个插件等配置项)
-│
-├── dist (开发模式时，指定的 miniprogramRoot)
-│
-├── node_modules
-│
-├── scripts
-│   ├── ci (ci 脚本: 打包、预览、上传)
-│   ├── generator (生成器脚本：创建组件、页面、分包等)
-│   ├── gulp (gulp tasks)
-│   └── lib (一些辅助函数或类库)
-│
-├── src
-│   ├── _shared (需要被全局共享的模块: sass 变量、图片、组件、配置、常量等等)
-│   ├── (参考主包或分包)
-│   ├── app.js
-│   ├── app.json
-│   ├── app.scss
-│   └── sitemap.json
-│
-├── _project.config.json
-│
-├── .env.dev
-├── .env.sit
-├── .env.uat
-├── .env.prod
-│
-├── .editorconfig
-├── jsconfig.json
-│
-├── .eslintignore
-├── .eslintrc.js
-│
-├── .prettierignore
-├── .prettierrc.js
-│
-├── .stylelintignore
-├── .stylelintrc.js
-│
-├── .cz-config.js
-├── commitlint.config.js
-│
-├── gulpfile.js
-│
-├── .npmrc
-├── package.json
-│
-├── .gitattributes
-├── .gitignore
-│
-└── README.md
-```
-
-<Image
-  src={'/static/images/setup-miniprogram/banner.jpeg'}
-  width={1417}
-  height={667}
-  alt="架构、框架、组件"
-/>
+export const structure = [
+  {
+    type: 'folder',
+    name: '.vscode',
+    childrens: [
+      { type: 'file', name: 'settings.json', help: '各个插件等配置项' },
+    ],
+  },
+  {
+    type: 'folder',
+    name: 'dist',
+    disabled: true,
+    help: '开发模式时，指定的 miniprogramRoot',
+  },
+  {
+    type: 'folder',
+    name: 'node_modules',
+    disabled: true,
+  },
+  {
+    type: 'folder',
+    name: 'scripts',
+    childrens: [
+      {
+        type: 'folder',
+        name: 'ci',
+        help: 'ci 脚本: 打包、预览、上传',
+        childrens: [{ type: 'file', name: '**/*.js' }],
+      },
+      {
+        type: 'folder',
+        name: 'generator',
+        help: '生成器：创建组件、页面、分包等',
+        childrens: [{ type: 'file', name: '**/*.js' }],
+      },
+      {
+        type: 'folder',
+        name: 'gulp',
+        help: 'gulp tasks',
+        childrens: [{ type: 'file', name: '**/*.js' }],
+      },
+      {
+        type: 'folder',
+        name: 'lib',
+        help: '一些辅助函数或类库',
+        childrens: [{ type: 'file', name: '**/*.js' }],
+      },
+    ],
+  },
+  {
+    type: 'folder',
+    name: 'src',
+    childrens: [
+      {
+        type: 'folder',
+        name: '_shared',
+        help: '全局共享模块',
+        childrens: [
+          {
+            type: 'folder',
+            name: 'components',
+            help: '全局组件',
+            childrens: [
+              {
+                type: 'folder',
+                name: 'my-component',
+                childrens: [
+                  {
+                    type: 'file',
+                    name: 'my-component.js',
+                  },
+                  {
+                    type: 'file',
+                    name: 'my-component.scss',
+                  },
+                  {
+                    type: 'file',
+                    name: 'my-component.json',
+                  },
+                  {
+                    type: 'file',
+                    name: 'my-component.wxml',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: 'folder',
+            name: 'configs',
+            help: '全局配置项',
+            childrens: [{ type: 'file', name: '**/*.js' }],
+          },
+          {
+            type: 'folder',
+            name: 'constants',
+            help: '全局常量',
+            childrens: [{ type: 'file', name: '**/*.js' }],
+          },
+          {
+            type: 'folder',
+            name: 'helpers',
+            help: '全局工具库',
+            childrens: [{ type: 'file', name: '**/*.js' }],
+          },
+          {
+            type: 'folder',
+            name: 'images',
+            help: '全局图标',
+            childrens: [{ type: 'file', name: '**/*.png' }],
+          },
+          {
+            type: 'folder',
+            name: 'stores',
+            help: '全局存储器',
+            childrens: [{ type: 'file', name: '**/*.js' }],
+          },
+          {
+            type: 'folder',
+            name: 'styles',
+            help: 'global scss variables、mixins etc...',
+            childrens: [{ type: 'file', name: '**/*.scss' }],
+          },
+          {
+            type: 'folder',
+            name: 'vendors',
+            help: '第三方库',
+            childrens: [{ type: 'file', name: '**/*' }],
+          },
+        ],
+      },
+      {
+        type: 'folder',
+        name: 'home',
+        help: '主包',
+        childrens: [
+          {
+            type: 'folder',
+            name: 'components',
+            childrens: [
+              {
+                type: 'folder',
+                name: 'my-component',
+                childrens: [
+                  {
+                    type: 'file',
+                    name: 'my-component.js',
+                  },
+                  {
+                    type: 'file',
+                    name: 'my-component.scss',
+                  },
+                  {
+                    type: 'file',
+                    name: 'my-component.json',
+                  },
+                  {
+                    type: 'file',
+                    name: 'my-component.wxml',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: 'folder',
+            name: 'images',
+            childrens: [{ type: 'file', name: '**/*.png' }],
+          },
+          {
+            type: 'folder',
+            name: 'pages',
+            childrens: [
+              {
+                type: 'folder',
+                name: 'index',
+                help: '主入口',
+                childrens: [
+                  {
+                    type: 'file',
+                    name: 'index.js',
+                  },
+                  {
+                    type: 'file',
+                    name: 'index.scss',
+                  },
+                  {
+                    type: 'file',
+                    name: 'index.json',
+                  },
+                  {
+                    type: 'file',
+                    name: 'index.wxml',
+                  },
+                ],
+              },
+              {
+                type: 'folder',
+                name: 'webview',
+                help: 'webview 公共页',
+                childrens: [
+                  {
+                    type: 'file',
+                    name: 'webview.js',
+                  },
+                  {
+                    type: 'file',
+                    name: 'webview.scss',
+                  },
+                  {
+                    type: 'file',
+                    name: 'webview.json',
+                  },
+                  {
+                    type: 'file',
+                    name: 'webview.wxml',
+                  },
+                ],
+              },
+              {
+                type: 'folder',
+                name: 'other pages...',
+                disabled: true,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        type: 'folder',
+        name: 'subPackage1',
+        help: '分包示例',
+        childrens: [
+          {
+            type: 'folder',
+            name: 'components',
+            childrens: [
+              {
+                type: 'file',
+                name: '.gitkeep',
+                icon: 'git',
+              },
+            ],
+          },
+          {
+            type: 'folder',
+            name: 'images',
+            childrens: [
+              {
+                type: 'file',
+                name: '.gitkeep',
+                icon: 'git',
+              },
+            ],
+          },
+          {
+            type: 'folder',
+            name: 'pages',
+            childrens: [
+              {
+                type: 'folder',
+                name: 'example',
+                childrens: [
+                  {
+                    type: 'file',
+                    name: '.gitkeep',
+                    icon: 'git',
+                  },
+                ],
+              },
+              {
+                type: 'folder',
+                name: 'other pages...',
+                disabled: true,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        type: 'folder',
+        name: 'subPackage2',
+        disabled: true,
+      },
+      {
+        type: 'folder',
+        name: 'subPackage3',
+        disabled: true,
+      },
+      {
+        type: 'folder',
+        name: 'other subPackages...',
+        disabled: true,
+      },
+      { type: 'file', name: 'app.js' },
+      { type: 'file', name: 'app.json' },
+      { type: 'file', name: 'app.scss' },
+      { type: 'file', name: 'sitemap.json' },
+    ],
+  },
+  {
+    type: 'file',
+    name: '_project.config.json',
+    help: (
+      <div className="flex items-center text-red-500 underline decoration-red-500">
+        <RiAlarmWarningLine />
+        注意文件名
+      </div>
+    ),
+  },
+  { type: 'file', name: '.env.dev', icon: 'env' },
+  { type: 'file', name: '.env.sit', icon: 'env' },
+  { type: 'file', name: '.env.uat', icon: 'env' },
+  { type: 'file', name: '.env.prod', icon: 'env' },
+  { type: 'file', name: '.editorconfig', icon: 'config' },
+  { type: 'file', name: 'jsconfig.json', icon: 'config' },
+  { type: 'file', name: '.eslintignore', icon: 'config' },
+  { type: 'file', name: '.eslintrc.js', icon: 'config' },
+  { type: 'file', name: '.prettierignore', icon: 'config' },
+  { type: 'file', name: '.prettierrc.js', icon: 'config' },
+  { type: 'file', name: '.stylelintignore', icon: 'config' },
+  { type: 'file', name: '.stylelintrc.js', icon: 'config' },
+  { type: 'file', name: '.cz-config.js', icon: 'config' },
+  { type: 'file', name: 'commitlint.config.js', icon: 'config' },
+  { type: 'file', name: 'gulpfile.js', icon: 'gulp' },
+  { type: 'file', name: '.npmrc', icon: 'npm' },
+  { type: 'file', name: 'package.json' },
+  { type: 'file', name: '.gitattributes', icon: 'git' },
+  { type: 'file', name: '.gitignore', icon: 'git' },
+  { type: 'file', name: 'README.md', icon: 'md' },
+]
