@@ -21,7 +21,7 @@ tags: ['guide']
 >
 > - :rainbow: [《Setup Miniprgram - PART 2》](/posts/setup-miniprogram/part-2)
 >
->   - 自定义异常、通讯、缓存、SDK 封装
+>   - 异常、通讯、缓存、SDK 封装
 >
 > - [《Setup Miniprgram - PART 3》](/posts/setup-miniprogram/part-3)
 >
@@ -34,7 +34,7 @@ tags: ['guide']
 > - [《Setup Miniprgram - PART 5》](/posts/setup-miniprogram/part-5)
 >   - TODO
 
-## 自定义异常
+## 异常
 
 联调接口时，通常后端会有一套通用的 `ResponseDTO`:
 
@@ -146,7 +146,7 @@ class SDKException {
 }
 ```
 
-### 判断异常来源
+### 异常来源
 
 **通过`instanceof`判断（👍 推荐）**
 
