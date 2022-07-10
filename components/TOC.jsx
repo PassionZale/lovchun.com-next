@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 
+// https://www.emgoto.com/react-table-of-contents/
+
 const Headings = ({ headings, activeId }) => (
   <ul>
     {headings.map((heading) => (
