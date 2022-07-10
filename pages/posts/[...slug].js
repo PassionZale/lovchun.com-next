@@ -7,6 +7,7 @@ import { PageSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
 import Comment from '@/components/Comment'
+import TOC from '@/components/TOC'
 import generateRss from '@/lib/generateRss'
 
 const posts = allPosts
@@ -56,6 +57,8 @@ export const Page = ({ previous, post, next }) => {
 
       <Profile />
 
+      <TOC />
+
       <MDXLayoutRenderer
         mdxSource={mdxSource}
         mdxRemote={remotePath}
@@ -64,6 +67,7 @@ export const Page = ({ previous, post, next }) => {
         frontMatter={frontMatter}
         readingTime={readingTime}
       />
+
 
       <InView rootMargin="140px" triggerOnce fallbackInView>
         {({ inView, ref }) => (
