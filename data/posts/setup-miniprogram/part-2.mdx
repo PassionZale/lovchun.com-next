@@ -110,9 +110,9 @@ throw new Error('请求失败')
 
 ```json
 {
-	"errMsg": "openBluetoothAdapter:fail:not available",
-	"errCode": 10001,
-	"errno": 1500102
+  "errMsg": "openBluetoothAdapter:fail:not available",
+  "errCode": 10001,
+  "errno": 1500102
 }
 ```
 
@@ -208,15 +208,274 @@ export async function makePhoneCall(phoneNumber) {
 
 ## 通讯
 
-**pageA** `navigateTo` **pageB**
+### queryParams
 
-### query 传参
+> **pageA** `navigateTo` **pageB** （最基本的通讯方式）
 
 ```js:pageA.js
 Page({
   methods: {
     handleTap() {
       wx.navigateTo({ url: `pageB?foo=bar` })
+    }
+  }
+})
+```
+
+```js:pageB.js
+Page({
+  onLoad(options) {
+    const { foo } = options // <== foo is 'bar'
+  }
+})
+```
+
+### variableStorage
+
+> **orderList** set data, **orderDetail** get data（适合一次性通讯复杂的数据结构）
+
+#### 定义 storage class
+
+```js:_shared/helpers/storage.js
+/**
+ * Storage
+ *
+ * @desc      内存存储，主要用于跨页面参数的传递
+ */
+
+import { CustomException } from './utils'
+
+class Storage {
+  constructor(options) {
+    const { snapchat = false } = options || {}
+
+    this.snapchat = snapchat
+    this.data = {}
+  }
+
+  set(key, value) {
+    if (!key) {
+      throw new CustomException({ message: 'key 不能为空' })
+    }
+
+    this.data[String(key)] = value
+  }
+
+  get(key) {
+    const value = key ? this.data[String(key)] : this.data
+
+    if (this.snapchat) {
+      this.removeItem(key)
+    }
+
+    return value
+  }
+
+  removeItem(key) {
+    delete this.data[String(key)]
+  }
+
+  clear() {
+    this.data = {}
+  }
+}
+
+export default Storage
+```
+
+#### 定制专属 store
+
+```js:_shared/stores/order.js {3,4,16,17}
+import Storage from '../helpers/storage'
+
+// 保证每个 store module 都是全新的 Storage 实例
+const storage = new Storage({ snapchat: true })
+
+class Store {
+  get orderSourceData() {
+    return storage.get('data')
+  }
+
+  set orderSourceData(val) {
+    storage.set('data', val)
+  }
+}
+
+// 导出 Order Store 实例
+export default new Store()
+```
+
+```js:orderList.js {10-12}
+import OrderStore from '@/_shared/stores/order'
+import { useRequest } from '@/_shared/helpers/request'
+
+Page({
+  methods: {
+    async handleDetail({ currentTarget: { dataset: { orderNo }}}) {
+      const [err, res] = await useRequest('api/v1/order/detail', { orderNo })
+
+      if(!err) {
+        // 写入 orderSourceData
+        OrderStore.orderSourceData = this.data.orders[index]
+        wx.navigateTo({ url: `orderDetail` })
+      } else {
+        // error handler
+      }
+    }
+  }
+})
+```
+
+```js:orderDetail.js {5,6}
+import OrderStore from '@/_shared/stores/order'
+
+Page({
+  onLoad() {
+    // 读取 orderSourceData
+    const data = OrderStore.orderSourceData
+  }
+})
+```
+
+### 发布订阅
+
+> pageA `navigateTo` pageB （**先订阅后发布**）
+
+#### eventBus
+
+有很多实现方式，这里简单展示项目中使用的模块示例：
+
+```js:_shared/helpers/eventBus.js
+const notices = []
+
+// 注册通知
+export function on(name, observer, selector) {
+  if (name && observer && selector) {
+    const newNotice = {
+      name,
+      observer,
+      selector
+    }
+
+    add(newNotice)
+  }
+}
+
+// 移除通知（observer按name）
+export function off(name, observer) {
+  wx.nextTick(() => {
+    // 以防post过程中同时remove
+    for (let i = notices.length - 1; i >= 0; i--) {
+      const inNotice = notices[i]
+
+      if (inNotice.name == name && inNotice.observer == observer) {
+        notices.splice(i, 1)
+      }
+    }
+  })
+}
+
+// 移除通知（observer所有）
+export function clean(observer) {
+  wx.nextTick(() => {
+    // 以防post过程中同时remove
+    for (let i = notices.length - 1; i >= 0; i--) {
+      const inNotice = notices[i]
+
+      if (inNotice.observer == observer) {
+        notices.splice(i, 1)
+      }
+    }
+  })
+}
+
+// 发送通知
+export function emit(name, info) {
+  for (let i = 0; i < notices.length; i++) {
+    const inNotice = notices[i]
+
+    if (inNotice.name == name) {
+      inNotice.selector(info)
+    }
+  }
+}
+
+// 加入通知数据
+function add(newNotice) {
+  if (notices.length > 0) {
+    for (let i = 0; i < notices.length; i++) {
+      const inNotice = notices[i]
+
+      if (
+        inNotice.name == newNotice.name &&
+        inNotice.selector == newNotice.selector &&
+        inNotice.observer == newNotice.observer
+      ) {
+        return
+      }
+    }
+  }
+
+  notices.push(newNotice)
+}
+```
+
+#### eventKeys
+
+**不要使用魔法字符**，使用 `常量`：
+
+```js:@/_shared/constants/eventKeys.js
+/**
+ * 订单已操作，例如：取消、支付、申请售后等
+ */
+export const ORDER_OPERATED = 'orderOperated'
+```
+
+#### 订阅事件
+
+**先订阅（orderList 在 orderDetail 之前）**
+
+```js:orderList.js {5,7,14,16}
+import * as eventBus from '@/_shared/helpers/eventBus'
+import * as eventKeys from '@/_shared/constants/eventKeys'
+
+Page({
+  // 若在 Component 中使用，生命周期函数为 attached
+  onLoad() {
+    eventBus.on(eventKeys.ORDER_OPERATED, this, (payload) => {
+      console.log(payload) // <= { foo: 'bar' }
+
+      this.reloadData()
+    })
+  },
+
+  // 若在 Component 中使用，生命周期函数为 detached
+  unUnload() {
+    eventBus.clean(this)
+  }
+})
+```
+
+**后发布（orderDetail 在 orderList 之后）**
+
+```js:orderDetail.js {12-16}
+import * as eventBus from '@/_shared/helpers/eventBus'
+import * as eventKeys from '@/_shared/constants/eventKeys'
+
+Page({
+  methods: {
+    async handleCancel() {
+      const { orderNo } = this.data
+
+      const [err, res] = await useRequest('api/order/cancel', { orderNo })
+
+      if(!err) {
+        eventBus.emit(
+          eventKeys.ORDER_OPERATED, 
+          // ↓↓↓↓ any paylod you want to pass ↓↓↓↓          
+          { foo: 'bar' }
+        )
+      }
     }
   }
 })
