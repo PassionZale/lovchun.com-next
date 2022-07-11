@@ -49,7 +49,7 @@ export const Page = ({ posts }) => {
     <>
       <SiteSEO />
 
-      <header className="mt-10">
+      <header className="pt-10">
         <div className="flex items-center justify-between">
           <Link href="/">
             <a className="font-semibold no-underline">
@@ -67,6 +67,8 @@ export const Page = ({ posts }) => {
       {posts.map((post) => (
         <PostItem key={post.slug} {...post} />
       ))}
+
+      <div className="border-t"/>
     </>
   )
 }

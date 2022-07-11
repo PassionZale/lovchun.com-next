@@ -34,6 +34,8 @@ export const Page = ({ post }) => {
         mdxComponents={mdxComponents}
         frontMatter={frontMatter}
       />
+
+      <div className="border-t" />
     </>
   )
 }

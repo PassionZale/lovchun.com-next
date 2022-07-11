@@ -36,6 +36,8 @@ export const Page = ({ post }) => {
         frontMatter={frontMatter}
         readingTime={readingTime}
       />
+
+      <div className="border-t" />
     </>
   )
 }
