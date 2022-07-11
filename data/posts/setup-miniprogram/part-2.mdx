@@ -831,7 +831,7 @@ export async function saveImageToPhotosAlbum({ success, fail, ...options }) {
     if (!error.errMsg || error.errMsg.indexOf('fail cancel') === -1) {
       fail
         ? fail(new SDKException(error))
-        : wx.showToast({ title: noPermissionMsg, icon: 'none' })
+        : wx.showToast({ title: error.errMsg, icon: 'none' })
     }
   }
 }
