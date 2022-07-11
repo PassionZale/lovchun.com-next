@@ -49,6 +49,7 @@ export const Page = ({ previous, post, next }) => {
     readingTime,
     body: { code: mdxSource },
     remotePath,
+    toc,
   } = post
 
   return (
@@ -57,7 +58,7 @@ export const Page = ({ previous, post, next }) => {
 
       <Profile />
 
-      <TOC />
+      {toc && <TOC />}
 
       <MDXLayoutRenderer
         mdxSource={mdxSource}
@@ -67,7 +68,6 @@ export const Page = ({ previous, post, next }) => {
         frontMatter={frontMatter}
         readingTime={readingTime}
       />
-
 
       <InView rootMargin="140px" triggerOnce fallbackInView>
         {({ inView, ref }) => (

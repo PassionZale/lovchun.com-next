@@ -14,6 +14,11 @@ const CommonFields = {
   createdAt: { type: 'date', description: '创建时间', required: true },
   publishedAt: { type: 'date', description: '发布时间', default: null },
   updatedAt: { type: 'date', description: '最后更新时间', default: null },
+  toc: {
+    type: 'boolean',
+    description: '是否展示 TableOfContents',
+    default: false,
+  },
   draft: {
     type: 'boolean',
     description: '是否为草稿, 草稿不会被展示',
@@ -36,6 +41,7 @@ const CommonComputedFields = {
       createdAt,
       publishedAt,
       updatedAt,
+      toc,
       draft,
       summary,
       tags,
@@ -44,6 +50,7 @@ const CommonComputedFields = {
       createdAt,
       publishedAt,
       updatedAt,
+      toc,
       draft,
       summary,
       tags,

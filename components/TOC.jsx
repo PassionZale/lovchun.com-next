@@ -1,36 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-// https://www.emgoto.com/react-table-of-contents/
+const activeClassName = 'text-blue-500 dark:text-cyan-500'
 
 const Headings = ({ headings, activeId }) => (
-  <ul>
+  <ul className="list-none">
     {headings.map((heading) => (
-      <li key={heading.id} className={heading.id === activeId ? "active" : ""}>
+      <li key={heading.id}>
         <a
+          className={`no-underline hover:underline ${
+            heading.id === activeId ? activeClassName : ''
+          }`}
           href={`#${heading.id}`}
           onClick={(e) => {
-            e.preventDefault();
+            e.preventDefault()
             document.querySelector(`#${heading.id}`).scrollIntoView({
-              behavior: "smooth"
-            });
+              behavior: 'smooth',
+            })
           }}
         >
           {heading.title}
         </a>
         {heading.items.length > 0 && (
-          <ul>
+          <ul className="list-none">
             {heading.items.map((child) => (
-              <li
-                key={child.id}
-                className={child.id === activeId ? "active" : ""}
-              >
+              <li key={child.id}>
                 <a
+                  className={`no-underline hover:underline ${
+                    child.id === activeId ? activeClassName : ''
+                  }`}
                   href={`#${child.id}`}
                   onClick={(e) => {
-                    e.preventDefault();
+                    e.preventDefault()
                     document.querySelector(`#${child.id}`).scrollIntoView({
-                      behavior: "smooth"
-                    });
+                      behavior: 'smooth',
+                    })
                   }}
                 >
                   {child.title}
@@ -42,7 +45,7 @@ const Headings = ({ headings, activeId }) => (
       </li>
     ))}
   </ul>
-);
+)
 
 const useHeadingsData = () => {
   const [nestedHeadings, setNestedHeadings] = useState([])
@@ -126,15 +129,18 @@ const useIntersectionObserver = (setActiveId) => {
 }
 
 const TableOfContents = () => {
-  const [activeId, setActiveId] = useState();
-  const { nestedHeadings } = useHeadingsData();
-  useIntersectionObserver(setActiveId);
+  const [activeId, setActiveId] = useState()
+  const { nestedHeadings } = useHeadingsData()
+  useIntersectionObserver(setActiveId)
 
   return (
-    <nav className="fixed lg:right-1/4 top-1/4 hidden md:flex" aria-label="Table of contents">
+    <nav
+      className="fixed top-1/4 ml-[640px] mt-8 hidden w-[150px] text-sm lg:flex xl:w-[300px]"
+      aria-label="Table of contents"
+    >
       <Headings headings={nestedHeadings} activeId={activeId} />
     </nav>
-  );
-};
+  )
+}
 
 export default TableOfContents

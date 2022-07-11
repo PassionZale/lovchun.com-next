@@ -61,6 +61,7 @@ title (required)
 createdAt (required)
 publishedAt (optional)
 updatedAt (optional, last modify date)
+toc (optional)
 draft (optional)
 summary (optional)
 tags (required, can be empty array)
@@ -74,6 +75,7 @@ title: 'Introducing MDX File Example'
 createdAt: '2022-03-01'
 publishedAt: '2022-03-07'
 updatedAt: '2022-03-10'
+toc: true
 draft: false
 summary: 'mdx file summary.'
 tags: ['next-js', 'tailwind', 'guide']
