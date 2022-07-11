@@ -61,6 +61,7 @@ title (required)
 createdAt (required)
 publishedAt (optional)
 updatedAt (optional, last modify date)
+toc (optional)
 draft (optional)
 summary (optional)
 tags (required, can be empty array)
@@ -74,6 +75,7 @@ title: 'Introducing MDX File Example'
 createdAt: '2022-03-01'
 publishedAt: '2022-03-07'
 updatedAt: '2022-03-10'
+toc: true
 draft: false
 summary: 'mdx file summary.'
 tags: ['next-js', 'tailwind', 'guide']
@@ -161,3 +163,16 @@ export default makeSource({
 
 - [Emojipedia](https://emojipedia.org/)
 - [markdown-it emoji](https://github.com/markdown-it/markdown-it-emoji/blob/master/lib/data/full.json)
+
+## Node 16+
+
+**fix react-ioncs error**
+
+[Deprecation - Invalid Main Field](https://github.com/react-icons/react-icons/issues/509)
+
+```diff:node_modules/react-icons/package.json
+"license": "MIT",
+-"main": "lib",
++"main": "./lib/cjs/index.js",
+"types": "./lib/esm/index.d.ts",
+```

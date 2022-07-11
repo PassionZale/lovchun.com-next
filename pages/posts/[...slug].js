@@ -7,6 +7,7 @@ import { PageSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
 import Comment from '@/components/Comment'
+import TOC from '@/components/TOC'
 import generateRss from '@/lib/generateRss'
 
 const posts = allPosts
@@ -48,6 +49,7 @@ export const Page = ({ previous, post, next }) => {
     readingTime,
     body: { code: mdxSource },
     remotePath,
+    toc,
   } = post
 
   return (
@@ -55,6 +57,8 @@ export const Page = ({ previous, post, next }) => {
       <PageSEO {...frontMatter} />
 
       <Profile />
+
+      {toc && <TOC />}
 
       <MDXLayoutRenderer
         mdxSource={mdxSource}
