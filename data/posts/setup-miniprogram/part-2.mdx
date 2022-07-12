@@ -665,7 +665,7 @@ Page(props)
 
 ### SDK Promisify
 
-虽然现在大部分 SDK 支持**异步**，但仍然有少量不支持，例如：wx.login 等，只能使用`回调`函数的形式处理 SDK 的成功与失败：
+虽然现在大部分 SDK 支持**异步**，但仍然有少量不支持，例如：`wx.login` 等，只能使用`回调`函数的形式处理 SDK 的成功与失败：
 
 ```js
 wx.login({
@@ -701,7 +701,7 @@ const wxLogin = () =>
   })
 ```
 
-如果项目中使用了 10 个 SDK 的调用，代码就会变成：
+如果项目中使用了 10 个 SDK 的调用，代码会变成... :confused:
 
 ```js
 const sdk1 = () => new Promise((resolve, reject) => {
@@ -767,13 +767,15 @@ export const wxOpenSetting = promisify(wx.openSetting)
 
 某些 SDK 一旦用户拒绝，再次调用时会直接报错而不会再执行后面的逻辑，
 
-此时，我们需要引导用户打开小程序**设置页**，开启对应权限，下面是一个完整的 `SDK ApplyPermission` 示例：
+此时，我们需要引导用户打开小程序**设置页**，开启对应权限。
+
+完整的 `SDK ApplyPermission` 示例：
 
 ```js
 /**
  * 保存图片至手机相册
  * https://developers.weixin.qq.com/miniprogram/dev/api/media/image/wx.saveImageToPhotosAlbum.html
- * 沿用 success fail 回调函数，是为了覆盖 sdk 默认的 toast 交互提示
+ * !!!延用 success fail 回调函数，是为了覆盖 sdk 默认的 toast 交互提示!!!
  * @param {function} success 接口调用成功的回调函数
  * @param {function} fail 接口调用失败的回调函数
  * @returns {Promise}
@@ -837,4 +839,6 @@ export async function saveImageToPhotosAlbum({ success, fail, ...options }) {
 }
 ```
 
-以上是我在小程序实际开发过程中，为数不多但又较为常见的经验总结，后面会持续更新，也欢迎你提交 `Pull Request` 和我一起完善。
+以上是我在小程序实际开发过程中，为数不多但又较为常见的经验总结。
+
+欢迎你提交 `Pull Request` 和我一起完善。:tada: :tada: :tada:
