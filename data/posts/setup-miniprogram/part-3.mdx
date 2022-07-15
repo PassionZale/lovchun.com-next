@@ -13,10 +13,10 @@ import Tree from '@/components/MDXComponents/Tree'
 import { RiAlarmWarningLine } from 'react-icons/ri'
 
 <Image
-  src={'/static/images/setup-miniprogram/banner.jpeg'}
-  width={1417}
-  height={667}
-  alt="架构、框架、组件"
+  src={'/static/images/setup-miniprogram/gulp.png'}
+  width={1720}
+  height={900}
+  alt="gulpjs"
 />
 
 > - [《Setup Miniprgram - 插件、目录结构、开发者工具、配置、Packages》](/posts/setup-miniprogram/part-1)
@@ -38,7 +38,7 @@ import { RiAlarmWarningLine } from 'react-icons/ri'
 > - [《Setup Miniprgram - PART 5》](/posts/setup-miniprogram/part-5)
 >   - TODO
 
-## Gulp
+## Gulpjs
 
 市面上有许多小程序开发框架: wepy/mpvue/taro/uni-app 等等...
 
@@ -69,7 +69,7 @@ import { RiAlarmWarningLine } from 'react-icons/ri'
 
 不论第三方框架是基于 `Vuejs` 还是 `React`，整个构建过程，它们都在干同一件事情：
 
-> **将代码转换成小程序所约定的文件和目录**
+> 将代码转换成小程序所约定的文件和目录
 
 ```shell
 # 转换 wxss
@@ -82,27 +82,381 @@ html dom => <view/>、<text />、<scroll-view />、etc...
 ES6 => ES5
 ```
 
-### 小程序目录特色
+小程序原生开发，不论是组件还是页面，通常都由四种文件组成:
 
-小程序中，不论是组件还是页面，通常都由四种文件组成:
-
-| 文件类型 |  必须  | 说明 |
-| :------- | :----: | :--: |
-| wxml     | **是** | 视图 |
-| wxss     |   否   | 样式 |
-| js       | **是** | 脚本 |
-| json     | **是** | 配置 |
+| 文件类型 |                      必须                      | 说明 |
+| :------- | :--------------------------------------------: | :--: |
+| `*.wxml` | <span class="text-red-500 font-bold">是</span> | 视图 |
+| `*.js`   | <span class="text-red-500 font-bold">是</span> | 脚本 |
+| `*.json` | <span class="text-red-500 font-bold">是</span> | 配置 |
+| `*.wxss` |                       否                       | 样式 |
 
 <Tree data={MiniprgramFolderData} />
+
+原生开发对比第三方框架，在 `js` 的处理上，我们不需要借助 `webpack` 或者 `babel` 来完成 `React` `Vuejs` `ES7/6` 的转换，
+
+如果需要嵌套一层构建逻辑，最简单最直接的方式就是做**文件迁移**，那么 `Gulpjs` 这种基于 node stream 便是一个很好的选择，
+
+简单粗暴，将 `源码` 转换后迁移到对应 `目录` 中。
+
+```shell
+# task.wxss.js
+css/less/scss/stylus => wxss
+# task.wxml.js
+wxml => wxml
+# 原生开发无需转换
+html dom => <view/>、<text />、<scroll-view />、etc...
+# 开发者工具已支持
+ES6 => ES5
+```
 
 ## 目录结构
 
 <Tree data={structure} />
 
+### 脚本
+
+> 结合项目的 `workflow` 来设计所需要的脚本
+
+**环境**
+
+> 开发、测试、预发布、生产，四个环境同时也对应着四个环境分支
+
+```js
+const ENV_BRANCH_MAPS = {
+  // 环境 : 分支
+  dev: 'dev',
+  sit: 'test',
+  uat: 'pre-release',
+  prod: 'master',
+}
+```
+
+**运行**
+
+> 本地运行时，直接以本地代码为准运行项目
+
+```json
+{
+  "start:dev": "运行开发环境",
+  "start:sit": "运行测试环境",
+  "start:uat": "运行预发布环境",
+  "start:prod": "运行生产环境"
+}
+```
+
+**构建**
+
+> 环境构建时，以 remote env-branch 分支进行打包
+
+```json
+{
+  "build:dev": "构建开发环境",
+  "build:sit": "构建测试环境",
+  "build:uat": "构建预发布环境",
+  "build:prod": "构建生产环境"
+}
+```
+
+**模板**
+
+> 使用脚本自动创建小程序组件或页面
+
+```json
+{
+  "make": "制作组件或页面"
+}
+```
+
+### 依赖
+
+| 名称                        |  版本   |                             说明 |
+| :-------------------------- | :-----: | -------------------------------: |
+| del                         | ^6.0.0  |                     清空指定目录 |
+| dotenv-flow                 | ^3.2.0  |                   读取 .env 文件 |
+| fs-extra                    | ^10.1.0 |         替代 `fs` 操作目录或文件 |
+| gulp                        | ^4.0.2  |                              N/A |
+| gulp-dart-sass              | ^1.0.2  |              将 scss 转换为 wxss |
+| gulp-json-format            | ^2.0.0  |                 格式化 json 文件 |
+| gulp-load-plugins           | ^2.0.7  |           更容易的加载 gulp 插件 |
+| gulp-miniprogram-path-alias | ^0.3.1  | 让小程序支持 alias path 模块引入 |
+| gulp-preprocess             | ^4.0.2  |             让小程序支持环境变量 |
+| gulp-rename                 | ^2.0.0  |             更改目录或文件的名称 |
+| gulp-zip                    | ^5.1.0  |             将 output 压缩为 zip |
+| require-dir                 | ^1.2.0  |                     加载指定目录 |
+| through2                    | ^4.0.2  |             解析流中的数据并操作 |
+| yargs                       | ^17.4.1 |           解析脚本中接收到的入参 |
+
+### 上下文
+
+环境变量、插件、配置等需要共享到每个 `gulp task` 中，提取一个 `context.js` 模块：
+
+```js:./scripts/gulp/context.js
+const { existsSync } = require('fs')
+const gulp = require('gulp')
+const $ = require('gulp-load-plugins')({ DEBUG: false, lazy: true })
+const path = require('path')
+const dotenvFlow = require('dotenv-flow')
+
+const yargs = require('yargs/yargs')
+const args = yargs(yargs.hideBin(process.argv)).argv
+
+const pkg = require('../../package.json')
+
+const { dateFormatter } = require('../lib/helper')
+const logger = require('../lib/logger')
+
+const { env = 'dev', ignoreLocal } = args
+
+const variables = parseENV()
+
+// 构建时，最终生产压缩文件的名称 ${buildId}.zip
+const buildId = `${pkg.name}_${env}_v${pkg.version}_${dateFormatter(
+  new Date(),
+  'yyyyMMddHHmmss'
+)}`
+
+// gulp-miniprogram-alias 配置
+const aliasConfig = {
+  '@': path.resolve(process.cwd(), 'src')
+}
+
+// gulp-preprocess 配置
+const processContext = {
+  ENV: env.toUpperCase(),
+  VERSION: pkg.version,
+  ...variables
+}
+
+// 解析 .env 文件
+function parseENV() {
+  const envPath = path.resolve(process.cwd(), `.env.${env}`)
+  const envLocalPath = path.resolve(process.cwd(), `.env.local`)
+
+  // gulp build 时，忽略 .env.local
+  const envs =
+    existsSync(envLocalPath) && !ignoreLocal
+      ? [envPath, envLocalPath]
+      : [envPath]
+
+  try {
+    const variables = dotenvFlow.parse(envs)
+
+    const { APPID, API_BASEPATH } = variables
+
+    if (!APPID || !API_BASEPATH) {
+      logger.fatal('APPID, API_BASEPATH 必填，请检查 .env 配置文件')
+    }
+
+    return variables
+  } catch (error) {
+    logger.fatal(error)
+  }
+}
+
+process.once('SIGINT', () => {
+  process.exit(0)
+})
+
+module.exports = {
+  gulp,
+  $,
+  args: { output: 'dist', ...args },
+  aliasConfig,
+  buildId,
+  processContext,
+  logger
+}
+```
+
+### 任务
+
+**清空输出目录**
+
+每次运行或构建项目时，清空 `output 目录`
+
+```js:./scripts/gulp/tasks/clean.task.js
+const del = require('del')
+const { args } = require('../context')
+
+module.exports = async () => {
+  await del([`${args.output}/**`], { force: true, dot: true })
+}
+```
+
+**迁移`*.js`文件**
+
+```js:./scripts/gulp/tasks/js.task.js
+const { processContext, args, gulp, $, aliasConfig } = require('../context')
+
+module.exports = () =>
+  gulp
+    .src(['./src/**/*.js'])
+    .pipe($.miniprogramPathAlias(aliasConfig))
+    .pipe($.preprocess({ context: processContext, type: 'js' }))
+    .pipe(gulp.dest(args.output))
+```
+
+**迁移`*.json`文件**
+
+```js:./scripts/gulp/tasks/json.task.js
+const { args, gulp } = require('../context')
+
+module.exports = () => gulp.src('./src/**/*.json').pipe(gulp.dest(args.output))
+```
+
+**迁移`*.scss`文件**
+
+```js:./scripts/gulp/tasks/scss.task.js
+const { processContext, args, gulp, $, aliasConfig } = require('../context')
+
+module.exports = () =>
+  gulp
+    .src(['./src/**/*.scss', '!./src/_shared/styles/*.scss'])
+    .pipe($.miniprogramPathAlias(aliasConfig))
+    .pipe($.dartSass.sync({ outputStyle: 'compressed' }))
+    .on('error', $.dartSass.logError)
+    .pipe($.preprocess({ context: processContext, type: 'css' }))
+    .pipe(
+      $.rename({
+        extname: '.wxss'
+      })
+    )
+    .pipe(gulp.dest(args.output))
+
+```
+
+**迁移`*.wxss`文件**
+
+当用到某些第三方库时，里面的源码可能是 `wxss`，因此需要支持 `wxss` 的迁移。
+
+```js:./scripts/gulp/tasks/wxss.task.js
+const { processContext, args, gulp, $, aliasConfig } = require('../context')
+
+module.exports = () =>
+  gulp
+    .src('./src/**/*.wxss')
+    .pipe($.miniprogramPathAlias(aliasConfig))
+    .pipe($.preprocess({ context: processContext, type: 'css' }))
+    .pipe(gulp.dest(args.output))
+```
+
+**迁移`*.wxml`文件**
+
+```js:./scripts/gulp/tasks/wxml.task.js
+const { processContext, args, gulp, $, aliasConfig } = require('../context')
+
+module.exports = () =>
+  gulp
+    .src('./src/**/*.wxml')
+    .pipe($.miniprogramPathAlias(aliasConfig))
+    .pipe($.preprocess({ context: processContext, type: 'html' }))
+    .pipe(gulp.dest(args.output))
+
+```
+
+**迁移`*.wxs`文件**
+
+```js:./scripts/gulp/tasks/wxs.task.js
+const { processContext, args, gulp, $, aliasConfig } = require('../context')
+
+module.exports = () =>
+  gulp
+    .src('./src/**/*.wxs')
+    .pipe($.miniprogramPathAlias(aliasConfig))
+    .pipe($.preprocess({ context: processContext, type: 'js' }))
+    .pipe(gulp.dest(args.output))
+```
+
+**迁移`others`**
+
+迁移 `scss|wxss|js|wxs|json|wxml|md` 以外的文件，例如：图片。
+
+```js:./scripts/gulp/tasks/others.task.js
+const { args, gulp } = require('../context')
+
+module.exports = () =>
+  gulp
+    .src(['./src/**/*.!(scss|wxss|js|wxs|json|wxml|md)'], {
+      dot: true,
+      nodir: true
+    })
+    .pipe(gulp.dest(args.output))
+```
+
+**制作 `project.config.json`**
+
+你已经注意到，根目录放置的是 `_project.config.json`，而不是 `project.config.json`。
+
+由于 `project.config.json` 是非常重要的工程配置，不仅会影响本地开发者工具，还会影响小程序的发布上传，
+
+如果该文件被追踪提交，开发成员相互篡改、相互覆盖极易导致出现各类问题，
+
+为了统一，通过任务以 `_project.config.json` 为蓝图在本地初始化一份 `project.config.json`。
+
+```js:./scripts/gulp/tasks/projectMake.task.task.js
+const through2 = require('through2')
+const path = require('path')
+const { existsSync } = require('fs')
+const { processContext, gulp, $ } = require('../context')
+
+/**
+ * ./_project.config.json + 当前环境的 appid => ./project.config.json
+ * 
+ * 每次运行项目时，都会执行 task.projectMake，
+ * 如果反复覆盖 project.config.js，会导致微信开发者工具不能及时更新，
+ * 此函数用于判断是否要重新覆盖 project.config.js
+ * 若 现有的 project.config.js 中的 appid 和当前 .env 中 APPID 相同时，跳过任务
+ * 若 现有的 project.config.js 中的 appid 和当前 .env 中 APPID 不同时，新建并覆盖
+ * 
+ * @returns {boolean} true/false
+ */
+function projectShouldUpdate() {
+  if (!existsSync(path.resolve(process.cwd(), 'project.config.json'))) {
+    return true
+  }
+
+  const configs = require('../../../project.config.json')
+
+  if (configs.appid !== processContext.APPID) {
+    return true
+  }
+
+  return false
+}
+
+module.exports = cb => {
+  if (projectShouldUpdate()) {
+    return gulp
+      .src('./_project.config.json')
+      .pipe(
+        through2.obj(function (chunk, _, callback) {
+          const { contents } = chunk
+          const data = JSON.parse(contents.toString())
+
+          data.appid = processContext.APPID
+
+          chunk.contents = Buffer.from(JSON.stringify(data), 'utf8')
+
+          this.push(chunk)
+
+          callback()
+        })
+      )
+      .pipe($.jsonFormat(2))
+      .pipe($.rename('project.config.json'))
+      .pipe(gulp.dest('./'))
+  } else {
+    cb()
+  }
+}
+```
+
 export const MiniprgramFolderData = [
   {
     type: 'folder',
     name: 'indexPage',
+    expand: true,
     childrens: [
       { type: 'file', name: 'indexPage.js' },
       { type: 'file', name: 'indexPage.json' },
@@ -113,6 +467,7 @@ export const MiniprgramFolderData = [
   {
     type: 'folder',
     name: 'indexComponent',
+    expand: true,
     childrens: [
       { type: 'file', name: 'indexComponent.js' },
       { type: 'file', name: 'indexComponent.json' },
@@ -137,7 +492,6 @@ export const structure = [
           {
             type: 'folder',
             name: 'tmp',
-            expand: true,
             childrens: [
               {
                 type: 'folder',
@@ -170,8 +524,8 @@ export const structure = [
       {
         type: 'folder',
         name: 'gulp',
-        expand: true,
         help: 'Gulp 任务',
+        expand: true,
         childrens: [
           {
             type: 'folder',
@@ -266,6 +620,15 @@ export const structure = [
       },
     ],
   },
+  {
+    type: 'folder',
+    name: 'src',
+    help: '源码目录',
+  },
+  { type: 'file', name: '.env.dev', icon: 'env' },
+  { type: 'file', name: '.env.sit', icon: 'env' },
+  { type: 'file', name: '.env.uat', icon: 'env' },
+  { type: 'file', name: '.env.prod', icon: 'env' },
   { type: 'file', name: 'gulpfile.js', icon: 'gulp' },
   { type: 'file', name: '.npmrc', icon: 'npm' },
   { type: 'file', name: 'package.json' },
