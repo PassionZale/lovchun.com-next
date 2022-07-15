@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react'
 import {
   DiHtml5,
   DiSass,
+  DiCssTricks,
   DiJavascript1,
   DiGulp,
   DiNpm,
@@ -23,6 +24,7 @@ import { generateUnid } from '@/lib/dataTransform'
 const FILE_ICONS = {
   js: <DiJavascript1 className="text-yellow-500" />,
   wxml: <DiHtml5 className="text-amber-500" />,
+  wxss: <DiCssTricks className="text-blue-500"/>,
   scss: <DiSass className="text-red-500" />,
   json: <VscJson className="text-yellow-500" />,
   gulp: <DiGulp className="text-red-500" />,
@@ -134,7 +136,7 @@ const Tree = ({ data, children }) => {
   const isImparative = data && !children
 
   return (
-    <div className="rounded bg-[#1d1f21] p-4 text-sm text-[#bfc8c6]">
+    <div className="rounded bg-[#1d1f21] p-4 text-sm text-[#bfc8c6] my-4">
       {isImparative ? <TreeRecursive data={data} /> : children}
     </div>
   )
