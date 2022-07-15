@@ -1,11 +1,11 @@
 ---
-title: 'Setup Miniprgram - Gulp Tasks'
+title: 'Setup Miniprgram - 框架、Gulpjs、Task'
 createdAt: '2022-07-01'
 publishedAt: '2022-07-03'
 updatedAt: '2022-07-03'
 toc: true
 draft: false
-summary: ''
+summary: '实际项目中，如何实用 Gulpjs 组装小程序开发框架，如何设计脚本目录，如何编写 Gulp Task'
 tags: ['guide']
 ---
 
@@ -19,26 +19,19 @@ import { RiAlarmWarningLine } from 'react-icons/ri'
   alt="gulpjs"
 />
 
-> - [《Setup Miniprgram - 插件、目录结构、开发者工具、配置、Packages》](/posts/setup-miniprogram/part-1)
+> - [《Setup Miniprgram - 插件、目录、开发者工具、配置》](/posts/setup-miniprogram/part-1)
 >
->   - 插件、目录结构、开发者工具、配置、Packages
+>   - 推荐一些有趣且实用的 vscode插件、目录结构设计、微信开发者工具配置等
 >
 > - [《Setup Miniprgram - 异常、通讯、技巧》](/posts/setup-miniprogram/part-2)
 >
->   - 异常、通讯、技巧
+>   - 分享一些小程序中自定义异常、页面之间的通讯以及实际开发中沉淀的技巧
 >
-> - :rainbow: [《Setup Miniprgram - Gulp Tasks》](/posts/setup-miniprogram/part-3)
+> - :rainbow: [《Setup Miniprgram - 框架、Gulpjs、Task》](/posts/setup-miniprogram/part-3)
 >
->   - Gulp Tasks
->
-> - [《Setup Miniprgram - PART 4》](/posts/setup-miniprogram/part-4)
->
->   - TODO
->
-> - [《Setup Miniprgram - PART 5》](/posts/setup-miniprogram/part-5)
->   - TODO
+>   - 实际项目中，如何实用 Gulpjs 组装小程序开发框架，如何设计脚本目录，如何编写 Gulp Task
 
-## Gulpjs
+## 框架
 
 市面上有许多小程序开发框架: wepy/mpvue/taro/uni-app 等等...
 
@@ -84,12 +77,12 @@ ES6 => ES5
 
 小程序原生开发，不论是组件还是页面，通常都由四种文件组成:
 
-| 文件类型 |                      必须                      | 说明 |
-| :------- | :--------------------------------------------: | :--: |
-| `*.wxml` | <span class="text-red-500 font-bold">是</span> | 视图 |
-| `*.js`   | <span class="text-red-500 font-bold">是</span> | 脚本 |
-| `*.json` | <span class="text-red-500 font-bold">是</span> | 配置 |
-| `*.wxss` |                       否                       | 样式 |
+| 文件类型 |                        必须                        | 说明 |
+| :------- | :------------------------------------------------: | :--: |
+| `*.wxml` | <span className="text-red-500 font-bold">是</span> | 视图 |
+| `*.js`   | <span className="text-red-500 font-bold">是</span> | 脚本 |
+| `*.json` | <span className="text-red-500 font-bold">是</span> | 配置 |
+| `*.wxss` |                         否                         | 样式 |
 
 <Tree data={MiniprgramFolderData} />
 
@@ -259,13 +252,21 @@ process.once('SIGINT', () => {
 })
 
 module.exports = {
+  // gulp 实例
   gulp,
+  // gulp plugins 集合
   $,
+  // 命令行入参
   args: { output: 'dist', ...args },
+  // gulp-miniprogram-alias 配置
   aliasConfig,
+  // ${buildId}.zip
   buildId,
+  // gulp-preprocess 配置
   processContext,
+  // 日志打印
   logger
+  // etc ...
 }
 ```
 
@@ -392,7 +393,7 @@ module.exports = () =>
 
 如果该文件被追踪提交，开发成员相互篡改、相互覆盖极易导致出现各类问题，
 
-为了统一，通过任务以 `_project.config.json` 为蓝图在本地初始化一份 `project.config.json`。
+为了统一，通过任务以 `_project.config.json` 为**蓝图**在本地初始化一份 `project.config.json`。
 
 ```js:./scripts/gulp/tasks/projectMake.task.task.js
 const through2 = require('through2')
@@ -402,13 +403,16 @@ const { processContext, gulp, $ } = require('../context')
 
 /**
  * ./_project.config.json + 当前环境的 appid => ./project.config.json
- * 
+ *
  * 每次运行项目时，都会执行 task.projectMake，
- * 如果反复覆盖 project.config.js，会导致微信开发者工具不能及时更新，
+ * 如果反复覆盖 project.config.js，会导致微信开发者工具不能及时更新设置，
+ * **工具甚至崩溃**
  * 此函数用于判断是否要重新覆盖 project.config.js
  * 若 现有的 project.config.js 中的 appid 和当前 .env 中 APPID 相同时，跳过任务
  * 若 现有的 project.config.js 中的 appid 和当前 .env 中 APPID 不同时，新建并覆盖
- * 
+ *
+ * 通过此函数，如果频繁运行同一环境，project.config.json 不会有任何变化
+ *
  * @returns {boolean} true/false
  */
 function projectShouldUpdate() {
@@ -450,6 +454,207 @@ module.exports = cb => {
     cb()
   }
 }
+```
+
+**构建 `project.config.json`**
+
+只有在运行 `npm run build:${env}` 时，才会执行该任务。
+
+<p className="flex items-center font-bold text-red-500">
+  <RiAlarmWarningLine />
+  <span>请注意12和14行</span>
+</p>
+
+```js:./scripts/gulp/tasks/projectBuild.task.task.js {12, 14} showLineNumbers
+const through2 = require('through2')
+const { processContext, args, gulp, $, buildId } = require('../context')
+
+module.exports = () =>
+  gulp
+    .src('./_project.config.json')
+    .pipe(
+      through2.obj(function (chunk, enc, callback) {
+        const { contents } = chunk
+        const data = JSON.parse(contents.toString())
+
+        delete data.miniprogramRoot
+
+        data.projectname = buildId
+
+        data.appid = processContext.APPID
+
+        chunk.contents = Buffer.from(JSON.stringify(data), 'utf8')
+
+        this.push(chunk)
+
+        callback()
+      })
+    )
+    .pipe($.jsonFormat(2))
+    .pipe($.rename('project.config.json'))
+    .pipe(gulp.dest(args.output))
+```
+
+在 `_project.confing.json` 中，初始化了 `miniprogramRoot` `projectname` `appid`
+
+```json:_project.config.json
+{
+  "miniprogramRoot": "dist/",
+  "projectname": "${YOUR_DEFAULT_PROJECTNAME}",
+  "appid": ""
+}
+```
+
+因此在执行 `npm run start:${env}` 后，我们只需要将*根目录*导入开发者工具即可开始开发。
+
+在构建目录时，为了方便打包给测试同事以及发布线上，该任务做了三件事情：
+
+- 移除 `miniprogramRoot`
+- 将 `buildId` 设置为 `projectname`
+- 将当前环境的 `APPID` 设置为 `appid`
+
+**监听文件**
+
+运行项目时，每当新增文件、新增目录、改变文件，会执行该任务，并执行对应的任务。
+
+```js:./scripts/gulp/tasks/watch.task.task.js
+const { gulp } = require('../context')
+
+module.exports = cb => {
+  const { parallel } = gulp
+
+  gulp.watch(
+    './src/**/*.scss',
+    { delay: 300, events: ['add', 'addDir', 'change'] },
+    parallel('build:scss')
+  )
+  gulp.watch(
+    './src/**/*.wxss',
+    { delay: 300, events: ['add', 'addDir', 'change'] },
+    parallel('build:wxss')
+  )
+  gulp.watch(
+    ['./src/**/*.js'],
+    { delay: 300, events: ['add', 'addDir', 'change'] },
+    parallel('build:js')
+  )
+  gulp.watch(
+    './src/**/*.wxs',
+    { delay: 300, events: ['add', 'addDir', 'change'] },
+    parallel('build:wxs')
+  )
+  gulp.watch(
+    './src/**/*.json',
+    { delay: 300, events: ['add', 'addDir', 'change'] },
+    parallel('build:json')
+  )
+  gulp.watch(
+    './src/**/*.wxml',
+    { delay: 300, events: ['add', 'addDir', 'change'] },
+    parallel('build:wxml')
+  )
+  gulp.watch(
+    './src/**/*.!(scss|wxss|js|wxs|json|wxml|md)',
+    { delay: 300, events: ['add', 'addDir', 'change'] },
+    parallel('build:others')
+  )
+
+  cb()
+}
+```
+
+### Gulpfile.js
+
+所有的任务脚本都已经准备好了，现在将 `task` `gulpfile` `scirpts` 结合起来，
+
+在 `scripts` 中，设计了两组命令 `npm run start:${env}` 和 `npm run build:${env}`，
+
+对应的，`gulp` 也需要提供两组任务来执行这两组命令：
+
+```json:package.json
+{
+  "scripts": {
+    "start:dev" : "gulp --env=dev",
+    "start:sit" : "gulp --env=sit",
+    "start:uat" : "gulp --env=uat",
+    "start:prod": "gulp --env=prod",
+    "build:dev" : "gulp build --env=dev --output=./build --ignoreLocal",
+    "build:sit" : "gulp build --env=sit --output=./build --ignoreLocal",
+    "build:uat" : "gulp build --env=uat --output=./build --ignoreLocal",
+    "build:prod": "gulp build --env=prod --output=./build --ignoreLocal"
+  }
+}
+```
+
+```js:gulpfile.js
+const requireDir = require('require-dir')
+const { gulp } = require('./scripts/gulp/context')
+
+// 获取全部任务模块
+const tasks = requireDir('./scripts/gulp/tasks', {
+  mapKey(_, baseName) {
+    // 例: "clean.task" 转换成 "clean"
+    const [taskName] = baseName.split('.')
+
+    return taskName
+  }
+})
+
+// 注册各个子任务
+gulp.task('clean', tasks.clean)
+
+gulp.task('build:scss', tasks.scss)
+gulp.task('build:js', tasks.js)
+gulp.task('build:json', tasks.json)
+gulp.task('build:wxml', tasks.wxml)
+gulp.task('build:wxss', tasks.wxss)
+gulp.task('build:wxs', tasks.wxs)
+gulp.task('build:others', tasks.others)
+
+gulp.task('project:make', tasks.projectMake)
+gulp.task('project:build', tasks.projectBuild)
+
+gulp.task('watch', tasks.watch)
+
+gulp.task('zip', tasks.zip)
+
+// 聚合任务 gulp build
+gulp.task(
+  'build',
+  gulp.series(
+    'clean',
+    gulp.parallel(
+      'project:build',
+      'build:scss',
+      'build:js',
+      'build:json',
+      'build:wxml',
+      'build:wxss',
+      'build:wxs',
+      'build:others'
+    ),
+    'zip'
+  )
+)
+
+// 聚合任务 gulp default
+gulp.task(
+  'default',
+  gulp.series(
+    'clean',
+    gulp.parallel(
+      'project:make',
+      'build:scss',
+      'build:js',
+      'build:json',
+      'build:wxml',
+      'build:wxss',
+      'build:wxs',
+      'build:others'
+    ),
+    'watch'
+  )
+)
 ```
 
 export const MiniprgramFolderData = [
