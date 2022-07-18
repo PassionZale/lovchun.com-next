@@ -3,19 +3,32 @@ title: 'Setup Miniprgram - CI'
 createdAt: '2022-07-01'
 publishedAt: '2022-07-04'
 updatedAt: '2022-07-04'
-toc: true
 draft: false
 summary: '结合 miniprogram-ci 进行自动化上传和预览'
 tags: ['guide']
 ---
 
-import Video from '@/components/MDXComponents/Video'
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai'
 
-<Video src={'/static/images/setup-miniprogram/ci.webm'} />
+export const SupportIcon = () => (
+  <div className="flex items-center justify-center font-mono text-green-500">
+    <AiOutlineCheckCircle />
+    <span>支持</span>
+  </div>
+)
+
+export const NotSupportIcon = () => (
+  <div className="flex items-center justify-center font-mono text-red-500">
+    <AiOutlineCloseCircle />
+    <span>不支持</span>
+  </div>
+)
+
+{/* <Video src={'/static/images/setup-miniprogram/ci.webm'} /> */}
 
 > - [《Setup Miniprgram - 插件、目录、开发者工具、配置》](/posts/setup-miniprogram/part-1)
 >
->   - 推荐一些有趣且实用的 vscode插件、目录结构设计、微信开发者工具配置等
+>   - 推荐一些有趣且实用的 vscode 插件、目录结构设计、微信开发者工具配置等
 >
 > - [《Setup Miniprgram - 异常、通讯、技巧》](/posts/setup-miniprogram/part-2)
 >
@@ -29,8 +42,22 @@ import Video from '@/components/MDXComponents/Video'
 >
 >   - 结合 miniprogram-ci 进行自动化上传和预览
 
-1
+## 开发辅助
 
-2
+为了让开发者能够通过 `Node` 来控制小程序的上传、预览等功能，微信官方提供了两种开发辅助：`开发者工具(命令行/HTTP)` 和 `miniprogram-ci`
 
-3
+| 模块         |     命令行      |      HTTP       |   miniprogram-ci   |
+| :----------- | :-------------: | :-------------: | :----------------: |
+| 登录工具     | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
+| 是否登录工具 | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
+| 预览         | <SupportIcon /> | <SupportIcon /> |  <SupportIcon />   |
+| 上传代码     | <SupportIcon /> | <SupportIcon /> |  <SupportIcon />   |
+| 自动预览     | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
+| 构建 npm     | <SupportIcon /> | <SupportIcon /> |  <SupportIcon />   |
+| 清除缓存     | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
+| 启动工具     | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
+| 打开其他项目 | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
+| 关闭项目窗口 | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
+| 关闭工具     | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
+
+`开发者工具(命令行/HTTP)` 功能丰富，支持面广，~~**什么都好，就是一点都不好用！**~~
