@@ -31,7 +31,11 @@ import { RiAlarmWarningLine } from 'react-icons/ri'
 >
 >   - 实际项目中，如何实用 Gulpjs 组装小程序开发框架，如何设计脚本目录，如何编写 Gulp Task
 >
-> - [《Setup Miniprgram - CI》](/posts/setup-miniprogram/part-4)
+> - [《Setup Miniprgram - Generator》](/posts/setup-miniprogram/part-4)
+>
+>   - 使用 gulp 增强你的工作流，制作一套页面和组件的生成器
+>
+> - [《Setup Miniprgram - CI》](/posts/setup-miniprogram/part-5)
 >
 >   - 结合 miniprogram-ci 进行自动化上传和预览
 
@@ -686,44 +690,6 @@ export const structure = [
     name: 'scripts',
     expand: true,
     childrens: [
-      {
-        type: 'folder',
-        name: 'generator',
-        expand: true,
-        help: '生成器：创建组件、页面、分包等',
-        childrens: [
-          {
-            type: 'folder',
-            name: 'tmp',
-            childrens: [
-              {
-                type: 'folder',
-                name: 'component',
-                help: '组件模板',
-                childrens: [
-                  { type: 'file', name: 'tpl.js' },
-                  { type: 'file', name: 'tpl.json' },
-                  { type: 'file', name: 'tpl.md' },
-                  { type: 'file', name: 'tpl.scss' },
-                  { type: 'file', name: 'tpl.wxml' },
-                ],
-              },
-              {
-                type: 'folder',
-                name: 'page',
-                help: '页面模板',
-                childrens: [
-                  { type: 'file', name: 'tpl.js' },
-                  { type: 'file', name: 'tpl.json' },
-                  { type: 'file', name: 'tpl.scss' },
-                  { type: 'file', name: 'tpl.wxml' },
-                ],
-              },
-            ],
-          },
-          { type: 'file', name: 'index.js' },
-        ],
-      },
       {
         type: 'folder',
         name: 'gulp',
