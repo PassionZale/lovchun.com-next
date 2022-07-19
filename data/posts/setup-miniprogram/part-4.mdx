@@ -1,31 +1,19 @@
 ---
-title: 'Setup Miniprgram - CI'
+title: 'Setup Miniprgram - Page Component Generator'
 createdAt: '2022-07-01'
 publishedAt: '2022-07-04'
 updatedAt: '2022-07-04'
 draft: false
-summary: '结合 miniprogram-ci 进行自动化上传和预览'
+summary: '使用 gulp 增强你的工作流，制作一套页面和组件的生成器'
 tags: ['guide']
 ---
 
-import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai'
-import Tree from '@/components/MDXComponents/Tree'
-
-export const SupportIcon = () => (
-  <div className="flex items-center justify-center font-mono text-green-700">
-    <AiOutlineCheckCircle />
-    <span>支持</span>
-  </div>
-)
-
-export const NotSupportIcon = () => (
-  <div className="flex items-center justify-center font-mono text-red-500">
-    <AiOutlineCloseCircle />
-    <span>不支持</span>
-  </div>
-)
-
-{/* <Video src={'/static/images/setup-miniprogram/ci.webm'} /> */}
+<Image
+  src={'/static/images/setup-miniprogram/gulp-enhance-your-work-flow.png'}
+  width={1000}
+  height={346}
+  alt="gulp-enhance-your-work-flow"
+/>
 
 > - [《Setup Miniprgram - 插件、目录、开发者工具、配置》](/posts/setup-miniprogram/part-1)
 >
@@ -39,120 +27,10 @@ export const NotSupportIcon = () => (
 >
 >   - 实际项目中，如何实用 Gulpjs 组装小程序开发框架，如何设计脚本目录，如何编写 Gulp Task
 >
-> - :rainbow: [《Setup Miniprgram - CI》](/posts/setup-miniprogram/part-4)
+> - :rainbow: [《Setup Miniprgram - Page Component Generator》](/posts/setup-miniprogram/part-4)
+>
+>   - 使用 gulp 增强你的工作流，制作一套页面和组件的生成器
+>
+> - [《Setup Miniprgram - CI》](/posts/setup-miniprogram/part-5)
 >
 >   - 结合 miniprogram-ci 进行自动化上传和预览
-
-## 开发辅助
-
-为了让开发者能够通过 `Node` 来控制小程序的上传、预览等功能，微信官方提供了两种开发辅助：`开发者工具(命令行/HTTP)` 和 `miniprogram-ci`
-
-| 模块         |     命令行      |      HTTP       |   miniprogram-ci   |
-| :----------- | :-------------: | :-------------: | :----------------: |
-| 登录工具     | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
-| 是否登录工具 | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
-| 预览         | <SupportIcon /> | <SupportIcon /> |  <SupportIcon />   |
-| 上传代码     | <SupportIcon /> | <SupportIcon /> |  <SupportIcon />   |
-| 自动预览     | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
-| 构建 npm     | <SupportIcon /> | <SupportIcon /> |  <SupportIcon />   |
-| 清除缓存     | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
-| 启动工具     | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
-| 打开其他项目 | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
-| 关闭项目窗口 | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
-| 关闭工具     | <SupportIcon /> | <SupportIcon /> | <NotSupportIcon /> |
-
-`开发者工具(命令行/HTTP)` 功能丰富，支持面广，~~**什么都好，就是一点都不好用！**~~
-
-- 需要先开启 `HTTP` 服务端口；
-- 关闭项目、打开其他项目等功能，在 `Windows` `MacOS` `MacOS ARM64` 表现不一致；
-- 通过脚本改写 `project.config.json` 属性后，需要清除缓存，再调用预览等功能；
-- `Windows` 下拼接 `cli` `端口号` 安装路径不统一；
-
-如果你想封装一个 `package` 提供给他人使用，不通平台的兼容性、安装路径的初始化就能直接劝退大部分使用者，
-
-尤其是略懂前端的测试同事、完全不懂开发的产品和运营同事。
-
-## 构建 NPM
-
-> 小程序引入 `npm packages` 时，千万小心你的主包大小！
->
-> - 构建 npm 后的 package 都会被计算在主包内
-> - 构建 npm 时只会构建 `dependencies` 中的 `package`
-> - 使用 `npm i dayjs --save --only=production` 来减少体积
-
-```json:package.json
-{
-  "dependencies": {
-    "dayjs": "^1.9.7"
-  }
-}
-```
-
-结合 `packageJsonPath` `miniprogramNpmDistDir` 来自定义 `miniprogram_npm` 输出目录
-
-```json:project.config.json {5,6}
-{
-  "setting": {
-    "packNpmRelationList": [
-      {
-        "packageJsonPath": "./package.json",
-        "miniprogramNpmDistDir": "./src/"
-      }
-    ]
-  }
-}
-```
-
-```diff:.gitignore
-node_modules
-+ src/miniprogram_npm
-```
-
-目录结构示例如下：
-
-<Tree data={structure} />
-
-export const structure = [
-  {
-    type: 'folder',
-    name: 'node_modules',
-    disabled: true,
-  },
-  {
-    type: 'folder',
-    name: 'src',
-    expand: true,
-    childrens: [
-      {
-        type: 'folder',
-        name: 'miniprogram_npm',
-        disabled: true,
-        expand: true,
-        childrens: [
-          {
-            type: 'folder',
-            name: 'dayjs',
-            help: '假设项目中依赖 dayjs',
-            disabled: true,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    type: 'file',
-    name: 'project.config.json',
-    icon: 'json',
-  },
-  {
-    type: 'file',
-    name: 'package.json',
-  },
-    {
-    type: 'file',
-    name: '.gitignore',
-    icon: 'git'
-  },
-]
-
-## MINIPROGRAM-CI

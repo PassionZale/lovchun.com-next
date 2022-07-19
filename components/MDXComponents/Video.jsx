@@ -23,7 +23,7 @@ const Video = ({ src, ...props }) => {
   return (
     <div className="relative overflow-auto rounded-xl">
       <video
-        className="aspect-video w-full rounded-lg shadow-lg"
+        className="aspect-video w-full rounded-lg shadow-lg mt-0"
         controls
         {...props}
       >
