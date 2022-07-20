@@ -49,9 +49,13 @@ script => args => load folder => output folder
 
 并且在迁移时，还要自动的更新 `app.json`，将新增的`主包` `分包` `页面` 等维护在配置文件中。
 
+> 可以依据项目实际情况，将一切你认为需要初始化的东西全部写在模板装
+
 <Tree data={structure} />
 
-## COMPONENT
+## Component
+
+<Video src={'/static/videos/setup-miniprogram/make-component.webm'} />
 
 ```js:component/tmp.js
 /**
@@ -142,7 +146,9 @@ N/A
 </view>
 ```
 
-## PAGE
+## Page
+
+<Video src={'/static/videos/setup-miniprogram/make-page.webm'} />
 
 ```js:page/tmp.js
 /**
@@ -222,8 +228,6 @@ Page({
   <!-- @echo FILENAME -->
 </view>
 ```
-
-> 可以依据项目实际情况，将一切你认为需要初始化的东西全部写在模板装
 
 ## SCRIPTS
 
@@ -462,10 +466,6 @@ function generateAppJson() {
   })
 }
 ```
-
-<Video src={'/static/videos/setup-miniprogram/make-component.webm'} />
-
-<Video src={'/static/videos/setup-miniprogram/make-page.webm'} />
 
 export const structure = [
   {
