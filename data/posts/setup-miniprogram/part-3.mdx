@@ -1,12 +1,12 @@
 ---
 title: 'Setup Miniprgram - 框架、Gulpjs、Task'
 createdAt: '2022-07-01'
-publishedAt: '2022-07-03'
-updatedAt: '2022-07-03'
+publishedAt: '2022-07-09'
+updatedAt: '2022-07-09'
 toc: true
 draft: false
 summary: '实际项目中，如何实用 Gulpjs 组装小程序开发框架，如何设计脚本目录，如何编写 Gulp Task'
-tags: ['guide']
+tags: ['guide', '微信小程序']
 ---
 
 import Tree from '@/components/MDXComponents/Tree'
@@ -21,7 +21,7 @@ import { RiAlarmWarningLine } from 'react-icons/ri'
 
 > - [《Setup Miniprgram - 插件、目录、开发者工具、配置》](/posts/setup-miniprogram/part-1)
 >
->   - 推荐一些有趣且实用的 vscode插件、目录结构设计、微信开发者工具配置等
+>   - 推荐一些有趣且实用的 vscode 插件、目录结构设计、微信开发者工具配置等
 >
 > - [《Setup Miniprgram - 异常、通讯、技巧》](/posts/setup-miniprogram/part-2)
 >
@@ -30,6 +30,14 @@ import { RiAlarmWarningLine } from 'react-icons/ri'
 > - :rainbow: [《Setup Miniprgram - 框架、Gulpjs、Task》](/posts/setup-miniprogram/part-3)
 >
 >   - 实际项目中，如何实用 Gulpjs 组装小程序开发框架，如何设计脚本目录，如何编写 Gulp Task
+>
+> - [《Setup Miniprgram - Generator》](/posts/setup-miniprogram/part-4)
+>
+>   - 使用 gulp 增强你的工作流，制作一套页面和组件的生成器
+>
+> - [《Setup Miniprgram - CI》](/posts/setup-miniprogram/part-5)
+>
+>   - 结合 miniprogram-ci 进行自动化上传和预览
 
 ## 框架
 
@@ -138,6 +146,8 @@ const ENV_BRANCH_MAPS = {
 }
 ```
 
+<Video src={'/static/videos/setup-miniprogram/local-dev.webm'} />
+
 **构建**
 
 > 环境构建时，以 remote env-branch 分支进行打包
@@ -151,15 +161,7 @@ const ENV_BRANCH_MAPS = {
 }
 ```
 
-**模板**
-
-> 使用脚本自动创建小程序组件或页面
-
-```json
-{
-  "make": "制作组件或页面"
-}
-```
+<Video src={'/static/videos/setup-miniprogram/env-build.webm'} />
 
 ### 依赖
 
@@ -688,44 +690,6 @@ export const structure = [
     name: 'scripts',
     expand: true,
     childrens: [
-      {
-        type: 'folder',
-        name: 'generator',
-        expand: true,
-        help: '生成器：创建组件、页面、分包等',
-        childrens: [
-          {
-            type: 'folder',
-            name: 'tmp',
-            childrens: [
-              {
-                type: 'folder',
-                name: 'component',
-                help: '组件模板',
-                childrens: [
-                  { type: 'file', name: 'tpl.js' },
-                  { type: 'file', name: 'tpl.json' },
-                  { type: 'file', name: 'tpl.md' },
-                  { type: 'file', name: 'tpl.scss' },
-                  { type: 'file', name: 'tpl.wxml' },
-                ],
-              },
-              {
-                type: 'folder',
-                name: 'page',
-                help: '页面模板',
-                childrens: [
-                  { type: 'file', name: 'tpl.js' },
-                  { type: 'file', name: 'tpl.json' },
-                  { type: 'file', name: 'tpl.scss' },
-                  { type: 'file', name: 'tpl.wxml' },
-                ],
-              },
-            ],
-          },
-          { type: 'file', name: 'index.js' },
-        ],
-      },
       {
         type: 'folder',
         name: 'gulp',

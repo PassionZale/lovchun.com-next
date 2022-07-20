@@ -1,22 +1,22 @@
 ---
 title: 'Setup Miniprgram - 插件、目录、开发者工具、配置'
 createdAt: '2022-07-01'
-publishedAt: '2022-07-01'
-updatedAt: '2022-07-01'
-toc: false
+publishedAt: '2022-07-02'
+updatedAt: '2022-07-03'
+toc: true
 draft: false
 summary: '推荐一些有趣且实用的 vscode插件、目录结构设计、微信开发者工具配置等'
-tags: ['guide']
+tags: ['guide', '微信小程序']
 ---
 
 import Tree from '@/components/MDXComponents/Tree'
 import { RiAlarmWarningLine } from 'react-icons/ri'
 
 <Image
-  src={'/static/images/setup-miniprogram/banner.jpeg'}
-  width={1417}
-  height={667}
-  alt="架构、框架、组件"
+  src={'/static/images/setup-miniprogram/miniprogram.jpeg'}
+  width={720}
+  height={400}
+  alt="插件、目录、开发者工具、配置"
 />
 
 > - :rainbow: [《Setup Miniprgram - 插件、目录、开发者工具、配置》](/posts/setup-miniprogram/part-1)
@@ -30,6 +30,14 @@ import { RiAlarmWarningLine } from 'react-icons/ri'
 > - [《Setup Miniprgram - 框架、Gulpjs、Task》](/posts/setup-miniprogram/part-3)
 >
 >   - 实际项目中，如何实用 Gulpjs 组装小程序开发框架，如何设计脚本目录，如何编写 Gulp Task
+>
+> - [《Setup Miniprgram - Generator》](/posts/setup-miniprogram/part-4)
+>
+>   - 使用 gulp 增强你的工作流，制作一套页面和组件的生成器
+>
+> - [《Setup Miniprgram - CI》](/posts/setup-miniprogram/part-5)
+>
+>   - 结合 miniprogram-ci 进行自动化上传和预览
 
 ## VSCode 插件
 
@@ -246,7 +254,7 @@ API_BASEPATH=${YOUR_API_PATH}
 4. `Commonjs` 最大弊端 “循环加载”，会导致你必须在使用处进行 `require(module)`，而不能在代码首行引入模块；
 5. `project.config.json` 是非常重要的工程配置，不仅会影响本地开发者工具，还会影响小程序的发布上传，通常该文件被追踪提交，开发成员相互篡改、相互覆盖，没有标准化；
 
-**[`gulp-preprocess`](https://github.com/pioug/gulp-preprocess)**
+### [gulp-preprocess](https://github.com/pioug/gulp-preprocess)
 
 通过读取并收集 `env.*`，在 Gulp Task 中注入环境变量，便可在 `runtime` 期间通过脚本读取不通的环境来切换对应的环境变量。
 
@@ -266,7 +274,7 @@ export const APPID = '/* @echo APPID */' || ''
 export const API_BASEPATH = '/* @echo API_BASEPATH */' || ''
 ```
 
-**[`gulp-alias`](https://github.com/pengzhanbo/gulp-miniprogram-path-alias)**
+### [gulp-alias](https://github.com/pengzhanbo/gulp-miniprogram-path-alias)
 
 > 注入 alias 配置
 
@@ -312,7 +320,7 @@ const userHelper = require('@/_shared/helper/user')
 <image src="@/_shared/images/test.png" />
 ```
 
-**[`gulp-dart-sass`](https://github.com/mattdsteele/gulp-dart-sass)(())
+### [gulp-dart-sass](https://github.com/mattdsteele/gulp-dart-sass)
 
 使用 `dart-sass` 来处理 `*.scss`，并迁移为 `*.wxss`
 
