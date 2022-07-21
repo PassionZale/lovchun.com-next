@@ -1,55 +1,52 @@
 import { allPosts } from 'contentlayer/generated'
-
-import MDXLayoutRenderer from '@/components/MDXComponents'
-import Profile from '@/components/Profile'
-import { CommonSEO } from '@/components/SEO'
+import { pick } from '@contentlayer/client'
 
 const posts = allPosts
   .filter((post) => !post.draft)
-  .sort(
-    (a, b) => Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt))
+  .sort((a, b) =>
+    Number(new Date(a.publishedAt) - Number(new Date(b.publishedAt)))
   )
 
 export const getStaticPaths = async () => {
-  const tags = posts.reduce((acc, cur) => {
-    cur.tags
-
-    return acc
+  const allTags = posts.reduce((acc, cur) => {
+    return [...acc, ...cur.tags]
   }, [])
 
+  const tags = [...new Set(allTags)]
+
   return {
-    paths: tags.map((tag) => ({ params: { slug: tag.slug.split('/') } })),
+    paths: tags.map((tag) => ({ params: { slug: [tag] } })),
     fallback: false,
   }
 }
 
 export const getStaticProps = async ({ params }) => {
-  const tag = tags.find((item) => item.slug === params.slug.join('/'))
+  const [tag] = params.slug
 
-  console.log(tag)
+  const postsOfTag = posts
+    .filter((post) => post.tags.indexOf(tag) > -1)
+    .map((post) => {
+      return pick(post, ['publishedAt', 'title', 'slug', 'summary'])
+    })
 
   return {
     props: {
-      tag,
+      posts: postsOfTag,
       key: params.slug,
     },
   }
 }
 
-export const Page = ({ tag }) => {
-  const {
-    frontMatter,
-    body: { code: mdxSource },
-  } = tag
-
+export const Page = ({ posts }) => {
   return (
-    <>
-      <CommonSEO {...frontMatter} />
-
-      <Profile />
-
-      <MDXLayoutRenderer mdxSource={mdxSource} frontMatter={frontMatter} />
-    </>
+    <div>
+      {posts.map((item) => (
+        <div key={item.slug}>
+          <h1>{item.title}</h1>
+          <p>{item.summary}</p>
+        </div>
+      ))}
+    </div>
   )
 }
 
