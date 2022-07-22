@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router'
+
 import Tag from '@/components/Tag'
 import { getDateString, msToString } from '@/lib/dataTransform'
 import useMounted from '@/lib/hooks/useMounted'
@@ -17,11 +19,15 @@ const DisplayPublishDateAndReadingTime = ({ publishedAt, readTime }) => {
 }
 
 const DisplayTags = ({ tags }) => {
+  const router = useRouter()
+
   if (tags.length) {
     return (
       <div className="mt-2 flex space-x-2">
         {tags.map((item, index) => (
-          <Tag key={index}>#{item}</Tag>
+          <Tag onClick={() => router.push(`/tags/${item}`)} key={index}>
+            #{item}
+          </Tag>
         ))}
       </div>
     )

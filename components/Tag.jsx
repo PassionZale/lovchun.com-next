@@ -1,7 +1,13 @@
-const Tag = ({ children }) => {
-  // TODO tag 点击
+const Tag = ({ children, onClick }) => {
+  const handleClick = () => {
+    onClick && onClick()
+  }
+
   return (
-    <button className="rounded-full text-xs bg-cyan-500 px-2 font-semibold text-white shadow-sm">
+    <button
+      onClick={handleClick}
+      className="rounded-full bg-cyan-500 px-2 text-xs font-semibold text-white shadow-sm"
+    >
       {children}
     </button>
   )
