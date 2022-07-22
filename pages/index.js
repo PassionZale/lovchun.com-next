@@ -1,13 +1,11 @@
-import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { useCallback } from 'react'
 
 import { allPosts } from 'contentlayer/generated'
 import { pick } from '@contentlayer/client'
 
-import { getDateString } from '@/lib/dataTransform'
 import { SiteSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
+import PostItem from '@/components/PostItem'
 
 export const getStaticProps = () => {
   const posts = allPosts
@@ -21,29 +19,6 @@ export const getStaticProps = () => {
   return { props: { posts } }
 }
 
-const PostItem = ({ title, publishedAt, slug, summary }) => {
-  const router = useRouter()
-
-  const handlePostTitleClick = useCallback(() => {
-    router.push(`/posts/${slug}`)
-  }, [router, slug])
-
-  return (
-    <div className="mb-10">
-      <small dangerouslySetInnerHTML={{ __html: getDateString(publishedAt) }} />
-
-      <h2
-        className="mt-0 mb-2 cursor-pointer hover:underline hover:underline-offset-8"
-        onClick={handlePostTitleClick}
-      >
-        {title}
-      </h2>
-
-      <p className="my-0">{summary}</p>
-    </div>
-  )
-}
-
 export const Page = ({ posts }) => {
   return (
     <>
@@ -55,7 +30,7 @@ export const Page = ({ posts }) => {
             <a className="font-semibold no-underline">
               <h2 className="my-0 flex items-center">
                 Hi
-                <span className='wave'>👋</span>
+                <span className="wave">👋</span>
               </h2>
             </a>
           </Link>
@@ -68,7 +43,7 @@ export const Page = ({ posts }) => {
         <PostItem key={post.slug} {...post} />
       ))}
 
-      <div className="border-t"/>
+      <div className="border-t" />
     </>
   )
 }
