@@ -19,8 +19,8 @@ const TAGS = [
     ogImage: '',
   },
   {
-    title: '微信小程序',
-    description: '小程序的开发经验总结',
+    title: 'miniprogram',
+    description: '一些小程序的开发经验',
     ogType: 'tag',
     ogImage: '/static/tags/miniprogram.png',
   },
