@@ -10,7 +10,7 @@ const TAGS = [
     description:
       '一些教程，不保证完全正确，但是它们都在至少三个项目的生产环境中运行过',
     ogType: 'tag',
-    ogImage: '/static/images/tags/guide.png',
+    ogImage: '/static/tags/guide.png',
   },
   {
     title: 'read',
@@ -22,7 +22,7 @@ const TAGS = [
     title: '微信小程序',
     description: '小程序的开发经验总结',
     ogType: 'tag',
-    ogImage: '/static/images/tags/miniprogram.png',
+    ogImage: '/static/tags/miniprogram.png',
   },
 ]
 
