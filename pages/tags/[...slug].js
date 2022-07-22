@@ -1,6 +1,11 @@
 import { allPosts } from 'contentlayer/generated'
 import { pick } from '@contentlayer/client'
 
+import { CommonSEO } from '@/components/SEO'
+import Profile from '@/components/Profile'
+import PostItem from '@/components/PostItem'
+import TAGS from '@/configs/tags.config'
+
 const posts = allPosts
   .filter((post) => !post.draft)
   .sort((a, b) =>
@@ -23,6 +28,8 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }) => {
   const [tag] = params.slug
 
+  const metaData = TAGS.find((item) => item.title === tag)
+
   const postsOfTag = posts
     .filter((post) => post.tags.indexOf(tag) > -1)
     .map((post) => {
@@ -31,22 +38,34 @@ export const getStaticProps = async ({ params }) => {
 
   return {
     props: {
+      tag,
+      metaData,
       posts: postsOfTag,
       key: params.slug,
     },
   }
 }
 
-export const Page = ({ posts }) => {
+export const Page = ({ tag, metaData, posts }) => {
+  console.log(tag)
   return (
-    <div>
-      {posts.map((item) => (
-        <div key={item.slug}>
-          <h1>{item.title}</h1>
-          <p>{item.summary}</p>
-        </div>
+    <>
+      <CommonSEO {...metaData} />
+
+      <Profile />
+
+      <div className="mb-10 flex items-center rounded-full bg-sky-400/10 py-1 px-3 text-xs font-medium leading-5 text-sky-600 hover:bg-sky-400/20 dark:text-sky-400">
+        <span className="mr-2 font-bold">#{tag}#</span> 共{posts.length}篇文章
+      </div>
+
+      <blockquote>{metaData.description}</blockquote>
+
+      {posts.map((post) => (
+        <PostItem key={post.slug} {...post} />
       ))}
-    </div>
+
+      <div className="border-t" />
+    </>
   )
 }
 

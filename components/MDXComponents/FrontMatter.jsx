@@ -26,7 +26,7 @@ const DisplayTags = ({ tags }) => {
       <div className="mt-2 flex space-x-2">
         {tags.map((item, index) => (
           <Tag onClick={() => router.push(`/tags/${item}`)} key={index}>
-            #{item}
+            #{item}#
           </Tag>
         ))}
       </div>
