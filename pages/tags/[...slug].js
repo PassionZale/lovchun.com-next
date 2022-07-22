@@ -47,7 +47,6 @@ export const getStaticProps = async ({ params }) => {
 }
 
 export const Page = ({ tag, metaData, posts }) => {
-  console.log(tag)
   return (
     <>
       <CommonSEO {...metaData} />
