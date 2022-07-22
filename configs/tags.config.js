@@ -7,9 +7,16 @@ const TAGS = [
   },
   {
     title: 'guide',
-    description: '一些教程，不保证完全正确，但是它们都在至少三个项目的生产环境中运行过',
+    description:
+      '一些教程，不保证完全正确，但是它们都在至少三个项目的生产环境中运行过',
     ogType: 'tag',
     ogImage: '/static/images/tags/guide.png',
+  },
+  {
+    title: 'read',
+    description: '多读书，吃饱饭',
+    ogType: 'tag',
+    ogImage: '',
   },
   {
     title: '微信小程序',
