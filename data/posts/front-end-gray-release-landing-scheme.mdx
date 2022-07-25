@@ -15,12 +15,20 @@ tags: ['guide']
   alt="nginx ingress"
 />
 
+> 基于 `Nginx Ingress Controller` 使用 `canary-*` 注解完成前端灰度与基线的流量转发：
+> - 一部分用户继续使用老版本的服务，
+> - 将一部分用户的流量切换到新版本，
+> - 如果新版本运行稳定，则逐步将所有用户迁移到新版本。
+
 ## Ingress
 
-`Ingress` 是对集群中服务的外部访问进行管理的 API 对象，典型的访问方式是 HTTP。
+### 概念
 
-`Ingress` 可以提供负载均衡、SSL 终结和基于名称的虚拟托管。
+- `Ingress` 是对集群中服务的外部访问进行管理的 API 对象，典型的访问方式是 HTTP。
 
+- `Ingress` 可以提供负载均衡、SSL 终结和基于名称的虚拟托管。
+
+### 术语
 
 - 节点（Node）: Kubernetes 集群中的一台工作机器，是集群的一部分。
 - 集群（Cluster）: 一组运行由 Kubernetes 管理的容器化应用程序的节点。 在此示例和在大多数常见的 Kubernetes 部署环境中，集群中的节点都不在公共网络中。
@@ -28,9 +36,34 @@ tags: ['guide']
 - 集群网络（Cluster Network）: 一组逻辑的或物理的连接，根据 Kubernetes 网络模型在集群内实现通信。
 - 服务（Service）：Kubernetes 服务（Service）， 使用标签选择器（selectors）辨认一组 Pod。 除非另有说明，否则假定服务只具有在集群网络中可路由的虚拟 IP。
 
+**一个最简单的示例（将全部流量转发到同一个服务）**
+
 <Image
   src={'/static/images/front-end-gray-release-landing-scheme/ingress.svg'}
   width={683}
   height={224}
   alt="ingress"
 />
+
+## Annotation
+
+```nginx
+server {
+  listen 80;
+  server_name localhost;
+  root /usr/share/app;
+  index index.php index.html index.htm;
+
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+
+  location ~ \.(css|js|gif|jpg|jpeg|png|bmp|swf|ttf|woff|otf|ttc|pfa)$ {
+    expires 30d;
+  }
+
+  location ~ \.(html|htm)$ {
+    add_header Cache-Control "no-store, no-cache, must-relalidate";
+  }
+}
+```
