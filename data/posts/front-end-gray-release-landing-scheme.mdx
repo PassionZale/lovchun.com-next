@@ -4,17 +4,29 @@ createdAt: '2022-07-22'
 publishedAt: '2022-07-23'
 updatedAt: '2022-07-23'
 draft: false
-summary: 'canary-* Annotation'
+summary: '基于 Nginx Ingress Controller 使用 canary-* 注解完成前端灰度与基线的流量转发'
 tags: ['guide']
 ---
+
+<Image
+  src={'/static/images/front-end-gray-release-landing-scheme/nginx-ingress.png'}
+  width={1000}
+  height={580}
+  alt="nginx ingress"
+/>
+
+## Ingress
+
+`Ingress` 是对集群中服务的外部访问进行管理的 API 对象，典型的访问方式是 HTTP。
+
+`Ingress` 可以提供负载均衡、SSL 终结和基于名称的虚拟托管。
+
 
 - 节点（Node）: Kubernetes 集群中的一台工作机器，是集群的一部分。
 - 集群（Cluster）: 一组运行由 Kubernetes 管理的容器化应用程序的节点。 在此示例和在大多数常见的 Kubernetes 部署环境中，集群中的节点都不在公共网络中。
 - 边缘路由器（Edge Router）: 在集群中强制执行防火墙策略的路由器。可以是由云提供商管理的网关，也可以是物理硬件。
 - 集群网络（Cluster Network）: 一组逻辑的或物理的连接，根据 Kubernetes 网络模型在集群内实现通信。
 - 服务（Service）：Kubernetes 服务（Service）， 使用标签选择器（selectors）辨认一组 Pod。 除非另有说明，否则假定服务只具有在集群网络中可路由的虚拟 IP。
-
-{*https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#canary*}
 
 <Image
   src={'/static/images/front-end-gray-release-landing-scheme/ingress.svg'}
