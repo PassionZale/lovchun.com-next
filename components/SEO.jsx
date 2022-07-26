@@ -19,7 +19,14 @@ export const CommonSEO = ({ title, description, ogType, ogImage }) => {
       <meta property="og:site_name" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:title" content={title} />
-      <meta property="og:image" content={ogImage || websiteConfigs.avatar} />
+      {Array.isArray(ogImage) && ogImage.length ? (
+        ogImage.map((url) => (
+          <meta property="og:image" content={url} key={url} />
+        ))
+      ) : (
+        <meta property="og:image" content={ogImage || websiteConfigs.avatar} />
+      )}
+
       <meta
         property="og:url"
         content={`${websiteConfigs.domain}${router.asPath}`}
@@ -39,7 +46,7 @@ export const SiteSEO = () => {
   )
 }
 
-export const PageSEO = ({ title, summary, publishedAt, updatedAt }) => {
+export const PageSEO = ({ title, summary, images, publishedAt, updatedAt }) => {
   const router = useRouter()
   const publishedTime = publishedAt
     ? new Date(publishedAt).toISOString()
@@ -51,7 +58,7 @@ export const PageSEO = ({ title, summary, publishedAt, updatedAt }) => {
 
   return (
     <>
-      <CommonSEO title={title} description={summary} ogType="article" />
+      <CommonSEO title={title} description={summary} ogImage={images} ogType="article" />
       <Head>
         {publishedTime && (
           <meta property="article:published_time" content={publishedTime} />
