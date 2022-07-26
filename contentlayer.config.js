@@ -31,6 +31,12 @@ const CommonFields = {
     description: '标签',
     required: true,
   },
+  images: {
+    type: 'list',
+    of: { type: 'string' },
+    description: 'ogImage',
+    required: false,
+  },
 }
 
 const CommonComputedFields = {
@@ -45,6 +51,7 @@ const CommonComputedFields = {
       draft,
       summary,
       tags,
+      images,
     }) => ({
       title,
       createdAt,
@@ -54,6 +61,7 @@ const CommonComputedFields = {
       draft,
       summary,
       tags,
+      images,
     }),
   },
 
