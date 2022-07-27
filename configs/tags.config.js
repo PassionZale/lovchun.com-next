@@ -1,31 +1,31 @@
-// TODO alias support
+// TODO slug support
 
 const TAGS = [
   {
-    title: 'life',
-    alias: 'life',
+    title: '生活',
+    slug: 'life',
     description: '我的生活',
     ogType: 'tag',
     ogImage: '/static/tags/life.png',
   },
   {
-    title: 'guide',
-    alias: 'guide',
+    title: '指南',
+    slug: 'guide',
     description:
-      '一些教程，不保证完全正确，但是它们都运行在生产环境，并实战于至少三个项目',
+      '一些指南，不保证完全正确，但是它们都运行在生产环境，并实战于至少三个项目',
     ogType: 'tag',
     ogImage: '/static/tags/guide.png',
   },
   {
-    title: 'read',
-    alias: 'read',
+    title: '阅读',
+    slug: 'read',
     description: '多读书，吃饱饭',
     ogType: 'tag',
     ogImage: '/static/tags/read.png',
   },
   {
-    title: 'miniprogram',
-    alias: 'miniprogram',
+    title: '微信小程序',
+    slug: 'miniprogram',
     description: '一些小程序的开发经验',
     ogType: 'tag',
     ogImage: '/static/tags/miniprogram.png',

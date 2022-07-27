@@ -4,7 +4,7 @@ import { pick } from '@contentlayer/client'
 import { CommonSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
 import PostItem from '@/components/PostItem'
-import TAGS from '@/configs/tags.config'
+import tagsConfigs from '@/configs/tags.config'
 
 const posts = allPosts
   .filter((post) => !post.draft)
@@ -13,25 +13,33 @@ const posts = allPosts
   )
 
 export const getStaticPaths = async () => {
-  const allTags = posts.reduce((acc, cur) => {
+  const allTagTitles = posts.reduce((acc, cur) => {
     return [...acc, ...cur.tags]
   }, [])
 
-  const tags = [...new Set(allTags)]
+  const tagTitles = [...new Set(allTagTitles)]
+
+  const tagSlugs = tagTitles.reduce((acc, cur) => {
+    const found = tagsConfigs.find((tag) => tag.title === cur)
+
+    if (found) acc.push(found.slug)
+
+    return acc
+  }, [])
 
   return {
-    paths: tags.map((tag) => ({ params: { slug: [tag] } })),
+    paths: tagSlugs.map((slug) => ({ params: { slug: [slug] } })),
     fallback: false,
   }
 }
 
 export const getStaticProps = async ({ params }) => {
-  const [tag] = params.slug
+  const [tagSlug] = params.slug
 
-  const metaData = TAGS.find((item) => item.title === tag)
+  const tag = tagsConfigs.find((item) => item.slug === tagSlug)
 
   const postsOfTag = posts
-    .filter((post) => post.tags.indexOf(tag) > -1)
+    .filter((post) => post.tags.indexOf(tag.title) > -1)
     .map((post) => {
       return pick(post, ['publishedAt', 'title', 'slug', 'summary'])
     })
@@ -39,25 +47,24 @@ export const getStaticProps = async ({ params }) => {
   return {
     props: {
       tag,
-      metaData,
       posts: postsOfTag,
       key: params.slug,
     },
   }
 }
 
-export const Page = ({ tag, metaData, posts }) => {
+export const Page = ({ tag, posts }) => {
   return (
     <>
-      <CommonSEO {...metaData} />
+      <CommonSEO {...tag} />
 
       <Profile />
 
       <div className="mb-10 flex items-center rounded-full bg-sky-400/10 py-1 px-3 text-xs font-medium leading-5 text-sky-600 hover:bg-sky-400/20 dark:text-sky-400">
-        <span className="mr-2 font-bold">#{tag}#</span> 共{posts.length}篇文章
+        <span className="mr-2 font-bold">#{tag.title}#</span> 共{posts.length}篇文章
       </div>
 
-      <blockquote>{metaData.description}</blockquote>
+      <blockquote>{tag.description}</blockquote>
 
       {posts.map((post) => (
         <PostItem key={post.slug} {...post} />

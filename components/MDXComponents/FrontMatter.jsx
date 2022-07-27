@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import Tag from '@/components/Tag'
 import { getDateString, msToString } from '@/lib/dataTransform'
 import useMounted from '@/lib/hooks/useMounted'
+import tagsConfigs from '@/configs/tags.config'
 
 const DisplayPublishDateAndReadingTime = ({ publishedAt, readTime }) => {
   return (
@@ -21,14 +22,28 @@ const DisplayPublishDateAndReadingTime = ({ publishedAt, readTime }) => {
 const DisplayTags = ({ tags }) => {
   const router = useRouter()
 
+  const getTagSlug = (tagTitle) => {
+    const found = tagsConfigs.find((item) => item.title === tagTitle)
+
+    return found?.slug
+  }
+
   if (tags.length) {
     return (
       <div className="mt-2 flex space-x-2">
-        {tags.map((item, index) => (
-          <Tag onClick={() => router.push(`/tags/${item}`)} key={index}>
-            #{item}#
-          </Tag>
-        ))}
+        {tags.map((title, index) => {
+          const slug = getTagSlug(title)
+
+          if (slug) {
+            return (
+              <Tag onClick={() => router.push(`/tags/${slug}`)} key={index}>
+                #{title}#
+              </Tag>
+            )
+          } else {
+            return null
+          }
+        })}
       </div>
     )
   }
