@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Tag from '@/components/Tag'
 import { getDateString, msToString } from '@/lib/dataTransform'
 import useMounted from '@/lib/hooks/useMounted'
-import tagsConfigs from '@/configs/tags.config'
+import tagConfigs from '@/configs/tag.config'
 
 const DisplayPublishDateAndReadingTime = ({ publishedAt, readTime }) => {
   return (
@@ -23,7 +23,7 @@ const DisplayTags = ({ tags }) => {
   const router = useRouter()
 
   const getTagSlug = (tagTitle) => {
-    const found = tagsConfigs.find((item) => item.title === tagTitle)
+    const found = tagConfigs.find((item) => item.title === tagTitle)
 
     return found?.slug
   }

@@ -4,7 +4,7 @@ import { pick } from '@contentlayer/client'
 import { CommonSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
 import PostItem from '@/components/PostItem'
-import tagsConfigs from '@/configs/tags.config'
+import tagConfigs from '@/configs/tag.config'
 
 const posts = allPosts
   .filter((post) => !post.draft)
@@ -20,7 +20,7 @@ export const getStaticPaths = async () => {
   const tagTitles = [...new Set(allTagTitles)]
 
   const tagSlugs = tagTitles.reduce((acc, cur) => {
-    const found = tagsConfigs.find((tag) => tag.title === cur)
+    const found = tagConfigs.find((tag) => tag.title === cur)
 
     if (found) acc.push(found.slug)
 
@@ -36,7 +36,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }) => {
   const [tagSlug] = params.slug
 
-  const tag = tagsConfigs.find((item) => item.slug === tagSlug)
+  const tag = tagConfigs.find((item) => item.slug === tagSlug)
 
   const postsOfTag = posts
     .filter((post) => post.tags.indexOf(tag.title) > -1)

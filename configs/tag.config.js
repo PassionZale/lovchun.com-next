@@ -1,5 +1,3 @@
-// TODO slug support
-
 const TAGS = [
   {
     title: '生活',
