@@ -24,8 +24,8 @@
 *.pem
 
 # lock
-package-lock.json
-yarn-lock.json
+#package-lock.json
+#yarn-lock.json
 
 # debug
 npm-debug.log*
