@@ -6,11 +6,15 @@ import Video from './Video'
 import FrontMatter from './FrontMatter'
 import Edit from './Edit'
 import Pagination from './Pagination'
+import Tree from './Tree'
+import Counter from './Counter'
 
 export const DefaultMDXComponents = {
   a: Link,
   Image,
-  Video
+  Video,
+  Tree,
+  Counter
 }
 
 export const MDXLayoutRenderer = ({
