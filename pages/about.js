@@ -3,11 +3,6 @@ import { allAbouts } from 'contentlayer/generated'
 import { PageSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
-import ThemeSwitch from '@/components/ThemeSwitch'
-
-const mdxComponents = {
-  ThemeSwitch,
-}
 
 export const getStaticProps = () => {
   const [AboutMdx] = allAbouts
@@ -21,6 +16,7 @@ export const Page = ({ post }) => {
     readingTime,
     body: { code: mdxSource },
     remotePath,
+    components,
   } = post
 
   return (
@@ -32,7 +28,7 @@ export const Page = ({ post }) => {
       <MDXLayoutRenderer
         mdxSource={mdxSource}
         mdxRemote={remotePath}
-        mdxComponents={mdxComponents}
+        components={components}
         frontMatter={frontMatter}
         readingTime={readingTime}
       />

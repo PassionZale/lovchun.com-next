@@ -37,6 +37,12 @@ const CommonFields = {
     description: 'ogImage',
     required: false,
   },
+  components: {
+    type: 'list',
+    of: { type: 'string' },
+    description: '异步导入的组件集合',
+    required: false,
+  },
 }
 
 const CommonComputedFields = {

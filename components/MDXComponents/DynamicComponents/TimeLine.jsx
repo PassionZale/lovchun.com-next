@@ -27,7 +27,9 @@ const Story = ({ title, children }) => {
             <path d="M22 4L12 14.01l-3-3" />
           </g>
         </svg>
-        <p className="font-bold my-4 text-gray-900 dark:text-gray-100">{title}</p>
+        <p className="my-4 font-bold text-gray-900 dark:text-gray-100">
+          {title}
+        </p>
       </div>
       <div className="ml-6 text-gray-700 dark:text-gray-400">{children}</div>
     </>
