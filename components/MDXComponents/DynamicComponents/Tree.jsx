@@ -17,14 +17,14 @@ import {
   VscFileCode,
   VscJson,
   VscKey,
-  VscFileZip
+  VscFileZip,
 } from 'react-icons/vsc'
 import { generateUnid } from '@/lib/dataTransform'
 
 const FILE_ICONS = {
   js: <DiJavascript1 className="text-yellow-500" />,
   wxml: <DiHtml5 className="text-amber-500" />,
-  wxss: <DiCssTricks className="text-blue-500"/>,
+  wxss: <DiCssTricks className="text-blue-500" />,
   scss: <DiSass className="text-red-500" />,
   json: <VscJson className="text-yellow-500" />,
   gulp: <DiGulp className="text-red-500" />,
@@ -40,7 +40,7 @@ const FILE_ICONS = {
 
 const Help = ({ children }) => {
   return children ? (
-    <span className="pl-2 select-none text-xs italic text-[#7c7c7c] underline">
+    <span className="select-none pl-2 text-xs italic text-[#7c7c7c] underline">
       {children}
     </span>
   ) : null
@@ -67,7 +67,7 @@ const File = ({ name, help, disabled, icon }) => {
     >
       {FILE_ICONS[ext] || FILE_ICONS.default}
 
-      <span className={`pl-2 select-none ${textClassName}`}>{name}</span>
+      <span className={`select-none pl-2 ${textClassName}`}>{name}</span>
       <Help>{help}</Help>
     </div>
   )
@@ -99,12 +99,10 @@ const Folder = ({ name, expand, help, disabled, children }) => {
         onClick={() => (disabled ? '' : setIsOpen(!isOpen))}
       >
         {isOpen ? <VscFolderOpened /> : <VscFolder />}
-        <span className={`pl-2 select-none ${textClassName}`}>{name}</span>
+        <span className={`select-none pl-2 ${textClassName}`}>{name}</span>
         <Help>{help}</Help>
       </div>
-      <div className={`pl-4 overflow-hidden ${toggeClassName}`}>
-        {children}
-      </div>
+      <div className={`overflow-hidden pl-4 ${toggeClassName}`}>{children}</div>
     </>
   )
 }
@@ -136,7 +134,7 @@ const Tree = ({ data, children }) => {
   const isImparative = data && !children
 
   return (
-    <div className="rounded bg-[#1d1f21] p-4 text-sm text-[#bfc8c6] my-4">
+    <div className="my-4 rounded bg-[#1d1f21] p-4 text-sm text-[#bfc8c6]">
       {isImparative ? <TreeRecursive data={data} /> : children}
     </div>
   )
