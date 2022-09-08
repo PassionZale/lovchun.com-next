@@ -9,4 +9,108 @@ summary: 'ArrayBuffer、Blob、File、FileReader'
 tags: ['指南']
 ---
 
-## ArrayBuffer
+- FileReader 结合 input[type="file"]
+
+```js
+function previewFile() {
+  var preview = document.querySelector('img')
+  var file = document.querySelector('input[type=file]').files[0]
+  var reader = new FileReader()
+
+  if (file) {
+    // readAsDataURL 方法会读取指定的 Blob 或 File 对象
+    // 读取操作完成的时候
+    // readyStatus 变为 DONE
+
+    reader.readAsDataURL(file)
+  }
+
+  // readAsDataURL
+  // 读取操作完成的时候
+  // 会触发 loaded 事件
+  reader.addEventListener(
+    'load',
+    function () {
+      preview.src = reader.result // base64 data:image/png;base64,XXXX
+    },
+    false
+  )
+
+  // 或
+  reader.onload = function () {
+    preview.src = reader.result // base64 data:image/png;base64,XXXX
+  }
+}
+```
+
+- 原生的 base64 编码和解码 => atob & btoa
+
+a => base64
+b => 普通字符串
+
+```js
+window.btoa('lovchun.com') // bG92Y2h1bi5jb20=
+
+window.atob('bG92Y2h1bi5jb20=') // lovchun.com
+```
+
+- base64ToBlob
+
+```js
+function convertBase64ImageData(base64Url) {
+  const arr = base64Url.split(',')
+
+  const [metaData, base64Data] = arr
+
+  const contentType = metaData.match(/:(.*?);/)[1]
+
+  return {
+    base64Data,
+    contentType,
+  }
+}
+
+function base64ToBlob(base64Data, contentType = '') {
+  const byteCharacters = atob(base64Data)
+  const byteArrays = []
+  let { length } = byteCharacters
+
+  const byteArray = new Uint8Array(length)
+
+  while (length--) {
+    byteArray[n] = byteCharacters.charCodeAt(n)
+  }
+
+  const blob = new Blob([byteArray], { type: contentType })
+
+  return blob
+}
+```
+
+- downloadBlob
+
+```js
+const downloadBlob = (blob, filename) => {
+  if (window.navigator && window.navigator.msSaveOrOpenBlob) { // for IE
+    window.navigator.msSaveOrOpenBlob(blob, filename);
+    return;
+  }
+
+  let downloadLink = document.createElement('a')
+  let downloadURL = URL.createObjectURL(blob)
+
+  downloadLink.href = downloadURL
+  downloadLink.download = filename
+  downloadLink.click()
+
+  setTimeout(() => {
+    downloadLink = null
+    URL.revokeObjectURL(downloadURL)
+    downloadURL = null
+  }, 1000)
+}
+```
+
+- TODO load image
+
+https://gist.github.com/santisbon/a7c221780b528bd3ebb8
