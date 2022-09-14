@@ -7,7 +7,31 @@ draft: false
 toc: false
 summary: 'ArrayBuffer、Blob、File、FileReader'
 tags: ['指南']
+components: ['Base64']
 ---
+
+## 原生 Base64 编码和解码
+
+从 IE10+浏览器开始，所有浏览器就原生提供了 Base64 编码解码方法，不仅可以用于浏览器环境，Service Worker 环境也可以使用。
+
+它们就是 `atob` 和 `btoa`:
+
+- `a` 表示 Base64 字符串
+- `b` 表示 普通字符串
+
+```js
+window.btoa('lovchun.com') // bG92Y2h1bi5jb20=
+
+window.atob('bG92Y2h1bi5jb20=') // lovchun.com
+```
+
+## FileReader
+
+在实际开发过程中，Base64 经常会用于处理图片的预览、上传、下载等。
+
+### 选择图片后获取 Base64
+
+<Base64 />
 
 - FileReader 结合 input[type="file"]
 
@@ -28,6 +52,11 @@ function previewFile() {
   // readAsDataURL
   // 读取操作完成的时候
   // 会触发 loaded 事件
+  //   推荐使用 addEventListener() 来注册一个事件监听器，理由如下：
+
+  // 它允许为一个事件添加多个监听器。特别是对库、JavaScript 模块和其他需要兼容第三方库/插件的代码来说，这一功能很有用。
+  // 相比于 onXYZ 属性绑定来说，它提供了一种更精细的手段来控制 listener 的触发阶段。（即可以选择捕获或者冒泡）。
+  // 它对任何事件都有效，而不仅仅是 HTML 或 SVG 元素。
   reader.addEventListener(
     'load',
     function () {
@@ -91,9 +120,10 @@ function base64ToBlob(base64Data, contentType = '') {
 
 ```js
 const downloadBlob = (blob, filename) => {
-  if (window.navigator && window.navigator.msSaveOrOpenBlob) { // for IE
-    window.navigator.msSaveOrOpenBlob(blob, filename);
-    return;
+  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+    // for IE
+    window.navigator.msSaveOrOpenBlob(blob, filename)
+    return
   }
 
   let downloadLink = document.createElement('a')
