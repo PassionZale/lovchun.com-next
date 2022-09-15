@@ -3,11 +3,6 @@ import { allTimeLines } from 'contentlayer/generated'
 import { PageSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
-import TimeLine from '@/components/TimeLine'
-
-const mdxComponents = {
-  TimeLine,
-}
 
 export const getStaticProps = () => {
   const [TimeLineMdx] = allTimeLines
@@ -20,6 +15,7 @@ export const Page = ({ post }) => {
     frontMatter,
     body: { code: mdxSource },
     remotePath,
+    components
   } = post
 
   return (
@@ -31,7 +27,7 @@ export const Page = ({ post }) => {
       <MDXLayoutRenderer
         mdxSource={mdxSource}
         mdxRemote={remotePath}
-        mdxComponents={mdxComponents}
+        components={components}
         frontMatter={frontMatter}
       />
 

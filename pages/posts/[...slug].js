@@ -50,6 +50,7 @@ export const Page = ({ previous, post, next }) => {
     body: { code: mdxSource },
     remotePath,
     toc,
+    components,
   } = post
 
   return (
@@ -67,6 +68,7 @@ export const Page = ({ previous, post, next }) => {
         next={next}
         frontMatter={frontMatter}
         readingTime={readingTime}
+        components={components}
       />
 
       <InView rootMargin="140px" triggerOnce fallbackInView>

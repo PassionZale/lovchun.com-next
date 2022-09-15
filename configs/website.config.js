@@ -5,7 +5,7 @@ const WEBSITE = {
   description: "2022，三餐四季温素有趣。",
   lang: 'zh-cn',
 
-  icp: '粤ICP备16020962号-1',
+  // icp: '粤ICP备16020962号-1', 我的备案没有了 T_T
   email: 'whouu@qq.com',
   github: 'https://github.com/PassionZale',
   domain: 'https://lovchun.com',
