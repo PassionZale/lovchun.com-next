@@ -1,13 +1,12 @@
 ---
 title: 'JS 中的二进制'
 createdAt: '2022-08-17'
-publishedAt: '2022-08-21'
-updatedAt: '2022-08-21'
+publishedAt: '2022-09-14'
+updatedAt: '2022-09-14'
 draft: false
-toc: false
-summary: 'ArrayBuffer、Blob、File、FileReader'
+summary: '通过 ArrayBuffer、Blob、File、FileReader、URL 等处理 Base64 的转换，以及图片的预览、上传、下载等'
 tags: ['指南']
-components: ['Base64']
+components: ['FileInput']
 ---
 
 ## 原生 Base64 编码和解码
@@ -25,67 +24,91 @@ window.btoa('lovchun.com') // bG92Y2h1bi5jb20=
 window.atob('bG92Y2h1bi5jb20=') // lovchun.com
 ```
 
-## FileReader
+> 在实际开发过程中，Base64 经常会用于处理图片的预览、上传、下载等。
 
-在实际开发过程中，Base64 经常会用于处理图片的预览、上传、下载等。
+## 预览图片
 
-### 选择图片后获取 Base64
+<FileInput />
 
-<Base64 />
+- 监听 `<input type="file" />` 的 `onchange` 拿到选中的 `File` 对象；
 
-- FileReader 结合 input[type="file"]
+- 使用 `FileReader` 的 `readAsDataURL` 并在 `load` 事件中获取到 `data:URL` 格式的字符串（base64 编码）；
 
-```js
-function previewFile() {
-  var preview = document.querySelector('img')
-  var file = document.querySelector('input[type=file]').files[0]
-  var reader = new FileReader()
+- 将 `data:URL` 赋值到 `img.src` 即可预览图片；
 
-  if (file) {
-    // readAsDataURL 方法会读取指定的 Blob 或 File 对象
-    // 读取操作完成的时候
-    // readyStatus 变为 DONE
+```js:FileInput.jsx
+import React, { useState } from 'react'
+import Image from 'next/image'
 
-    reader.readAsDataURL(file)
+const FileInput = () => {
+  const [selectedFile, setSelectedFile] = useState(null)
+
+  const onChange = (e) => {
+    const file = e.target.files[0]
+
+    const reader = new FileReader()
+
+    if (file) {
+      reader.readAsDataURL(file)
+    }
+
+    reader.addEventListener(
+      'load',
+      () => {
+        setSelectedFile(reader.result)
+      },
+      false
+    )
   }
 
-  // readAsDataURL
-  // 读取操作完成的时候
-  // 会触发 loaded 事件
-  //   推荐使用 addEventListener() 来注册一个事件监听器，理由如下：
-
-  // 它允许为一个事件添加多个监听器。特别是对库、JavaScript 模块和其他需要兼容第三方库/插件的代码来说，这一功能很有用。
-  // 相比于 onXYZ 属性绑定来说，它提供了一种更精细的手段来控制 listener 的触发阶段。（即可以选择捕获或者冒泡）。
-  // 它对任何事件都有效，而不仅仅是 HTML 或 SVG 元素。
-  reader.addEventListener(
-    'load',
-    function () {
-      preview.src = reader.result // base64 data:image/png;base64,XXXX
-    },
-    false
+  return (
+    <form className="flex items-center space-x-6 py-6">
+      <div className="shrink-0">
+        {selectedFile && (
+          <Image
+            className="h-16 w-16 object-cover"
+            src={selectedFile}
+            alt="upload-image"
+            width={100}
+            height={100}
+          />
+        )}
+      </div>
+      <label className="block">
+        <input
+          type="file"
+          onChange={onChange}
+          className="block w-full text-sm text-gray-900 file:mr-4
+              file:rounded-full file:border-0 file:bg-cyan-500
+              file:py-2 file:px-4
+              file:text-sm file:font-semibold
+              file:text-white dark:text-gray-300
+              dark:file:bg-gray-700 dark:file:text-gray-400
+            "
+        />
+      </label>
+    </form>
   )
-
-  // 或
-  reader.onload = function () {
-    preview.src = reader.result // base64 data:image/png;base64,XXXX
-  }
 }
+
+export default FileInput
 ```
 
-- 原生的 base64 编码和解码 => atob & btoa
+## 上传图片
 
-a => base64
-b => 普通字符串
+### 从 data:URL 中解析出 base64Data 和 contentType
 
-```js
-window.btoa('lovchun.com') // bG92Y2h1bi5jb20=
-
-window.atob('bG92Y2h1bi5jb20=') // lovchun.com
-```
-
-- base64ToBlob
-
-```js
+```js:convertBase64ImageData
+/**
+ * data:image/jpeg;base64,XXXXXX
+ *
+ * 解析成
+ *
+ * {
+ *    base64Data: 'XXXX',
+ *    contentType: 'image/jpeg'
+ * }
+ */
 function convertBase64ImageData(base64Url) {
   const arr = base64Url.split(',')
 
@@ -98,27 +121,76 @@ function convertBase64ImageData(base64Url) {
     contentType,
   }
 }
+```
 
+### 将 base64Data 和 contentType 转换为 Blob
+
+```js:base64ToBlob
 function base64ToBlob(base64Data, contentType = '') {
+  // atob 将 base64 字符串解码为新的字符串
   const byteCharacters = atob(base64Data)
-  const byteArrays = []
-  let { length } = byteCharacters
 
-  const byteArray = new Uint8Array(length)
+  // 使用 charCodeAt 将 byteCharacters 中的每个字节添加到 byteNumbers
+  const byteNumbers = new Array(byteCharacters.length)
 
-  while (length--) {
-    byteArray[n] = byteCharacters.charCodeAt(n)
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i)
   }
 
-  const blob = new Blob([byteArray], { type: contentType })
+  // new TypedArray() 创建 ArrayBuffer 的视图
+  const byteArray = new Uint8Array(byteNumbers)
 
-  return blob
+  // 创建 blob
+  const blob = new Blob([byteArray], {type: contentType})
+
+  return blob;
 }
 ```
 
-- downloadBlob
+### 使用 FormData.append() 添加 Blob
 
-```js
+```diff:FileInput.jsx
+const onChange = (e) => {
+  const file = e.target.files[0]
+
+  const reader = new FileReader()
+
+  if (file) {
+    reader.readAsDataURL(file)
+  }
+
+  reader.addEventListener(
+    'load',
+    () => {
+      setSelectedFile(reader.result)
+
++      const {
++        base64Data,
++        contentType
++      } = convertBase64ImageData(reader.result)
++      const blob = base64ToBlob(base64Data, contentType)
+
++      const formData = new FormData()
++      formData.append('file', blob) // 《== 上传参数
+    },
+    false
+  )
+}
+```
+
+## 下载图片
+
+在某些情况中，我们可能需要使用 JS 去下载 `data:URL` 的图片，例如：**小程序太阳码**
+
+小程序太阳码，由微信直接返回 `data:URL` 字符串，如果需要下载它：
+
+- `data:URL` 转换为 `Blob`；
+
+- `URL.createObjectURL` 引用 `Blob`；
+
+- 创建 `<a />` 标签触发点击，完成下载；
+
+```js:downloadBlob
 const downloadBlob = (blob, filename) => {
   if (window.navigator && window.navigator.msSaveOrOpenBlob) {
     // for IE
@@ -135,12 +207,10 @@ const downloadBlob = (blob, filename) => {
 
   setTimeout(() => {
     downloadLink = null
+    // URL.createObjectURL() 每次调用，都会创建一个新的 URL 对象
+    // 每个 URL 对象必须调用 revokeObjectURL() 来释放内存
     URL.revokeObjectURL(downloadURL)
     downloadURL = null
   }, 1000)
 }
 ```
-
-- TODO load image
-
-https://gist.github.com/santisbon/a7c221780b528bd3ebb8
