@@ -2,7 +2,7 @@ const WEBSITE = {
   author: 'Lei Zhang',
   avatar: '/static/images/avatar.jpg',
   title: 'Lei Zhang - lovchun.com',
-  description: "2022，三餐四季温素有趣。",
+  description: "2023，初为人父。",
   lang: 'zh-cn',
 
   // icp: '粤ICP备16020962号-1', 我的备案没有了 T_T
