@@ -1,6 +1,6 @@
 # Lei Zhang's Personal Website
 
-This site is built with
+This repo is built with
 
 - [Next.js](https://nextjs.org/)
 - [MDX](https://mdxjs.com/)
@@ -8,53 +8,11 @@ This site is built with
 - [Contentlayer](https://www.contentlayer.dev)
 - [create-next-app](https://github.com/vercel/next.js/tree/canary/packages/create-next-app)
 
-## Versions
-
-- v1.0.0: [Source code](https://github.com/PassionZale/lovchun.com-next)
-
-## Getting Started
-
-First, install the dependencies
-
-```bash
-npm install
-```
-
-and run the development server:
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Available Scripts
-
-#### `npm run dev`
-
-to start development server
-
-#### `npm run start`
-
-to start production server
-
-#### `npm run build`
-
-to generate production build. The built assets will be in under `/.next` directory.
-
-#### `npm run export`
-
-to export the app to static HTML, which can be run standalone without the need of a Node.js server.
-
-#### `npm run deploy`
-
-to deploy the static app from `npm run export` to github pages. The deployment is triggered by merging into `gh-pages` branch.
-
-### MDX Frontmatter Example
+## MDX Frontmatter Example
 
 Frontmatter follows [Hugo's standards](https://gohugo.io/content-management/front-matter/).
 
-Currently 7 fields are supported.
+Currently 9 fields are supported.
 
 ```
 title (required)
@@ -65,6 +23,7 @@ toc (optional)
 draft (optional)
 summary (optional)
 tags (required, can be empty array)
+components (optional)
 ```
 
 Here's an example of a mdx's frontmatter:
@@ -79,19 +38,20 @@ toc: true
 draft: false
 summary: 'mdx file summary.'
 tags: ['next-js', 'tailwind', 'guide']
+components: []
 ---
 ```
 
-### PrismPlus
+## PrismPlus
 
-#### codeblock
+### codeblock
 
 ```shell
 MDX ----> remark AST ------> rehype AST --------> HTML
     parse            convert            stringify
 ```
 
-#### rehypeCodeTitles
+### rehypeCodeTitles
 
 ```js:pages/posts/[...slug.js]
 export async function getStaticPaths() {
@@ -104,7 +64,7 @@ export async function getStaticPaths() {
 }
 ```
 
-#### highlight line
+### highlight line
 
 ```js:pages/posts/[...slug.js] {1,3-4}
 export async function getStaticPaths() {
@@ -117,7 +77,7 @@ export async function getStaticPaths() {
 }
 ```
 
-#### showLineNumbers
+### showLineNumbers
 
 ```js:pages/posts/[...slug.js] {1,3-4} showLineNumbers
 export async function getStaticPaths() {
@@ -130,7 +90,7 @@ export async function getStaticPaths() {
 }
 ```
 
-#### diff
+### diff
 
 ```diff:contentlayer.config.js
 + import remarkGfm from 'remark-gfm'
