@@ -8,3 +8,52 @@ summary: '123'
 tags: ['指南']
 components: ['Tree']
 ---
+
+{/* https://www.arc.id.au/Spectrogram.html */}
+{/* https://github.com/vlandham/spectrogramJS */}
+{/* https://github.com/miguelmota/spectrogram */}
+{/* https://vue3.chengpeiquan.com/ */}
+
+## 环境变量
+
+## 魔法字符串
+
+## 模块目录
+
+假设，我们需要一个 `./constants/` 目录来放置整个项目的常量文件，其中包含了，按照不同常量的使用场景，有如下分类，例如：
+
+- 环境变量: `env.js`
+- 消息文案: `text.js`
+- 发布订阅: `emitter.js`
+
+<Tree data={structure} />
+
+```js
+export * from 'xxx'
+```
+
+export const structure = [
+  {
+    type: 'folder',
+    name: 'constants',
+    expand: true,
+    childrens: [
+      {
+        type: 'file',
+        name: 'env.js',
+      },
+      {
+        type: 'file',
+        name: 'text.js',
+      },
+      {
+        type: 'file',
+        name: 'emitter.js',
+      },
+      {
+        type: 'file',
+        name: 'index.js',
+      },
+    ],
+  },
+]
