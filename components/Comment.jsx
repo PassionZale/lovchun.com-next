@@ -13,9 +13,10 @@ const WrapperStyles = {
 
 const Comment = ({ title }) => {
   const mounted = useMounted()
+  const isProd = process.env.NODE_ENV === 'production'
   const { resolvedTheme } = useTheme()
 
-  if (!mounted) return null
+  if (!mounted || !isProd) return null
 
   return (
     <div style={WrapperStyles}>
