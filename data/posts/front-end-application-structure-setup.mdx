@@ -1,10 +1,10 @@
 ---
-title: '前端应用结构'
+title: '前端应用结构设置'
 createdAt: '2023-04-15'
 publishedAt: '2023-04-15'
 updatedAt: '2023-04-15'
 draft: false
-summary: '123'
+summary: '我在日常开发中如何处理魔法字符串、异常的捕获、模块的组织、错误边界的处理'
 tags: ['指南']
 components: ['Tree']
 ---
@@ -13,6 +13,22 @@ components: ['Tree']
 {/* https://github.com/vlandham/spectrogramJS */}
 {/* https://github.com/miguelmota/spectrogram */}
 {/* https://vue3.chengpeiquan.com/ */}
+
+## `/src`
+
+现如今的前端工程，几乎所有的项目都会是类似这样的结构：
+
+<Tree data={spa} />
+
+我们将整个项目的业务代码在 `/src` 目录中书写，这很自然。
+
+> 源码放到一个固定的目录中有什么好处？
+
+我个人认为，是**利于构建脚本的编写**，不论是何种框架，还是何种构建工具，抽象来讲，都需要做同一件事情：
+
+将 `input file` 构建后输出成 `output file`，即文件到文件的转换。
+
+那么这些 `input files` 公
 
 ## 环境变量
 
@@ -31,6 +47,40 @@ components: ['Tree']
 ```js
 export * from 'xxx'
 ```
+
+export const spa = [
+  {
+    type: 'folder',
+    name: 'src',
+    expand: true,
+    childrens: [
+      {
+        type: 'folder',
+        name: 'components',
+      },
+      {
+        type: 'folder',
+        name: 'pages',
+      },
+      {
+        type: 'folder',
+        name: 'routes',
+      },
+      {
+        type: 'file',
+        name: 'main.js',
+      },
+    ],
+  },
+  {
+    type: 'file',
+    name: 'index.html',
+  },
+  {
+    type: 'file',
+    name: 'package.json',
+  },
+]
 
 export const structure = [
   {

@@ -23,6 +23,7 @@ import { generateUnid } from '@/lib/dataTransform'
 
 const FILE_ICONS = {
   js: <DiJavascript1 className="text-yellow-500" />,
+  html: <DiHtml5 className="text-amber-500" />,
   wxml: <DiHtml5 className="text-amber-500" />,
   wxss: <DiCssTricks className="text-blue-500" />,
   scss: <DiSass className="text-red-500" />,
