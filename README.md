@@ -7,6 +7,7 @@ This repo is built with
 - [Prism themes](https://github.com/PrismJS/prism-themes)
 - [Contentlayer](https://www.contentlayer.dev)
 - [create-next-app](https://github.com/vercel/next.js/tree/canary/packages/create-next-app)
+- [flaticon](https://www.flaticon.com/)
 
 ## MDX Frontmatter Example
 

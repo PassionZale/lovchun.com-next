@@ -15,6 +15,14 @@ const TAGS = [
     ogImage: '/static/tags/guide.png',
   },
   {
+    title: '面试',
+    slug: 'interview',
+    description:
+      '一些面试心得、面试题等',
+    ogType: 'tag',
+    ogImage: '/static/tags/interview.png',
+  },
+  {
     title: '阅读',
     slug: 'read',
     description: '多读书，吃饱饭',
