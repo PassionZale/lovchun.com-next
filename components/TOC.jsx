@@ -135,7 +135,7 @@ const TableOfContents = () => {
 
   return (
     <nav
-      className="fixed top-1/4 ml-[640px] mt-8 hidden w-[150px] text-sm lg:flex xl:w-[300px]"
+      className="fixed top-1/4 ml-[768px] mt-8 hidden w-[150px] text-sm lg:flex xl:w-[300px]"
       aria-label="Table of contents"
     >
       <Headings headings={nestedHeadings} activeId={activeId} />
