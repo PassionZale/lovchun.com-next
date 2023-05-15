@@ -9,7 +9,7 @@ import tagConfigs from '@/configs/tag.config'
 const posts = allPosts
   .filter((post) => !post.draft)
   .sort((a, b) =>
-    Number(new Date(a.publishedAt) - Number(new Date(b.publishedAt)))
+    Number(new Date(b.publishedAt) - Number(new Date(a.publishedAt)))
   )
 
 export const getStaticPaths = async () => {
@@ -61,7 +61,8 @@ export const Page = ({ tag, posts }) => {
       <Profile />
 
       <div className="mb-10 flex items-center rounded-full bg-sky-400/10 py-1 px-3 text-xs font-medium leading-5 text-sky-600 hover:bg-sky-400/20 dark:text-sky-400">
-        <span className="mr-2 font-bold">#{tag.title}#</span> 共{posts.length}篇文章
+        <span className="mr-2 font-bold">#{tag.title}#</span> 共{posts.length}
+        篇文章
       </div>
 
       <blockquote>{tag.description}</blockquote>
