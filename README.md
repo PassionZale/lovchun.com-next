@@ -127,7 +127,7 @@ export default makeSource({
 
 ## Node 16+
 
-**fix react-ioncs error**
+**fix react-icons error**
 
 [Deprecation - Invalid Main Field](https://github.com/react-icons/react-icons/issues/509)
 
