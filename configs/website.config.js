@@ -1,6 +1,6 @@
 const WEBSITE = {
   author: 'Lei Zhang',
-  avatar: '/static/images/avatar.jpg',
+  avatar: '/static/images/avatar.webp',
   title: 'Lei Zhang - lovchun.com',
   description: "2023，初为人父。",
   lang: 'zh-cn',
