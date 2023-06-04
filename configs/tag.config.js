@@ -23,11 +23,11 @@ const TAGS = [
     ogImage: '/static/tags/interview.png',
   },
   {
-    title: '阅读',
-    slug: 'read',
-    description: '多读书，吃饱饭',
+    title: '笔记',
+    slug: 'note',
+    description: '好记性不如烂笔头',
     ogType: 'tag',
-    ogImage: '/static/tags/read.png',
+    ogImage: '/static/tags/note.png',
   },
   {
     title: '微信小程序',
