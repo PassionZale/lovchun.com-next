@@ -27,7 +27,7 @@ export const LimitText = ({ text }) => (
 )
 
 | 名称                 |                                                            接口名称                                                            |                 过期                  |                              数量 |
-| :------------------- | :----------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------: | --------------------------------: |
+| :-------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------: | :--------------------------------: |
 | 获取小程序码         |          [getQRCode](https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/qrcode-link/qr-code/getQRCode.html)           |    <UnlimitText text="永久有效" />    |       <LimitText text="100,000"/> |
 | 获取不限制的小程序码 | [getUnlimitedQRCode](https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/qrcode-link/qr-code/getUnlimitedQRCode.html)  |    <UnlimitText text="永久有效" />    |         <UnlimitText text="N/A"/> |
 | 获取小程序二维码     |       [createQRCode](https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/qrcode-link/qr-code/createQRCode.html)        |    <UnlimitText text="永久有效" />    |       <LimitText text="100,000"/> |
