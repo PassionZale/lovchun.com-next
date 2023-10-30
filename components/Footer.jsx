@@ -15,10 +15,9 @@ const Footer = () => {
         width={24}
         height={24}
       />
-      <span className="">&copy;</span>
-      <span>{new Date().getFullYear()}</span>
-      <Tag>v{publicRuntimeConfig.version}</Tag>
+      <span>&copy; Lei Zhang all rights reserved</span>
       <ICP className="text-xs text-gray-500" />
+      <Tag>v{publicRuntimeConfig.version}</Tag>
     </footer>
   )
 }
