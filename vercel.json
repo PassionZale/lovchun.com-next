@@ -6,7 +6,7 @@
     {
       "source": "/posts/2018/2/13/商品多规格多属性模型设计思路.html",
       "destination": "/posts/product-sku-model-design",
-      "statusCode": 301
+      "permanent": false
     }
   ]
 }
