@@ -2,9 +2,9 @@
   "github": {
     "enabled": false
   },
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/posts/2018/2/13/商品多规格多属性模型设计思路.html",
+      "source": "/posts/2018/2/13/(.*)",
       "destination": "/posts/product-sku-model-design",
       "statusCode": 301
     }
