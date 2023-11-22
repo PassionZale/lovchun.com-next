@@ -5,7 +5,7 @@ publishedAt: '2023-11-22'
 updatedAt: '2023-11-22'
 toc: false
 draft: false
-summary: '在开始编码前，先聊聊会面临的问题，需要克服的难点。'
+summary: '在开始编码前，先琢磨琢磨项目结构的选型。'
 tags: ['指南', 'Vue.js']
 components: ['Tree']
 ---
@@ -91,13 +91,15 @@ components: ['Tree']
 
 组件的源码目录，里面囊括了所有跟组件相关的东西：`styles/SFC/hooks/utils/etc...`。
 
+<Tree data={MonolithStructure} />
+
 **`vite + vitepress` 只需要这两个库，便可以支撑这三个目录的运作：**
 
 - `./docs/` 是 `vitepress` 默认的项目根目录；
 - `./start` 是一个 `vite` 项目，引入 `./src/index.tsx` 即可实时的调试组件；
-- `./src/` 使用 `vite` 库模式打包，通过 `vite -c` 指定不同的配置文件来分别打包库的 `js` 和 `css`；
+- `./src/` 使用 `vite` 库模式打包，通过 `vite -c` 指定不同的配置文件来分别构建 `js` 和 `css`；
 
-<Tree data={MonolithStructure} />
+接下来，在后面的文章中，将从安装依赖开始，逐步完善整个组件库的构建。
 
 export const MonoRepoStructure = [
   {
