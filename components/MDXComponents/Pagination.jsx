@@ -12,7 +12,7 @@ const Pagination = ({ previous, next }) => {
         }`}
       >
         <Link href={`/posts/${previous?.slug}`} passHref>
-          <button className="group flex items-center hover:text-slate-900 dark:hover:text-white">
+          <button className="group text-left flex items-center hover:text-slate-900 dark:hover:text-white">
             <RiArrowLeftCircleFill className="mr-3 overflow-visible text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" />
             {previous?.title}
           </button>
@@ -23,7 +23,7 @@ const Pagination = ({ previous, next }) => {
         className={`flex w-full justify-end ${next ? 'visible' : 'invisible'}`}
       >
         <Link href={`/posts/${next?.slug}`} passHref>
-          <button className="group flex items-center hover:text-slate-900 dark:hover:text-white">
+          <button className="group text-right flex items-center hover:text-slate-900 dark:hover:text-white">
             {next?.title}
             <RiArrowRightCircleFill className="ml-3 overflow-visible text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" />
           </button>
