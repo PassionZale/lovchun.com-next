@@ -19,10 +19,12 @@ import {
   VscKey,
   VscFileZip,
 } from 'react-icons/vsc'
+import { SiTypescript, SiPnpm, SiVuedotjs, SiVite } from 'react-icons/si'
 import { generateUnid } from '@/lib/dataTransform'
 
 const FILE_ICONS = {
   js: <DiJavascript1 className="text-yellow-500" />,
+  ts: <SiTypescript className="text-blue-500" />,
   html: <DiHtml5 className="text-amber-500" />,
   wxml: <DiHtml5 className="text-amber-500" />,
   wxss: <DiCssTricks className="text-blue-500" />,
@@ -30,10 +32,13 @@ const FILE_ICONS = {
   json: <VscJson className="text-yellow-500" />,
   gulp: <DiGulp className="text-red-500" />,
   npm: <DiNpm className="text-red-500" />,
+  pnpm: <SiPnpm className="text-yellow-500" />,
   env: <DiEnvato className="text-emerald-500" />,
   git: <DiGit />,
   config: <DiAptana className="text-blue-500" />,
   md: <DiMarkdown />,
+  vue: <SiVuedotjs className="text-green-500" />,
+  vite: <SiVite className="text-green-500" />,
   key: <VscKey />,
   zip: <VscFileZip />,
   default: <VscFileCode />,

@@ -1,7 +1,7 @@
 ---
 title: '构建 Vue3 组件库 - 如何开始'
-createdAt: '2023-11-22'
-publishedAt: '2023-12-31'
+createdAt: '2023-11-20'
+publishedAt: '2023-11-22'
 updatedAt: '2023-11-22'
 toc: false
 draft: false
@@ -27,8 +27,6 @@ components: ['Tree']
 - 如何构建和发布组件库；
 - ...
 
-## 项目搭建
-
 > **monolith** **multirepo** **monorepo** 到底该选哪一个？
 
 网上铺天盖地的文章，不约而同的推荐你使用 `monorepo` + `pnpm workspace` 来构建一个组件库：
@@ -47,30 +45,59 @@ components: ['Tree']
 - 为什么有的库需要装到根目录，有的需要安装到指定的 `workspace`；
 - ...
 
-**你真的需要 monorepo 吗？**
+<details open>
+  <summary class="cursor-pointer">**灵魂拷问**</summary>
 
-**你真的会持续的维护组件库吗？**
+  * **你真的需要 monorepo 吗？**
 
-**你真的会持续的构建组件库相关生态吗？**
+  * **你真的会持续的维护组件库吗？**
 
-**你真的会持续的解决 issue 吗？**
+  * **你真的会持续的构建组件库相关生态吗？**
 
-**真的会有人使用你的组件库吗？**
+  * **你真的会持续的解决 issue 吗？**
+
+  * **真的会有人使用你的组件库吗？**
+
+</details>
 
 在调研期间，我购买了一本小册 [《基于 Vite 的组件库工程化实战》](https://s.juejin.cn/ds/iRCGnt8v/)，评论下面，学员各种环境问题颇多，这个跑不起来，那个不生效的比比皆是。
 
 能跟着把小册啃完，而后折腾出成果的不多，在 [🚀 学员优秀实践汇总](https://github.com/smarty-team/smarty-admin/issues/17) 中，大部分学员们的成果，基本就是写了 `<Button />`，而后发布一次 `npm`，就结束了。
 
-其中最健壮的 [`Fighting Design`](https://github.com/FightingDesign/fighting-design)，我从这个仓库借鉴了许多，如 `eslint` `utils` `props` 等，这是一个非常棒的仓库，如果你仍然想用 monorepo 试试，可以参考它，当然 [`element-plus`](https://github.com/element-plus/element-plus) 也是个不错的选择。
+其中最健壮的 [`Fighting Design`](https://github.com/FightingDesign/fighting-design)，我从这个仓库借鉴了许多，如 `eslint` `utils` `props` 等，这是一个非常棒的仓库，如果你仍然想用 monorepo 试试，可以参考它，当然 [`Element Plus`](https://github.com/element-plus/element-plus) 也是个不错的选择。
 
 <Image
   src="/static/images/setup-vue3-component-library/i-want-easy-to-play.jpg"
-  alt={'i-want-easy-to-play'}
+  alt={"i-want-easy-to-play"}
   width={218}
   height={72}
 />
 
-如我同事说的那样，我只想简单的开始编码，
+正如 [**JsLin**](https://github.com/JslinSir) 所说，既然大部分人只是想尝试开发库的过程，那我们便直接按照 **monolith** 的形式来搭建项目。
+
+完整的制作一个组件库，**至少需要三个**目录或者项目来支撑整个开发：
+
+**`./docs/`：**
+
+用来编写所有的文档和示例，并且需要单独部署。
+
+**`./start/`：**
+
+用来本地调试组件，不需要部署，只需要能实时的监听组件源码变化，而后渲染组件到页面，能看到效果即可。
+
+~~也可以命名为 `./play/`~~
+
+**`./src/`：**
+
+组件的源码目录，里面囊括了所有跟组件相关的东西：`styles/SFC/hooks/utils/etc...`。
+
+**`vite + vitepress` 只需要这两个库，便可以支撑这三个目录的运作：**
+
+- `./docs/` 是 `vitepress` 默认的项目根目录；
+- `./start` 是一个 `vite` 项目，引入 `./src/index.tsx` 即可实时的调试组件；
+- `./src/` 使用 `vite` 库模式打包，通过 `vite -c` 指定不同的配置文件来分别打包库的 `js` 和 `css`；
+
+<Tree data={MonolithStructure} />
 
 export const MonoRepoStructure = [
   {
@@ -113,8 +140,69 @@ export const MonoRepoStructure = [
   {
     type: 'file',
     name: 'pnpm-workspace.yaml',
-    icon: 'config',
+    icon: 'pnpm',
     help: 'docs, paly, pacakges/*'
+  },
+  {
+    type: 'file',
+    name: 'package.json'
+  }
+]
+
+export const MonolithStructure = [
+  {
+    type: 'folder',
+    name: 'docs',
+    help: 'project root of vitepress'
+  },
+  {
+    type: 'folder',
+    name: 'start',
+    help: 'vite project'
+  },
+  {
+    type: 'folder',
+    name: 'src',
+    expand: true,
+    childrens: [
+      { type: 'folder', name: '_styles', help: '样式' },
+      { type: 'folder', name: '_hooks', help: '自定义 composable api' },
+      { type: 'folder', name: '_utils', help: '一些工具模块等...' },
+      { 
+        type: 'folder', 
+        name: 'avatar', 
+        help: '<Avatar />', 
+        expand: true,
+        childrens: [
+          { 
+            type: 'folder', 
+            name: 'src',
+            expand: true,
+            childrens: [
+              { type: 'file', name: 'interface.ts' },
+              { type: 'file', name: 'props.ts' },
+              { type: 'file', name: 'avatar.vue' },
+            ]
+          },
+          { type: 'file', name: 'index.ts' }
+        ] 
+      },
+      { type: 'folder', name: 'button', help: '<Button />' },
+      { type: 'folder', name: 'other component...', help: '一个组件一个目录' },
+      { type: 'file', name: 'index.ts', help: '导出全部组件' },
+    ]
+  },
+  {
+    type: 'file',
+    name: 'vite.config.ts',
+    icon: 'vite',
+    help: 'vite 库模式打包 js'
+  },
+  {
+    type: 'file',
+    name: 'vite.config.css.ts',
+    icon: 'vite',
+    help: 'vite 库模式打包 css'
   },
   {
     type: 'file',
