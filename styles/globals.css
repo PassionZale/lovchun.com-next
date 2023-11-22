@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+:root,
+.light {
+  --website-accents-1: #fafafa;
+  --website-accents-2: #eaeaea;
+}
+
+.dark {
+  --website-accents-1: #111;
+  --website-accents-2: #333;
+}
+
+body::-webkit-scrollbar,
+pre[class*="language-"]::-webkit-scrollbar {
+  width: 5px;
+  background-color: var(--website-accents-1);
+}
+
+body::-webkit-scrollbar-thumb,
+pre[class*="language-"]::-webkit-scrollbar-thumb {
+  background-color: var(--website-accents-2);
+  border-radius: 5px;
+}
+
 .prose .anchor {
   @apply invisible absolute;
 

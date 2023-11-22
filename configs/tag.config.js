@@ -17,8 +17,7 @@ const TAGS = [
   {
     title: '面试',
     slug: 'interview',
-    description:
-      '一些面试心得、面试题等',
+    description: '一些面试心得、面试题等',
     ogType: 'tag',
     ogImage: '/static/tags/interview.png',
   },
@@ -35,6 +34,13 @@ const TAGS = [
     description: '一些小程序的开发经验',
     ogType: 'tag',
     ogImage: '/static/tags/miniprogram.png',
+  },
+  {
+    title: 'Vue.js',
+    slug: 'vuejs',
+    description: '一些使用 Vue.js 的开发经验',
+    ogType: 'tag',
+    ogImage: '/static/tags/vuejs.png',
   },
 ]
 
