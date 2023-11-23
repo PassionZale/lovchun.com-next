@@ -8,7 +8,7 @@ const WEBSITE = {
   // icp: '粤ICP备16020962号-1', 我的备案没有了 T_T
   email: 'whouu@qq.com',
   github: 'https://github.com/PassionZale',
-  domain: 'https://lovchun.com',
+  domain: 'https://www.lovchun.com',
   repo: 'https://github.com/PassionZale/lovchun.com-next'
 }
 
