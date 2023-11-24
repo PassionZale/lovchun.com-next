@@ -1,0 +1,114 @@
+---
+title: '构建 Vue3 组件库 - Svg-icon Component'
+createdAt: '2023-11-24'
+publishedAt: '2023-11-26'
+updatedAt: '2023-11-24'
+toc: false
+draft: false
+summary: '在我看来，组件库的编码不是从 <Button /> 开始，而是从 <Icon /> 开始。'
+tags: ['指南', 'Vue.js']
+---
+
+## 目录
+
+- [**《构建 Vue3 组件库 - 如何开始》**](/posts/setup-vue3-component-library/how-to-start)
+- [**《构建 Vue3 组件库 - 安装依赖》**](/posts/setup-vue3-component-library/install-deps)
+- [**《构建 Vue3 组件库 - Svg-icon Component》**](/posts/setup-vue3-component-library/svg-icons)
+
+> 本文只讨论 svg icon 图标组件库的实现，
+>
+> 如果你更喜欢通过 [iconfont](https://www.iconfont.cn/) 等生成字体文件后使用样式来处理图标，
+>
+> 完全可以忽略本文。
+
+组件库为什么要从图标开始？
+
+在我看来，图标贯穿了整个组件库，对于组件库来讲，不仅需要提供一套图标，还要支持使用者自定义图标。
+
+只有把图标落地，才能正式的开发组件库。
+
+## Svg-icon Component
+
+#### 同步组件
+
+一个最基本的 Svg-icon，大概是这样，将 svg 文本直塞到 `<template>` 中即可：
+
+```html:IconCopy.vue
+<script setup lang="ts">
+  defineOptions({ name: "icon-copy" })
+</script>
+
+<template>
+  <svg v-bind="$attrs" viewBox="0 0 22 12" fill="none">
+    <path
+      d="M1 1L11 11L21 1"
+      stroke="#000"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</template>
+```
+
+#### 异步组件
+
+如果想使用 svg 文件又改怎么做呢？
+
+~~这个需求必须上一点魔法才能实现~~
+
+想要在 vite 中能 `import("icon.svg")`，就需要安装并开启 `vite-svg-loader`：
+
+```shell
+npm i -D vite-svg-loader
+```
+
+```ts:vite.config.ts {6}
+import svgLoader from 'vite-svg-loader';
+import type { UserConfig } from 'vite'
+
+export default (): UserConfig => {
+  return {
+    plugins: [svgLoader()],
+  }
+}
+```
+
+使用 [defineAsyncComponent](https://cn.vuejs.org/guide/components/async.html) 实现一个异步的 Svg-icon：
+
+```html:Icon.vue
+<script setup lang="ts">
+  import { defineAsyncComponent } from 'vue'
+
+  defineOptions({ name: 'icon' })
+
+  // svg 由 vite-svg-loader 加载
+  const Icon = defineAsyncComponent(() => import('../../assets/icon.svg'))
+</script>
+
+<template>
+  <Icon />
+</template>
+```
+
+## 解耦 Svg-icon
+
+现在市面上的第三方组件库，会将图标抽离出来，单独封装成一个 package。
+
+为什么不将 Svg-icon 和组件库放在一起维护和发布，而要单独抽离出来呢？
+
+- 有条件的公司会制作一套定制化的 Svg-icon，不会用到组件库所提供的 Svg-icon；
+- 图标与组件库解耦，可以更好的维护和更新图标资源，图标库单独发版不会影响组件库；
+- 解耦后，组件库构建后的体积会大幅减少；
+
+解耦之后，整个组件库就变成两个 package：
+
+- components；
+- icons；
+
+使用 `scope` 的方式来命名，例如：
+
+- `@whouu/geist-design`
+- `@whouu/geist-design-icons`
+
+同理也可以继续扩充相关的包，例如专属的 eslint 配置：`@whouu/geist-design-eslint` 等等。
