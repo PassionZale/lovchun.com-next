@@ -9,7 +9,7 @@ import tagConfigs from '@/configs/tag.config'
 const posts = allPosts
   .filter((post) => !post.draft)
   .sort((a, b) =>
-    Number(new Date(b.publishedAt) - Number(new Date(a.publishedAt)))
+    Number(new Date(a.publishedAt) - Number(new Date(b.publishedAt)))
   )
 
 export const getStaticPaths = async () => {
