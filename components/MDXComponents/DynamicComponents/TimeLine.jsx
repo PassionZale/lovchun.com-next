@@ -1,5 +1,3 @@
-import sourceData from '@/configs/timeline.config.json'
-
 const Divider = () => {
   return (
     <div className="my-8 w-full border-t border-gray-200 dark:border-gray-600" />
@@ -36,9 +34,7 @@ const Story = ({ title, children }) => {
   )
 }
 
-export default function Timeline() {
-  const { length } = sourceData
-
+export default function Timeline({ sourceData }) {
   return (
     <>
       {sourceData.map(({ year, stories }, index) => {
