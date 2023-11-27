@@ -10,7 +10,7 @@ const TAGS = [
     title: '指南',
     slug: 'guide',
     description:
-      '一些指南，不保证完全正确，但是它们都运行在生产环境，并实战于至少三个项目',
+      '一些曾实践于生产环境中的经验总结',
     ogType: 'tag',
     ogImage: '/static/tags/guide.png',
   },

@@ -3,6 +3,7 @@ import { pick } from '@contentlayer/client'
 
 import { CommonSEO } from '@/components/SEO'
 import Profile from '@/components/Profile'
+import Alert from '@/components/MDXComponents/DynamicComponents/Alert'
 import PostItem from '@/components/PostItem'
 import tagConfigs from '@/configs/tag.config'
 
@@ -60,16 +61,16 @@ export const Page = ({ tag, posts }) => {
 
       <Profile />
 
-      <div className="mb-10 flex items-center rounded-full bg-sky-400/10 py-1 px-3 text-xs font-medium leading-5 text-sky-600 hover:bg-sky-400/20 dark:text-sky-400">
-        <span className="mr-2 font-bold">#{tag.title}#</span> 共{posts.length}
-        篇文章
+      <Alert type="info" hidePrefix>
+        <span className="mr-2 font-bold">#{tag.title}#</span> {tag.description}
+        ，共{posts.length}篇文章。
+      </Alert>
+
+      <div className="mt-8">
+        {posts.map((post) => (
+          <PostItem key={post.slug} {...post} />
+        ))}
       </div>
-
-      <blockquote>{tag.description}</blockquote>
-
-      {posts.map((post) => (
-        <PostItem key={post.slug} {...post} />
-      ))}
 
       <div className="border-t" />
     </>
