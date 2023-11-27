@@ -38,4 +38,167 @@ components: ['Tree', 'Alert']
 - [代码仓库](https://github.com/passionzale/geist-design)
 - [在线预览](https://geist-design.lovchun.com)
 
-## Comming soon...
+## Css variables
+
+组件库，最重要的就是[**颜色**](https://geist-design.lovchun.com/guide/colors.html)，一套成体系的颜色可以让人眼前一亮，
+
+通过 `Css variables`，可以很方便的实现换肤，也可以使 `css` 更好的组织化，甚至能让使用者更方便的调整 UI。
+
+对于不懂 UI、不懂设计的开发人员来讲，怎么快速整出一套 `Css variables`？
+
+参考第三方组件库的 `调色盘` 是最快的方式之一，例如：[antd-design colors](https://ant-design.antgroup.com/docs/spec/colors-cn)，
+
+或者我参考的 [vercel-design colors](https://vercel.com/design/color)。
+
+## Light/Dark mode
+
+在暗黑模式全面支持的今天，`Css Variables` 也需要提供两套。
+
+实现 `Light/Dark mode` 非常简单，通常的做法是为 `html` 元素动态添加 `class`：
+
+```ts:theme.ts
+const THEMES = ['dark', 'light'] as const
+
+const setTheme = (theme: (typeof THEMES)[number]): void => {
+  if (typeof document === 'undefined') return
+
+  const html = document.querySelector('html')
+
+  html?.classList.remove(...THEMES)
+  html?.classList.add(theme)
+}
+
+/** 切换为默认色系 */
+export const enableLight = (): void => {
+  setTheme('light')
+}
+
+/** 切换为暗黑色系 */
+export const enableDark = (): void => {
+  setTheme('dark')
+}
+```
+
+在 `:root` 下声明 `Css variables`：
+
+```scss:themes/default/index.scss
+:root,.light {
+	// base color
+	--accents-1: #fafafa;
+	--accents-2: #eaeaea;
+	--accents-3: #999;
+	--accents-4: #888;
+	--accents-5: #666;
+	--accents-6: #444;
+	--accents-7: #333;
+	--accents-8: #111;
+	--geist-foreground: #000;
+	--geist-background: #fff;
+	--geist-selection: var(--geist-cyan);
+
+	// status color
+	--geist-success: #0070f3;
+	--geist-success-light: #3291ff;
+	--geist-success-dark: #0366d6;
+
+	--geist-error: #e00;
+	--geist-error-light: #ff1a1a;
+	--geist-error-dark: #c00;
+
+	--geist-warning: #f5a623;
+	--geist-warning-light: #f7b955;
+	--geist-warning-dark: #f49b0b;
+
+	// highlight
+	--geist-alert: #ff0080;
+	--geist-purple: #f81ce5;
+	--geist-cyan: #79ffe1;
+	--geist-violet: #7928ca;
+
+	// etc...
+}
+```
+
+```scss:themes/dark/index.scss
+.dark {
+  // base color
+  --accents-1: #111;
+  --accents-2: #333;
+  --accents-3: #444;
+  --accents-4: #666;
+  --accents-5: #888;
+  --accents-6: #999;
+  --accents-7: #eaeaea;
+  --accents-8: #fafafa;
+  --geist-foreground: #fff;
+  --geist-background: #000;
+  --geist-selection: var(--geist-purple);
+
+  // status color
+  --geist-success: #0070f3;
+  --geist-success-light: #3291ff;
+  --geist-success-dark: #0366d6;
+
+  --geist-error: #e00;
+  --geist-error-light: #ff1a1a;
+  --geist-error-dark: #c00;
+
+  --geist-warning: #f5a623;
+  --geist-warning-light: #f7b955;
+  --geist-warning-dark: #f49b0b;
+
+  // highlight
+  --geist-alert: #ff0080;
+  --geist-purple: #f81ce5;
+  --geist-cyan: #79ffe1;
+  --geist-violet: #7928ca;
+
+	// etc...
+}
+```
+
+## 目录结构
+
+不在 SFC 的 `<style>` 标签书写样式，而是在单独的目录中编写样式文件，是为了：
+
+- 和 [图标](/posts/setup-vue3-component-library/svg-icon) 一样，样式和组件解耦，减少构建后的体积；
+- 便于移植到其他语言；~~万一你需要同时支持 Vue 和 React 呢？~~
+
+<Tree data={StylesStructure} />
+
+export const StylesStructure = [
+  {
+    type: 'folder',
+    name: '_styles',
+    expand: true,
+    childrens: [
+      {
+        type: 'folder',
+        name: 'foundation',
+        help: '工具模块'
+      },
+      {
+        type: 'folder',
+        name: 'themes',
+        help: 'theme css variables'
+      },
+      {
+        type: 'file',
+        name: '_avatar.scss'
+      },
+      {
+        type: 'file',
+        name: '_button.scss'
+      },
+      {
+        type: 'file',
+        name: '_${componentName}.scss',
+        help: '一个组件一个文件'
+      },
+      {
+        type: 'file',
+        name: 'index.scss'
+      }
+    ]
+  }
+]
