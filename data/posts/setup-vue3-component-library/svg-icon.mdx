@@ -1,5 +1,5 @@
 ---
-title: '构建 Vue3 组件库 - Svg-icon'
+title: '构建 Vue3 组件库 - 图标'
 createdAt: '2023-11-24'
 publishedAt: '2023-11-26'
 updatedAt: '2023-11-24'
@@ -15,6 +15,7 @@ tags: ['指南', 'Vue.js']
 - [**《构建 Vue3 组件库 - 如何开始》**](/posts/setup-vue3-component-library/how-to-start)
 - [**《构建 Vue3 组件库 - 安装依赖》**](/posts/setup-vue3-component-library/install-deps)
 - [**《构建 Vue3 组件库 - 图标》**](/posts/setup-vue3-component-library/svg-icon)
+- [**《构建 Vue3 组件库 - 组件》**](/posts/setup-vue3-component-library/sfc)
 
 ## 源码
 
@@ -149,9 +150,9 @@ export const SvgIconStructure = [
         childrens: [
           {
             type: 'file',
-            name: 'IconCopy.vue'
-          }
-        ]
+            name: 'IconCopy.vue',
+          },
+        ],
       },
       {
         type: 'file',
@@ -159,19 +160,19 @@ export const SvgIconStructure = [
       },
       {
         type: 'file',
-        name: 'index.ts'
+        name: 'index.ts',
       },
       {
         type: 'file',
-        name: 'main.ts'
-      }
-    ]
+        name: 'main.ts',
+      },
+    ],
   },
   {
     type: 'file',
     name: 'vite.config.ts',
-    icon: 'vite'
-  }
+    icon: 'vite',
+  },
 ]
 
 使用库模式打包，需要调整一下 `vite.config.ts`：
@@ -184,7 +185,7 @@ import { resolve } from "node:path";
 
 export default defineConfig({
   plugins: [
-    vue(), 
+    vue(),
     dts({ include: ["./src/components", './src/index.ts'] })
   ],
   build: {
@@ -223,27 +224,27 @@ export const BuildStructure = [
           {
             type: 'file',
             name: 'IconCopy.vue.d.ts',
-            icon: 'ts'
-          }
-        ]
+            icon: 'ts',
+          },
+        ],
       },
       {
         type: 'file',
         name: 'geist-design-icons.es.js',
-        icon: 'js'
+        icon: 'js',
       },
       {
         type: 'file',
         name: 'geist-design-icons.umd.js',
-        icon: 'js'
+        icon: 'js',
       },
       {
         type: 'file',
         name: 'index.d.ts',
-        icon: 'ts'
-      }
-    ]
-  }
+        icon: 'ts',
+      },
+    ],
+  },
 ]
 
 在 `package.json` 中，我们需要针对 `./dist/` 中的产物来声明库的一些入口、导出等 `key/value`：
