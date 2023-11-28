@@ -166,6 +166,151 @@ export const enableDark = (): void => {
 
 <Tree data={StylesStructure} />
 
+## 其他实践
+
+我个人比较习惯直入直出的写法，只定义 `Css variables`，每个组件使用单独的 `.scss` 文件来编写样式。
+
+如果你对 sass 有非常深入的了解，或者想更进一步，可以参考 [《SCSS 和 CSS变量的架构实践》](https://juejin.cn/post/7190370726677839932#heading-10)，里面详细介绍了 Element-plus 构建整套样式 `theme-chalk` 的思路和方法。
+
+用这种思路编写代码之后，SFC 文件中需要通过 js 来单独组装 className，例如 `<el-avatar />`：
+
+```html
+<template>
+  <span :class="avatarClass" :style="sizeStyle">
+    <img
+      v-if="(src || srcSet) && !hasLoadError"
+      :src="src"
+      :alt="alt"
+      :srcset="srcSet"
+      :style="fitStyle"
+      @error="handleError"
+    />
+    <el-icon v-else-if="icon">
+      <component :is="icon" />
+    </el-icon>
+    <slot v-else />
+  </span>
+</template>
+
+<script lang="ts" setup>
+import { computed, ref, watch } from 'vue'
+import { ElIcon } from '@element-plus/components/icon'
+import { useNamespace } from '@element-plus/hooks'
+import { addUnit, isNumber, isString } from '@element-plus/utils'
+import { avatarEmits, avatarProps } from './avatar'
+
+import type { CSSProperties } from 'vue'
+
+defineOptions({
+  name: 'ElAvatar',
+})
+
+const props = defineProps(avatarProps)
+const emit = defineEmits(avatarEmits)
+
+const ns = useNamespace('avatar')
+
+const hasLoadError = ref(false)
+
+const avatarClass = computed(() => {
+  const { size, icon, shape } = props
+  const classList = [ns.b()]
+  if (isString(size)) classList.push(ns.m(size))
+  if (icon) classList.push(ns.m('icon'))
+  if (shape) classList.push(ns.m(shape))
+  return classList
+})
+
+const sizeStyle = computed(() => {
+  const { size } = props
+  return isNumber(size)
+    ? (ns.cssVarBlock({
+        size: addUnit(size) || '',
+      }) as CSSProperties)
+    : undefined
+})
+
+const fitStyle = computed<CSSProperties>(() => ({
+  objectFit: props.fit,
+}))
+
+// need reset hasLoadError to false if src changed
+watch(
+  () => props.src,
+  () => (hasLoadError.value = false)
+)
+
+function handleError(e: Event) {
+  hasLoadError.value = true
+  emit('error', e)
+}
+</script>
+```
+
+Element-plus 通过 `useNamespace` 来构建 className 的前缀，整个 SFC 文件中看不到具体的类名，如果不熟悉这种风格，很难找到对应的样式。
+
+如果再来一些循环等方法来开发 `Col` 等组件的样式的话：
+
+```scss
+@use 'sass:math';
+
+@use 'common/var' as *;
+@use 'mixins/mixins' as *;
+@use 'mixins/_col' as *;
+
+[class*='#{$namespace}-col-'] {
+  box-sizing: border-box;
+  @include when(guttered) {
+    display: block;
+    min-height: 1px;
+  }
+}
+
+.#{$namespace}-col-0 {
+  display: none;
+  @include when(guttered) {
+    display: none;
+  }
+}
+
+@for $i from 0 through 24 {
+  .#{$namespace}-col-#{$i} {
+    max-width: (math.div(1, 24) * $i * 100) * 1%;
+    flex: 0 0 (math.div(1, 24) * $i * 100) * 1%;
+  }
+
+  .#{$namespace}-col-offset-#{$i} {
+    margin-left: (math.div(1, 24) * $i * 100) * 1%;
+  }
+
+  .#{$namespace}-col-pull-#{$i} {
+    position: relative;
+    right: (math.div(1, 24) * $i * 100) * 1%;
+  }
+
+  .#{$namespace}-col-push-#{$i} {
+    position: relative;
+    left: (math.div(1, 24) * $i * 100) * 1%;
+  }
+}
+
+@include col-size(xs);
+
+@include col-size(sm);
+
+@include col-size(md);
+
+@include col-size(lg);
+
+@include col-size(xl);
+```
+
+:worried: 对于 `less/sass` 只会一个嵌套操作的，这种模式还比较费时费力，
+
+如果你不想花费大精力深入 `sass`，可以采用单文件、唯一前缀的方式来快速编写组件样式，
+
+如果你已经深入了解过 `sass`，也可以用上述模式来进行实践。
+
 export const StylesStructure = [
   {
     type: 'folder',
