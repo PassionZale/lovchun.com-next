@@ -1,10 +1,10 @@
 ---
 title: '构建 Vue3 组件库 - 调试'
 createdAt: '2023-11-27'
-publishedAt: '2023-11-27'
-updatedAt: '2023-11-27'
+publishedAt: '2023-11-28'
+updatedAt: '2023-11-28'
 toc: false
-draft: true
+draft: false
 summary: '本地如何实时的调试组件库。'
 tags: ['指南', 'Vue.js']
 components: ['Tree']
@@ -38,4 +38,18 @@ components: ['Tree']
 - [代码仓库](https://github.com/passionzale/geist-design)
 - [在线预览](https://geist-design.lovchun.com)
 
-## Comming soon...
+## 初始化 `./start/`
+
+在 [**《构建 Vue3 组件库 - 如何开始》**](/posts/setup-vue3-component-library/how-to-start) 中，调试目录其实是一个通过 Vite 初始化的 `SPA` 项目。
+
+调试组件库，需要启动项目，在 `package.json` 中增加启动命令：
+
+```diff:package.json
+{
+  "scripts": {
++    "start": "vite -c ./start/vite.config.ts"
+  }
+}
+```
+
+在前面
