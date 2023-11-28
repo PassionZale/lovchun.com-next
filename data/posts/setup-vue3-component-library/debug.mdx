@@ -38,7 +38,19 @@ components: ['Tree']
 - [代码仓库](https://github.com/passionzale/geist-design)
 - [在线预览](https://geist-design.lovchun.com)
 
-## 初始化 `./start/`
+## 调试组件
+
+开发组件库最重要的是如何**实时调试组件**，最早我尝试使用 `pnpm workspace` 来搭建 [papa-interview](https://github.com/passionzale/papa-interview) 时，
+
+由于我将组件库 [packages/ui/package.json](https://github.com/PassionZale/papa-interview/tree/main/packages/ui/package.json) 配置完毕，在 [@app/ddl](https://github.com/PassionZale/papa-interview/tree/main/@app/ddl) 中我只能引入构建后的产物。
+
+为了能实时调试组件，我使用了 `vite build --watch`，特别费劲。
+
+在这一次的实践中，我直接引入组件库的入口文件，配合 `vite.config.ts` 来进行调试，
+
+现在项目目录结构大概是这样：
+
+<Tree data={Data} />
 
 在 [**《构建 Vue3 组件库 - 如何开始》**](/posts/setup-vue3-component-library/how-to-start) 中，调试目录其实是一个通过 Vite 初始化的 `SPA` 项目。
 
@@ -52,4 +64,114 @@ components: ['Tree']
 }
 ```
 
-在前面
+分别将 **样式入口文件** 和 **组件入口文件** 引入到 start 中：
+
+```diff:start/vite.config.ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { resolve } from 'node:path'
+
+export default defineConfig({
++  root: './start',
+  plugins: [vue()],
+  resolve: {
+    alias: {
++      'geist-design': resolve(__dirname, '../src/index.ts'),
++      'geist-design-styles': resolve(__dirname, '../src/_styles/index.scss')
+    }
+  }
+})
+```
+
+在 `main.ts` 中通过 `app.use` 来安装组件：
+
+```diff:start/src/main.ts
+import { createApp } from 'vue'
+import App from './App.vue'
+
++ import GeistDesign from 'geist-design'
++ import 'geist-design-styles'
+
+createApp(App)
++  .use(GeistDesign)
+  .mount('#app')
+```
+
+现在组件已经全部注册，样式也引入完毕，
+
+在根目录执行 `npm run start`，运行项目后，便可以在 `App.vue` 中实时调试：
+
+```html:src/App.vue
+<template>
+  <g-avatar text="Geist Design" size="small" />
+  <g-avatar text="Geist Design" />
+  <g-avatar text="Geist Design" size="big" />
+  <g-avatar text="Geist Design" size="huge" />
+</template>
+```
+
+export const Data = [
+  {
+    type: 'folder',
+    name: 'src',
+    expand: true,
+    childrens: [
+      {
+        type: 'folder',
+        name: '_styles',
+        expand: true,
+        childrens: [
+          { type: 'file', name: 'index.scss', help: '样式入口文件' }
+        ]
+      },
+      {
+        type: 'file',
+        name: 'index.ts',
+        help: '组件入口文件'
+      }
+    ]
+  },
+  {
+    type: 'folder',
+    name: 'start',
+    expand: true,
+    childrens: [
+      {
+        type: 'folder',
+        name: 'public',
+      },
+      {
+        type: 'folder',
+        name: 'src',
+        expand: true,
+        childrens: [
+          { type: 'file', name: 'App.vue' },
+          { type: 'file', name: 'main.ts' }
+        ]
+      },
+      {
+        type: 'file',
+        name: 'index.html',
+      },
+      {
+        type: 'file',
+        name: 'tsconfig.json'
+      },
+      {
+        type: 'file',
+        name: 'tsconfig.node.json',
+        icon: 'json'
+      },
+      {
+        type: 'file',
+        name: 'vite.config.ts',
+        icon: 'vite'
+      }
+    ]
+  },
+  {
+    type: 'file',
+    name: 'package.json'
+  }
+]
+
