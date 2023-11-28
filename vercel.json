@@ -1,6 +1,8 @@
 {
-  "github": {
-    "enabled": false
+  "git": {
+    "deploymentEnabled": {
+      "dev": false
+    }
   },
   "redirects": [
     {
