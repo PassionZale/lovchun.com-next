@@ -2,7 +2,7 @@ const WEBSITE = {
   author: 'Lei Zhang',
   avatar: '/static/images/avatar.webp',
   title: 'Lei Zhang - lovchun.com',
-  description: "2023，初为人父。",
+  description: "2024，33/35。",
   lang: 'zh-cn',
 
   // icp: '粤ICP备16020962号-1', 我的备案没有了 T_T

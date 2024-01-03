@@ -123,7 +123,7 @@ export default makeSource({
 ## Emoji Support
 
 - [Emojipedia](https://emojipedia.org/)
-- [markdown-it emoji](https://github.com/markdown-it/markdown-it-emoji/blob/master/lib/data/full.json)
+- [markdown-it emoji](https://github.com/markdown-it/markdown-it-emoji/blob/master/lib/data/full.mjs)
 
 ## Node 16+
 
