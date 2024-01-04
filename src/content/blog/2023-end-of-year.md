@@ -6,7 +6,7 @@ featured: true
 draft: false
 tags:
   - 生活
-description: 2023 我心中的 Top8
+description: 2023 我心中的 Top8。
 ---
 
 > 2023，**1 次**裁员，**4 家**公司，**4 个**仓库，**15 篇**博客，**2 本**书，**458 次**提交。
@@ -85,7 +85,7 @@ description: 2023 我心中的 Top8
 
 以前将路由或者组件按目录拆分成不同的模块，都需要一个个的 `import/export`，现在只需要一个通配符：
 
-```shell
+```ansi
 router
  ┣ modules
  ┃ ┣ module1.tsx
@@ -95,7 +95,7 @@ router
  ┗ index.tsx
 ```
 
-```ts
+```ts title="index.tsx"
 const routerModules = import.meta.glob(['./modules/*.tsx'], {
   eager: true,
 }) as Record<
@@ -150,14 +150,14 @@ const rootRouter: RouterObject[] = [
 
 这里主要介绍下 **追加**、**修改**、**自定义 action** 等操作：
 
-```shell
+```ansi
 components
  ┣ avatar
  ┃ ┗ index.ts
  ┗ index.ts
 ```
 
-```ts
+```ts title="index.ts"
 export { GAvatar } from "./avatar";
 export * from "./avatar";
 
@@ -166,7 +166,7 @@ export * from "./avatar";
 
 通过 `/** PLOP_INJECT_EXPORT */` 这个标记物，每次创建组件后，在 `index.ts` 后面追加新组件的 `export` 代码：
 
-```js
+```js title="plopfile.js"
 actions: {
   {
     type: 'modify',
@@ -180,7 +180,7 @@ actions: {
 
 在开发组件库时，新增的组件需要编写文档，因此需要更新 VitePress `sidebar` 的配置：
 
-```ts
+```ts title="sidebar.ts"
 export const sidebar = [
     '/components/': [
     {
@@ -201,7 +201,7 @@ export const sidebar = [
 ]
 ```
 
-```js
+```js title="plopfile.js"
 actions: {
   async function modifySidebars(answers) {
     // sidebar.ts 文件路径

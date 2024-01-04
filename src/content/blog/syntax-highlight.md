@@ -6,7 +6,7 @@ featured: false
 draft: false
 tags:
   - 指南
-description: shikiji syntax highlight examples
+description: shikiji syntax highlight examples.
 ---
 
 ## Table of contents

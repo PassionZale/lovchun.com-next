@@ -6,649 +6,217 @@ featured: false
 draft: false
 tags:
   - 指南
-description: 通过 ArrayBuffer、Blob、File、FileReader、URL 等处理 Base64 的转换，以及图片的预览、上传、下载等
+description: 通过 ArrayBuffer、Blob、File、FileReader、URL 等处理 Base64 的转换，以及图片的预览、上传、下载等。
 ---
 
-## Editor-Grade Highlighting
-
-<span className="mix-blend-plus-lighter text-zinc-400/80">
-  Enjoy the accuracy and granularity of VS Code's syntax highlighting engine and
-  the popularity of its themes ecosystem — use any VS Code theme you want!
-</span>
-
-```tsx
-import { useFloating, offset } from "@floating-ui/react";
-
-interface Props {
-  open: boolean;
-  onOpenChange(open: boolean): void;
-}
-
-export function App({ open, onOpenChange }: Props) {
-  const { refs, floatingStyles } = useFloating({
-    open,
-    onOpenChange,
-    placement: "left",
-    middleware: [offset(10)],
-  });
-
-  return (
-    <Container>
-      <div ref={refs.setReference} />
-      {open && <div ref={refs.setFloating} style={floatingStyles} />}
-    </Container>
-  );
-}
-```
-
-> The theme is [Moonlight II](https://github.com/atomiks/moonlight-vscode-theme)
-> with a custom background color.
-
-## Line Numbers and Line Highlighting
-
-Draw attention to a particular line of code.
-
-```js {4} showLineNumbers
-import { useFloating } from "@floating-ui/react";
-
-function MyComponent() {
-  const { refs, floatingStyles } = useFloating();
-
-  return (
-    <>
-      <div ref={refs.setReference} />
-      <div ref={refs.setFloating} style={floatingStyles} />
-    </>
-  );
-}
-```
-
-## Word Highlighting
-
-Draw attention to a particular word or series of characters.
-
-```js /floatingStyles/
-import { useFloating } from "@floating-ui/react";
-
-function MyComponent() {
-  const { refs, floatingStyles } = useFloating();
-
-  return (
-    <>
-      <div ref={refs.setReference} />
-      <div ref={refs.setFloating} style={floatingStyles} />
-    </>
-  );
-}
-```
-
-## Inline Code Highlighting
-
-The result of `[1, 2, 3].join('-'){:js}` is `'1-2-3'{:js}`.
-
-### Context Aware Inline Code
-
-For instance, if you had the following code block:
-
-```js
-function getStringLength(str) {
-  return str.length;
-}
-```
-
-When we refer to `getStringLength{:.entity.name.function}` as a plain variable,
-we can color it as a function. Same with `function{:.keyword}`, or
-`str{:.variable.parameter}` vs. `str{:.variable.other.object}`, etc. This allows
-you to semantically tie inline code with the nearest code block it's referring
-to.
-
-## ANSI Highlighting
-
-```ansi
-[0;36m  vite v5.0.0[0;32m dev server running at:[0m
-
-  > Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m
-  > Network: [0;2muse `--host` to expose[0m
-
-  [0;36mready in 125ms.[0m
-
-[0;2m8:38:02 PM[0m [0;36;1m[vite][0m [0;32mhmr update [0;2m/src/App.jsx
-```
-
-Inline ANSI: `> Local: [0;36mhttp://localhost:[0;36;1m3000[0;36m/[0m{:ansi}`
-
-## Installation
-
-Install via your terminal:
-
-```shell
-npm install rehype-pretty-code shikiji@^0.9.0
-```
-
-This package is ESM-only and currently supports `shikiji{:.string}`
-`^0.7.0 - ^0.9.0{:.string}`.
-
-> **Note:** If you need `CJS` support you should use
-> `rehype-pretty-code@0.10.1{:.string}`, which uses Shiki instead of Shikiji
-> ([v0.10.1 docs here](https://github.com/atomiks/rehype-pretty-code/blob/00e5451e3aac7b86f748b01267e255bf345d1550/website/src/app/index.mdx)).
-> To use the latest version in Next.js, ensure your config file is `ESM`:
-> `next.config.mjs`. Here's a full example:
-> [rehype-pretty-code/website/next.config.mjs](https://github.com/atomiks/rehype-pretty-code/blob/master/website/next.config.mjs)
-
-## Usage
-
-The following works both on the server and on the client.
-
-> `unified@11{:.string}` is used as a dependency.
-
-```js /rehypePrettyCode/
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import rehypeStringify from "rehype-stringify";
-import rehypePrettyCode from "rehype-pretty-code";
-
-async function main() {
-  const file = await unified()
-    .use(remarkParse)
-    .use(remarkRehype)
-    .use(rehypePrettyCode, {
-      // See Options section below.
-    })
-    .use(rehypeStringify)
-    .process("`const numbers = [1, 2, 3]{:js}`");
-
-  console.log(String(file));
-}
-
-main();
-```
-
-### MDX
-
-The following example shows how to use this package with Next.js.
-
-```js title="next.config.mjs"
-import fs from "node:fs";
-import nextMDX from "@next/mdx";
-import rehypePrettyCode from "rehype-pretty-code";
-
-/** @type {import('rehype-pretty-code').Options} */
-const options = {
-  // See Options section below.
-};
-
-const withMDX = nextMDX({
-  extension: /\.mdx?$/,
-  options: {
-    remarkPlugins: [],
-    rehypePlugins: [[rehypePrettyCode, options]],
-  },
-});
-
-/** @type {import('next').NextConfig} */
-const nextConfig = { reactStrictMode: true };
-
-export default withMDX(nextConfig);
-```
-
-> **Make sure you have disabled** the `mdxRs{:.meta.object-literal.key}` option
-> for Next.js 13 / app dir, as it currently does not support Rehype plugins.
-
-## Options
-
-```ts
-interface Options {
-  grid?: boolean;
-  theme?: Theme | Record<string, Theme>;
-  keepBackground?: boolean;
-  defaultLang?: string | { block?: string; inline?: string };
-  tokensMap?: Record<string, string>;
-  transformers?: ShikijiTransformer[];
-  filterMetaString?(str: string): string;
-  getHighlighter?(options: BundledHighlighterOptions): Promise<Highlighter>;
-  onVisitLine?(element: LineElement): void;
-  onVisitHighlightedLine?(element: LineElement): void;
-  onVisitHighlightedChars?(element: CharsElement, id: string | undefined): void;
-  onVisitTitle?(element: Element): void;
-  onVisitCaption?(element: Element): void;
-}
-```
-
-### `grid{:.meta.object-literal.key}`
-
-A grid style is present by default which allows line highlighting to span the
-entire width of a horizontally-scrollable code block.
-
-You can disable this setting if necessary:
-
-```js
-const options = {
-  grid: false,
-};
-```
-
-### `theme{:.meta.object-literal.key}`
-
-The default theme is `github-dark-dimmed{:.string}`. Shikiji has a bunch of
-[pre-packaged themes](https://github.com/antfu/shikiji/blob/main/docs/themes.md),
-which can be specified as a plain string:
-
-```js
-const options = {
-  theme: "one-dark-pro",
-};
-```
-
-You can use your own theme as well by passing the theme JSON:
-
-```js
-const options = {
-  theme: JSON.parse(fs.readFileSync("./themes/moonlight-ii.json", "utf-8")),
-};
-```
-
-### `keepBackground{:.meta.object-literal.key}`
-
-To apply a custom background instead of inheriting the background from the
-theme:
-
-```js
-const options = {
-  keepBackground: false,
-};
-```
-
-### `defaultLang{:.meta.object-literal.key}`
-
-When no code language is specified, inline code or code blocks will not be
-themed (nor will the background), which may appear incongruous with others.
-
-In this case, you can specify a default language:
-
-```js
-const options = {
-  defaultLang: "plaintext",
-};
-```
-
-Or you can also specify default languages for inline code and code blocks
-separately:
-
-```js
-const options = {
-  defaultLang: {
-    block: "plaintext",
-    inline: "plaintext",
-  },
-};
-```
-
-### `transformers{:.meta.object-literal.key}`
-
-[Transformers](https://github.com/antfu/shikiji#hast-transformers) are a
-Shikiji-native way to manipulate the `hAST` tree of the code blocks and further
-extend the behavior of this plugin. The
-[`shikiji-transformers`](https://www.npmjs.com/package/shikiji-transformers)
-package provides some useful transformers.
-
-```js
-import { transformerNotationDiff } from "shikiji-transformers";
-
-const options = {
-  transformers: [transformerNotationDiff()],
-};
-```
-
-### Meta Strings
-
-Code blocks are configured via the meta string on the top codeblock fence.
-
-> If your library also parses code blocks' meta strings, it may
-> [cause conflicts](https://github.com/atomiks/rehype-pretty-code/issues/52)
-> with `rehype-pretty-code`. This option allows you to filter out some part of
-> the meta string before the library starts parsing it.
+> **在实际开发过程中，Base64 经常会用于处理图片的预览、上传、下载等。**
 >
-> ```js
-> const options = {
->   filterMetaString: string => string.replace(/filename="[^"]*"/, ""),
-> };
-> ```
+> - `FileReader.readAsDataURL()` 触发 `loaded`，并在回调中获取到 `data:URL`
+> - `convertBase64ImageData()` 解析 `data:URL`，拿到 `base64Data` `contentType`
+> - `base64ToBlob()` 将 `base64Data` 转换为 `Blob`
+> - `FormData().append()` 可用于上传
+> - `URL.createObjectURL()` 可用于下载
 
-#### Highlight Lines
+## Table of contents
 
-Place a numeric range inside `{}`.
+## 原生 Base64 编码和解码
 
-````md
-```js {1-3,4}
+从 IE10+浏览器开始，所有浏览器就原生提供了 Base64 编码解码方法，不仅可以用于浏览器环境，Service Worker 环境也可以使用。
 
-```
-````
+它们就是 `atob` 和 `btoa`:
 
-The line `<span>{:html}` receives a `data-highlighted-line` attribute to style
-via CSS.
-
-#### Group Highlighted Lines By Id
-
-Place an id after `#` after the `{}`. This allows you to color or style lines
-differently based on their id.
-
-````md
-```js {1,2}#a {3,4}#b
-
-```
-````
-
-The line `<span>{:html}` receives a `data-highlighted-line-id="<id>"` attribute
-to style via CSS.
-
-#### Highlight Chars
-
-You can use either `/`:
-
-````md
-```js /carrot/
-
-```
-````
-
-Or `"` as a delimiter:
-
-````md
-```js "carrot"
-
-```
-````
-
-Different segments of chars can also be highlighted:
-
-````md
-```js /carrot/ /apple/
-
-```
-````
-
-The chars `<span>{:html}` receives a `data-highlighted-chars` attribute to style
-via CSS.
-
-To highlight only the third to fifth instances of `carrot`, a numeric range can
-be placed after the last `/`.
-
-````md
-```js /carrot/3-5
-
-```
-````
-
-Highlight only the third to fifth instances of `carrot` and any instances of
-`apple`.
-
-````md
-```js /carrot/3-5 /apple/
-
-```
-````
-
-#### Group Highlighted Chars By Id
-
-Place an id after `#` after the chars. This allows you to color chars
-differently based on their id.
-
-````md
-```js /age/#v /name/#v /setAge/#s /setName/#s /50/#i /'Taylor'/#i
-const [age, setAge] = useState(50);
-const [name, setName] = useState("Taylor");
-```
-````
-
-```js /age/#v /name/#v /setAge/#s /setName/#s /50/#i /'Taylor'/#i
-const [age, setAge] = useState(50);
-const [name, setName] = useState("Taylor");
-```
-
-The chars `<span>{:html}` receives a `data-chars-id="<id>"` attribute to style
-via CSS.
-
-#### Highlight Inline Code
-
-Append `\{:lang}` (e.g. `\{:js}`) to the end of inline code to highlight it like
-a regular code block.
-
-```md
-This is an array `[1, 2, 3]{:js}` of numbers 1 through 3.
-```
-
-#### Highlight Plain Text
-
-Append `\{:.token}` to the end of the inline code to highlight it based on a
-token specified in your VS Code theme. Tokens start with a `.` to differentiate
-them from a language.
-
-```md
-The name of the function is `getStringLength{:.entity.name.function}`.
-```
-
-You can create a map of tokens to shorten this usage throughout your docs:
+- `a` 表示 Base64 字符串
+- `b` 表示 普通字符串
 
 ```js
-const options = {
-  tokensMap: {
-    fn: "entity.name.function",
-  },
+window.btoa("lovchun.com"); // bG92Y2h1bi5jb20=
+
+window.atob("bG92Y2h1bi5jb20="); // lovchun.com
+```
+
+## 预览图片
+
+- 监听 `<input type="file" />` 的 `onchange` 拿到选中的 `File` 对象；
+
+- 使用 `FileReader` 的 `readAsDataURL` 并在 `load` 事件中获取到 `data:URL` 格式的字符串（base64 编码）；
+
+- 将 `data:URL` 赋值到 `img.src` 即可预览图片；
+
+```js title="FileInput.jsx"
+import React, { useState } from "react";
+import Image from "next/image";
+
+const FileInput = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const onChange = e => {
+    const file = e.target.files[0];
+
+    const reader = new FileReader();
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+
+    reader.addEventListener(
+      "load",
+      () => {
+        setSelectedFile(reader.result);
+      },
+      false
+    );
+  };
+
+  return (
+    <form className="flex items-center space-x-6 py-6">
+      <div className="shrink-0">
+        {selectedFile && (
+          <Image
+            className="h-16 w-16 object-cover"
+            src={selectedFile}
+            alt="upload-image"
+            width={100}
+            height={100}
+          />
+        )}
+      </div>
+      <label className="block">
+        <input
+          type="file"
+          onChange={onChange}
+          className="block w-full text-sm text-gray-900 file:mr-4
+              file:rounded-full file:border-0 file:bg-cyan-500
+              file:px-4 file:py-2
+              file:text-sm file:font-semibold
+              file:text-white dark:text-gray-300
+              dark:file:bg-gray-700 dark:file:text-gray-400
+            "
+        />
+      </label>
+    </form>
+  );
 };
+
+export default FileInput;
 ```
 
-```md
-The name of the function is `getStringLength{:.fn}`.
-```
+## 上传图片
 
-#### Titles
+### 从 data:URL 中解析出 base64Data 和 contentType
 
-Add a file title to your code block, with text inside double quotes (`""`):
+```js title="convertBase64ImageData"
+/**
+ * data:image/jpeg;base64,XXXXXX
+ *
+ * 解析成
+ *
+ * {
+ *    base64Data: 'XXXX',
+ *    contentType: 'image/jpeg'
+ * }
+ */
+function convertBase64ImageData(base64Url) {
+  const arr = base64Url.split(",");
 
-````md
-```js title="..."
+  const [metaData, base64Data] = arr;
 
-```
-````
+  const contentType = metaData.match(/:(.*?);/)[1];
 
-#### Captions
-
-Add a caption underneath your code block, with text inside double quotes (`""`):
-
-````md
-```js caption="..."
-
-```
-````
-
-### Line Numbers
-
-CSS counters can be used to add line numbers.
-
-```css {2,6-7}
-code {
-  counter-reset: line;
-}
-
-code > [data-line]::before {
-  counter-increment: line;
-  content: counter(line);
-
-  /* Other styling */
-  display: inline-block;
-  width: 1rem;
-  margin-right: 2rem;
-  text-align: right;
-  color: gray;
-}
-
-code[data-line-numbers-max-digits="2"] > [data-line]::before {
-  width: 2rem;
-}
-
-code[data-line-numbers-max-digits="3"] > [data-line]::before {
-  width: 3rem;
+  return {
+    base64Data,
+    contentType,
+  };
 }
 ```
 
-If you want to conditionally show them, use `showLineNumbers`:
+### 将 base64Data 和 contentType 转换为 Blob
 
-````md
-```js showLineNumbers
+```js title="base64ToBlob"
+function base64ToBlob(base64Data, contentType = "") {
+  // atob 将 base64 字符串解码为新的字符串
+  const byteCharacters = atob(base64Data);
 
-```
-````
+  // 使用 charCodeAt 将 byteCharacters 中的每个字节添加到 byteNumbers
+  const byteNumbers = new Array(byteCharacters.length);
 
-`<code>{:html}` will have attributes `data-line-numbers` and
-`data-line-numbers-max-digits="n"`.
-
-If you want to start line numbers at a specific number, use
-`showLineNumbers{number}`:
-
-````md
-```js showLineNumbers{number}
-
-```
-````
-
-### Multiple Themes (Dark and Light Mode)
-
-Pass your themes to `theme{:.meta.object-literal.key}`, where the keys represent
-the color mode:
-
-```js
-const options = {
-  theme: {
-    dark: "github-dark-dimmed",
-    light: "github-light",
-  },
-};
-```
-
-Now, use the following CSS to display the variable colors — if a space is found
-in the theme name, then CSS variable keys based on the object are available
-([more info](https://github.com/antfu/shikiji#lightdark-dual-themes)):
-
-```scss
-code[data-theme*=" "],
-code[data-theme*=" "] span {
-  color: var(--shiki-light);
-  background-color: var(--shiki-light-bg);
-}
-
-@media (prefers-color-scheme: dark) {
-  code[data-theme*=" "],
-  code[data-theme*=" "] span {
-    color: var(--shiki-dark);
-    background-color: var(--shiki-dark-bg);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
   }
+
+  // new TypedArray() 创建 ArrayBuffer 的视图
+  const byteArray = new Uint8Array(byteNumbers);
+
+  // 创建 blob
+  const blob = new Blob([byteArray], { type: contentType });
+
+  return blob;
 }
 ```
 
-The `<code>{:html}` and `<pre>{:html}` elements will have the data attribute
-`data-theme="...themes"`, listing each theme value space-separated:
+### 使用 FormData.append() 添加 Blob
 
-```html
-<code data-theme="github-dark-dimmed github-light"></code>
+```diff title="FileInput.jsx"
+const onChange = (e) => {
+  const file = e.target.files[0]
+
+  const reader = new FileReader()
+
+  if (file) {
+    reader.readAsDataURL(file)
+  }
+
+  reader.addEventListener(
+    'load',
+    () => {
+      setSelectedFile(reader.result)
+
++      const {
++        base64Data,
++        contentType
++      } = convertBase64ImageData(reader.result)
++      const blob = base64ToBlob(base64Data, contentType)
+
++      const formData = new FormData()
++      formData.append('file', blob) // 《== 上传参数
+    },
+    false
+  )
+}
 ```
 
-### Visitor Hooks
+## 下载图片
 
-To customize the HTML output, you can use visitor callback hooks to manipulate
-the [hAST elements](https://github.com/syntax-tree/hast#element) directly:
+在某些情况中，我们可能需要使用 JS 去下载 `data:URL` 的图片，例如：**小程序太阳码**
 
-```js
-const options = {
-  onVisitLine(element) {
-    console.log("Visited line");
-  },
-  onVisitHighlightedLine(element) {
-    console.log("Visited highlighted line");
-  },
-  onVisitHighlightedChars(element) {
-    console.log("Visited highlighted chars");
-  },
-  onVisitTitle(element) {
-    console.log("Visited title");
-  },
-  onVisitCaption(element) {
-    console.log("Visited caption");
-  },
+小程序太阳码，由微信直接返回 `data:URL` 字符串，如果需要下载它：
+
+- `data:URL` 转换为 `Blob`；
+
+- `URL.createObjectURL` 引用 `Blob`；
+
+- 创建 `<a />` 标签触发点击，完成下载；
+
+```js title="downloadBlob"
+const downloadBlob = (blob, filename) => {
+  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+    // for IE
+    window.navigator.msSaveOrOpenBlob(blob, filename);
+    return;
+  }
+
+  let downloadLink = document.createElement("a");
+  let downloadURL = URL.createObjectURL(blob);
+
+  downloadLink.href = downloadURL;
+  downloadLink.download = filename;
+  downloadLink.click();
+
+  setTimeout(() => {
+    downloadLink = null;
+    // URL.createObjectURL() 每次调用，都会创建一个新的 URL 对象
+    // 每个 URL 对象必须调用 revokeObjectURL() 来释放内存
+    URL.revokeObjectURL(downloadURL);
+    downloadURL = null;
+  }, 1000);
 };
 ```
-
-### Custom Highlighter
-
-To completely configure the highlighter, use the
-`getHighlighter{:.entity.name.function}` option. This is helpful if you'd like
-to configure other Shikiji options, such as `langs{:.meta.object-literal.key}`.
-
-```js
-import { getHighlighter } from "shikiji";
-
-const options = {
-  getHighlighter: options =>
-    getHighlighter({
-      ...options,
-      langs: [
-        "plaintext",
-        async () => JSON.parse(await readFile("my-grammar.json", "utf-8")),
-      ],
-    }),
-};
-```
-
-## React Server Component
-
-The [usage](#usage) works directly in React Server Components. Here's an example:
-
-```tsx title="code.tsx"
-import * as React from "react";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import rehypeStringify from "rehype-stringify";
-import rehypePrettyCode from "rehype-pretty-code";
-
-export async function Code({ code }: { code: string }) {
-  const highlightedCode = await highlightCode(code);
-  return (
-    <section
-      dangerouslySetInnerHTML={{
-        __html: highlightedCode,
-      }}
-    />
-  );
-}
-
-async function highlightCode(code: string) {
-  const file = await unified()
-    .use(remarkParse)
-    .use(remarkRehype)
-    .use(rehypePrettyCode, {
-      keepBackground: false,
-    })
-    .use(rehypeStringify)
-    .process(code);
-
-  return String(file);
-}
-```
-
-Then, simply import the RSC into a page / another component:
-
-```tsx src/app/rsc/page.tsx
-import * as React from "react";
-import { Code } from "./code.tsx";
-
-export default async function Page() {
-  return (
-    <main>
-      <Code code="`const numbers = [1, 2, 3]{:js}`" />
-    </main>
-  );
-}
-```
-
-See this example in action at [/rsc](/rsc).
