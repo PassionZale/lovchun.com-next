@@ -67,7 +67,7 @@ description: 2023 我心中的 Top8
 
 后面找到了 Contentlayer，终于解决了这一系列的问题。
 
-![contentlayer.png](@assets/images/contentlayer.png)
+![contentlayer.png](/images/contentlayer.png)
 
 ## Vite
 

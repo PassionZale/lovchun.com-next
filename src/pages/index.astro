@@ -22,7 +22,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   <Header />
   <main id="main-content">
     <section id="hero">
-      <h1 class="mr-2">Mingalaba</h1>
+      <h1 class="mr-2">Lovchun.com</h1>
       <a
         target="_blank"
         href="/rss.xml"
@@ -39,12 +39,21 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         </svg>
       </a>
 
-      <p>
-        AstroPaper is a minimal, responsive, accessible and SEO-friendly Astro
-        blog theme. This theme follows best practices and provides accessibility
-        out of the box. Light and dark mode are supported by default. Moreover,
-        additional color schemes can also be configured.
-      </p>
+      <p class="flex items-center">Hey there <img src={'/images/wave.gif'} alt="hey there" width="30"/></p>
+
+      <p>My name is Lei Zhang!</p>
+
+      <ul>
+        <li>🔭 I’m Front-end engineer, currently working on Wuhan.</li>
+        <li>🌱 I enjoy building tool, writing documentation, and CI/CD to improve developer experience.</li>
+        <li>🤔 I’m looking for help with how to be a good father.</li>
+        <li>⚡ My baby was born on December 1st!</li>
+      </ul>
+
+      <p>Apart from coding, I also maintain a blog - you can find my articles on this website.</p>
+
+      <p>It build with Astro & MD, Deployed on Vercel.</p>
+
       <p>
         Read the blog posts or check
         <LinkButton
