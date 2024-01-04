@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 @layer base {
+  @font-face {
+    font-family: "JetBrains Mono";
+    src: url("/fonts/JetBrainsMono-Regular.eot");
+    src: url("/fonts/JetBrainsMono-Regular.eot?#iefix") format("embedded-opentype"),
+        url("/fonts/JetBrainsMono-Regular.woff2") format("woff2"),
+        url("/fonts/JetBrainsMono-Regular.woff") format("woff"),
+        url("/fonts/JetBrainsMono-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
+
   :root,
   html[data-theme="light"] {
     --color-fill: 251, 254, 251;
@@ -74,6 +85,9 @@
   }
   .prose a {
     @apply break-words hover:!text-skin-accent;
+  }
+  .prose code {
+    font-family: "JetBrains Mono", monospace;
   }
   .prose thead th:first-child,
   tbody td:first-child,
