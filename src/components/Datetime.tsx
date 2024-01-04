@@ -30,10 +30,10 @@ export default function Datetime({
       </svg>
       {modDatetime ? (
         <span className={`${size === "sm" ? "text-sm" : "text-base"}`}>
-          Updated:
+          最近更新于:
         </span>
       ) : (
-        <span className="sr-only">Published:</span>
+        <span className="sr-only">发布于:</span>
       )}
       <span className={`${size === "sm" ? "text-sm" : "text-base"}`}>
         <FormattedDatetime
