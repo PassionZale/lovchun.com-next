@@ -22,6 +22,7 @@ export default defineConfig({
       [
         remarkCollapse,
         {
+          summary: "展开目录",
           test: "Table of contents",
         },
       ],
