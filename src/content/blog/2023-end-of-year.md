@@ -13,6 +13,8 @@ description: 2023 我心中的 Top8
 
 ## Table of contents
 
+## Ranks
+
 3-7 月，在刷面试题、找工作、入职、换工作中反复横跳，
 
 8-10 月，熟悉新公司，适应新环境，

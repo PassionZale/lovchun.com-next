@@ -142,8 +142,18 @@
   .prose h2#table-of-contents + p {
     @apply hidden;
   }
-  .prose pre code {
+  .prose pre {
+    @apply !px-0 rounded-lg;
+  }
+  .prose code {
     font-family: "JetBrains Mono";
+    /* @apply text-sm md:text-base !leading-loose; */
+  }
+  .prose pre > code {
+    counter-reset: line;
+  }
+  .prose figcaption + pre {
+    @apply !rounded-t-none;
   }
 
   /* ===== scrollbar ===== */
