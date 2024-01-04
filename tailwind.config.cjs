@@ -82,6 +82,8 @@ module.exports = {
               '&::before': { content: `unset !important` },
               '&::after': { content: `unset !important` },
               fontWeight: 'normal',
+              fontSize: '.875em !important;',
+              lineHeight: '1.5'
             },
             '[data-rehype-pretty-code-title]': {
               color: 'rgb(228 228 231 / var(--tw-text-opacity)) !important;'
