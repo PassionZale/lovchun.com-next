@@ -16,6 +16,15 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# vercel
+.vercel
+
+# vscode
+/.vscode/*
+!/.vscode/settings.json
+!/.vscode/extensions.json
+!/.vscode/launch.json
+
 
 # environment variables
 .env
