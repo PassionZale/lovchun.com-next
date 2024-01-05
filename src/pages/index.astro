@@ -39,35 +39,34 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         </svg>
       </a>
 
-      <p class="flex items-center">Hey there <img src={'/images/wave.gif'} alt="hey there" width="30"/></p>
+      <p class="text-lg flex items-center">Hi <span class="wave">👋</span></p>
 
-      <p>My name is Lei Zhang!</p>
+      <p>我的名字是张磊！</p>
 
       <ul>
-        <li>🔭 I’m Front-end engineer, currently working on Wuhan.</li>
-        <li>🌱 I enjoy building tool, writing documentation, and CI/CD to improve developer experience.</li>
-        <li>🤔 I’m looking for help with how to be a good father.</li>
-        <li>⚡ My baby was born on December 1st!</li>
+        <li>🔭 我是一名前端开发工程师，现工作于武汉，</li>
+        <li>🌱 我喜欢编写工具、文档和 CI/CD，</li>
+        <li>🤔 我现在正在学习如何做一名好父亲，</li>
+        <li>⚡ 我的小孩出生 @2022-12-01！</li>
       </ul>
 
-      <p>Apart from coding, I also maintain a blog - you can find my articles on this website.</p>
+      <p>除了编码之外，我还维护着博客 - 你可以在当前网站上浏览我所发布过的文章，</p>
 
-      <p>It build with Astro & MD, Deployed on Vercel.</p>
+      <p>它通过 <code>Astro</code> 构建，并部署于 <code>Vercel</code>。</p>
 
       <p>
-        Read the blog posts or check
+        请浏览博客文章或者查看
         <LinkButton
           className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
-          href="https://github.com/satnaing/astro-paper#readme"
+          href="https://github.com/passionzale"
         >
           README
-        </LinkButton> for more info.
+        </LinkButton> 了解更多。
       </p>
       {
-        // only display if at least one social link is enabled
         socialCount > 0 && (
           <div class="social-wrapper">
-            <div class="social-links">Social Links:</div>
+            <div class="social-links">社交链接：</div>
             <Socials />
           </div>
         )

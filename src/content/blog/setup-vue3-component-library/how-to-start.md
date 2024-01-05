@@ -1,7 +1,7 @@
 ---
 title: 构建 Vue3 组件库 - 如何开始
 description: 我对 monolith、multirepo、monorepo 选择的一些看法。
-pubDatetime: 2022-11-20T04:06:31Z
+pubDatetime: 2023-11-20T04:06:31Z
 postSlug: setup-vue3-component-library/how-to-start
 featured: false
 draft: false

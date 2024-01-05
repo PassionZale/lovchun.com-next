@@ -1,7 +1,7 @@
 ---
 title: 构建 Vue3 组件库 - 样式
 description: 组件库中 css variables 等一些经验之谈。
-pubDatetime: 2022-11-24T04:06:31Z
+pubDatetime: 2023-11-24T04:06:31Z
 postSlug: setup-vue3-component-library/css
 featured: false
 draft: false

@@ -1,7 +1,7 @@
 ---
 title: 构建 Vue3 组件库 - 渲染器
 description: 如何打包并发布组件库。
-pubDatetime: 2022-11-25T04:06:31Z
+pubDatetime: 2023-11-25T04:06:31Z
 postSlug: setup-vue3-component-library/plopjs
 featured: false
 draft: false

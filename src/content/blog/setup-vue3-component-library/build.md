@@ -1,7 +1,7 @@
 ---
 title: 构建 Vue3 组件库 - 打包
 description: 如何打包并发布组件库。
-pubDatetime: 2022-11-28T04:06:31Z
+pubDatetime: 2023-11-28T04:06:31Z
 postSlug: setup-vue3-component-library/build
 featured: false
 draft: false
