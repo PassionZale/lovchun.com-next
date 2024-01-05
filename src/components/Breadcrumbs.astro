@@ -1,4 +1,10 @@
 ---
+interface Props {
+  breadcrumbs?: { title: string; slug: string }[];
+}
+
+const { breadcrumbs } = Astro.props;
+
 // Remove current url path and remove trailing slash if exists
 const currentUrlPath = Astro.url.pathname.replace(/\/+$/, "");
 
@@ -31,24 +37,41 @@ breadcrumbList[0] === "tags" &&
       <span aria-hidden="true">&gt;</span>
     </li>
     {
-      breadcrumbList.map((breadcrumb, index) =>
-        index + 1 === breadcrumbList.length ? (
-          <li>
-            <span
-              class={`${index > 0 ? "lowercase" : "capitalize"}`}
-              aria-current="page"
-            >
-              {/* make the last part lowercase in Home > Tags > some-tag */}
-              {decodeURIComponent(breadcrumb)}
-            </span>
-          </li>
-        ) : (
-          <li>
-            <a href={`/${breadcrumb}`}>{breadcrumb}</a>
-            <span aria-hidden="true">&gt;</span>
-          </li>
-        )
-      )
+      breadcrumbs
+        ? breadcrumbs.map((breadcrumb, index) =>
+            index + 1 === breadcrumbs.length ? (
+              <li>
+                <span
+                  class={`${index > 0 ? "lowercase" : "capitalize"}`}
+                  aria-current="page"
+                >
+                  {decodeURIComponent(breadcrumb.title)}
+                </span>
+              </li>
+            ) : (
+              <li>
+                <a href={`/${breadcrumb.slug}`}>{breadcrumb.title}</a>
+                <span aria-hidden="true">&gt;</span>
+              </li>
+            )
+          )
+        : breadcrumbList.map((breadcrumb, index) =>
+            index + 1 === breadcrumbList.length ? (
+              <li>
+                <span
+                  class={`${index > 0 ? "lowercase" : "capitalize"}`}
+                  aria-current="page"
+                >
+                  {decodeURIComponent(breadcrumb)}
+                </span>
+              </li>
+            ) : (
+              <li>
+                <a href={`/${breadcrumb}`}>{breadcrumb}</a>
+                <span aria-hidden="true">&gt;</span>
+              </li>
+            )
+          )
     }
   </ul>
 </nav>

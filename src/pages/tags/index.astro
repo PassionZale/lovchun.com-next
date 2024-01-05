@@ -15,7 +15,11 @@ let tags = getUniqueTags(posts);
 
 <Layout title={`标签 | ${SITE.title}`}>
   <Header activeNav="tags" />
-  <Main pageTitle="标签" pageDesc="文章中使用的所有标签。">
+  <Main
+    pageTitle="标签"
+    pageDesc="文章中使用的所有标签。"
+    pageBreadcrumbs={[{ title: "标签", slug: "tags" }]}
+  >
     <ul>
       {tags.map(({ tag }) => <Tag {tag} size="lg" />)}
     </ul>
