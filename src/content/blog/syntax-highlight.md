@@ -3,7 +3,7 @@ title: 代码高亮示例
 pubDatetime: 2024-01-04T04:06:31Z
 slug: syntax-highlight
 featured: false
-draft: false
+draft: true
 tags:
   - 指南
 description: shikiji syntax highlight examples.
