@@ -1,0 +1,18 @@
+---
+import { SITE } from "@config";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+---
+
+<Layout title={`时间轴 | ${SITE.title}`}>
+  <Header activeNav="timeline" />
+  <Main
+    pageTitle="时间轴"
+    pageDesc="我的故事 @ 1991-2024"
+    pageBreadcrumbs={[{ title: "时间轴", slug: "timeline" }]}
+  >
+    123
+  <Footer />
+</Layout>
