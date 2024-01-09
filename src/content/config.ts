@@ -23,4 +23,8 @@ const blog = defineCollection({
     }),
 });
 
-export const collections = { blog };
+const json = defineCollection({
+  type: "data",
+});
+
+export const collections = { blog, json };

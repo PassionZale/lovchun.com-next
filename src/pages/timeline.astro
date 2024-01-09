@@ -1,9 +1,13 @@
 ---
+import { getEntry } from "astro:content";
 import { SITE } from "@config";
 import Layout from "@layouts/Layout.astro";
 import Main from "@layouts/Main.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
+import TimelineRender from "@components/TimelineRender";
+
+const timeline = await getEntry("json", "timeline");
 ---
 
 <Layout title={`时间轴 | ${SITE.title}`}>
@@ -13,6 +17,8 @@ import Footer from "@components/Footer.astro";
     pageDesc="我的故事 @ 1991-2024"
     pageBreadcrumbs={[{ title: "时间轴", slug: "timeline" }]}
   >
-    123
+    <TimelineRender sourceData={timeline.data} />
+  </Main>
+
   <Footer />
 </Layout>
