@@ -1,0 +1,50 @@
+---
+import { type CollectionEntry } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Card from "@components/Card";
+import Pagination from "@components/Pagination.astro";
+import { SITE } from "@config";
+
+export interface Props {
+  currentPage: number;
+  totalPages: number;
+  paginatedPosts: CollectionEntry<"blog">[];
+  tag: string;
+  tagName: string;
+}
+
+const { currentPage, totalPages, paginatedPosts, tag, tagName } = Astro.props;
+---
+
+<Layout title={`标签: ${tagName} | ${SITE.title}`}>
+  <Header activeNav="tags" />
+  <Main
+    pageTitle={['标签', `${tagName}`]}
+    titleTransition={tag}
+    pageDesc={`所有带有"${tagName}"的文章：`}
+    pageBreadcrumbs={[{ title: "标签", slug: "tags" }, { title: tagName, slug: `tags/${tagName}`}]}
+  >
+    <h1 slot="title" transition:name={tag}>{`标签：${tag}`}</h1>
+    <ul>
+      {
+        paginatedPosts.map(({ data, slug }) => (
+          <Card href={`/posts/${slug}`} frontmatter={data} />
+        ))
+      }
+    </ul>
+  </Main>
+
+  <Pagination
+    {currentPage}
+    {totalPages}
+    prevUrl={`/tags/${tag}${
+      currentPage - 1 !== 1 ? "/" + (currentPage - 1) : ""
+    }`}
+    nextUrl={`/tags/${tag}/${currentPage + 1}`}
+  />
+
+  <Footer noMarginTop={totalPages > 1} />
+</Layout>
