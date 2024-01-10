@@ -3,7 +3,7 @@ title: 小程序码与小程序链接
 description: 完整的梳理微信小程序中各种链接、太阳码、二维码等。
 pubDatetime: 2023-09-12T04:06:31Z
 postSlug: miniprogram-qrcode-link
-featured: true
+featured: false
 draft: false
 tags:
   - 指南

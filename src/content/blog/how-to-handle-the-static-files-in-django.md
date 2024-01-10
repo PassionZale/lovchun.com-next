@@ -3,7 +3,7 @@ title: Django 静态文件处理
 description: 如何在 Django 中配置静态文件，搭配 Nginx 在生产环境下进行访问。
 pubDatetime: 2018-04-04T04:06:31Z
 postSlug: how-to-handle-the-static-files-in-django
-featured: true
+featured: false
 draft: false
 tags:
   - 指南
