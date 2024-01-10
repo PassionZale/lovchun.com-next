@@ -5,8 +5,6 @@ import "@styles/base.css";
 import "@styles/highlight.css";
 import { ViewTransitions } from "astro:transitions";
 
-const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
-
 export interface Props {
   title?: string;
   author?: string;
@@ -102,21 +100,13 @@ const socialImageURL = new URL(
     <meta name="msapplication-TileColor" content="#000000" />
     <meta name="theme-color" content="#000000" />
 
-    {
-      // If PUBLIC_GOOGLE_SITE_VERIFICATION is set in the environment variable,
-      // include google-site-verification tag in the heading
-      // Learn more: https://support.google.com/webmasters/answer/9008080#meta_tag_verification&zippy=%2Chtml-tag
-      googleSiteVerification && (
-        <meta
-          name="google-site-verification"
-          content={googleSiteVerification}
-        />
-      )
-    }
-
     <ViewTransitions />
 
     <script is:inline src="/toggle-theme.js"></script>
+    <script is:inline>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script is:inline src="/_vercel/insights/script.js" defer=""></script>
   </head>
   <body>
     <slot />
