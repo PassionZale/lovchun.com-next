@@ -8,7 +8,7 @@ import rehypePrettyCode from "rehype-pretty-code";
 import { rehypeAccessibleEmojis } from "rehype-accessible-emojis";
 import sitemap from "@astrojs/sitemap";
 import { SITE } from "./src/config";
-import moonlightTheme from "./src/assets/moonlight-ii.json";
+import moonlightTheme from './public/assets/moonlight-ii.json';
 
 import type { RehypePlugins } from "@astrojs/markdown-remark";
 
