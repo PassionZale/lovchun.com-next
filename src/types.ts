@@ -21,6 +21,7 @@ export type SocialIcons = {
 
 export type SocialMedia =
   | "Github"
+  | "Rss"
   | "Facebook"
   | "Instagram"
   | "LinkedIn"
@@ -40,3 +41,20 @@ export type SocialMedia =
   | "Steam"
   | "Telegram"
   | "Mastodon";
+
+export type Repository = {
+  name: string;
+  html_url: string;
+  description: string;
+  language?: string;
+  stargazers_count?: number;
+  forks?: number;
+};
+
+export type Talk = {
+  date: string;
+  title: string;
+  place: string;
+  url: string;
+  download?: string
+};

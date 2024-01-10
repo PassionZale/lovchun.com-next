@@ -1,5 +1,5 @@
 import type { GiscusProps } from "@giscus/react";
-import type { Site, SocialObjects } from "./types";
+import type { Site, SocialObjects, Talk } from "./types";
 
 export const SITE: Site = {
   website: "https://www.lovchun.com",
@@ -36,6 +36,12 @@ export const SOCIALS: SocialObjects = [
     linkTitle: `Send an email to ${SITE.author}`,
     active: true,
   },
+  {
+    name: "Rss",
+    href: "/rss.xml",
+    linkTitle: `RSS Feed`,
+    active: true,
+  },
 ];
 
 export const GISCUS: GiscusProps = {
@@ -50,3 +56,22 @@ export const GISCUS: GiscusProps = {
   lang: "zh-CN",
   loading: "lazy",
 };
+
+export const REPOS: `${string}/${string}`[] = [
+  "PassionZale/lovchun.com-next",
+  "PassionZale/talks",
+  "PassionZale/create-app",
+  "PassionZale/geist-design",
+  "PassionZale/iMall",
+  "PassionZale/JWT-RESTfull-IN-CI-Tutorial",
+];
+
+export const TALKS: Talk[] = [
+  {
+    date: "2023-12-08",
+    title: "Setup Miniprogram",
+    place: "武汉",
+    url: "https://talks.lovchun.com/2023/setup-miniprogram",
+    download: "https://talks.lovchun.com/2023/setup-miniprogram/pdf",
+  },
+];
