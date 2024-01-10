@@ -1,3 +1,4 @@
+import type { GiscusProps } from "@giscus/react";
 import type { Site, SocialObjects } from "./types";
 
 export const SITE: Site = {
@@ -5,7 +6,7 @@ export const SITE: Site = {
   author: "Lei Zhang",
   desc: "Articles & life for my live.",
   title: "Lei Zhang",
-  // ogImage: "astropaper-og.jpg",
+  // ogImage: "ogImage.jpg",
   lightAndDarkMode: true,
   postPerPage: 8,
 };
@@ -36,3 +37,16 @@ export const SOCIALS: SocialObjects = [
     active: true,
   },
 ];
+
+export const GISCUS: GiscusProps = {
+  repo: "PassionZale/lovchun.com-next",
+  repoId: "R_kgDOG450fA",
+  categoryId: "DIC_kwDOG450fM4COJ-Y",
+  mapping: "og:title",
+  theme: "preferred_color_scheme",
+  reactionsEnabled: "1",
+  emitMetadata: "0",
+  inputPosition: "top",
+  lang: "zh-CN",
+  loading: "lazy",
+};

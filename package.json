@@ -13,6 +13,7 @@
   "dependencies": {
     "@astrojs/check": "^0.2.0",
     "@astrojs/rss": "^3.0.0",
+    "@giscus/react": "^2.4.0",
     "@resvg/resvg-js": "^2.4.1",
     "astro": "^3.6.4",
     "fuse.js": "^6.6.2",

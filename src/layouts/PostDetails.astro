@@ -6,6 +6,7 @@ import Tag from "@components/Tag.astro";
 import Datetime from "@components/Datetime";
 import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
+import Comment from "@components/Comment";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -72,6 +73,9 @@ const layoutProps = {
     <ul class="my-8">
       {tags.map(tag => <Tag tag={slugifyStr(tag)} />)}
     </ul>
+
+    <Comment title={title} client:load />
+
     <div class="flex justify-end">
       <button
         id="back-to-top"

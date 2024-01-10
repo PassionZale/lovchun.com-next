@@ -2,9 +2,9 @@ import React from "react";
 
 const Divider: React.FC<{ hidden?: boolean }> = ({ hidden }) => (
   <div
-    class={`mx-auto max-w-3xl px-0 ${hidden ? "invisible my-4" : "visible my-8"}`}
+    className={`mx-auto max-w-3xl px-0 ${hidden ? "invisible my-4" : "visible my-8"}`}
   >
-    <hr class="border-skin-line" aria-hidden="true" />
+    <hr className="border-skin-line" aria-hidden="true" />
   </div>
 );
 

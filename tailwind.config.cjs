@@ -1,18 +1,5 @@
 import colors from 'tailwindcss/colors.js';
 
-const linkHeadingStyles = {
-  color: colors.gray[100],
-  borderBottomColor: 'transparent',
-  borderRadius: 3,
-  boxShadow: `0 0 0 0.4rem transparent`,
-  '&:hover': {
-    color: 'none',
-    borderBottomColor: 'transparent',
-    background: colors.gray[100],
-    boxShadow: `0 0 0 0.4rem ${colors.gray[100]}`,
-  },
-};
-
 function withOpacity(variableName) {
   return ({ opacityValue }) => {
     if (opacityValue !== undefined) {
@@ -82,8 +69,9 @@ module.exports = {
               '&::before': { content: `unset !important` },
               '&::after': { content: `unset !important` },
               fontWeight: 'normal',
-              fontSize: '.875em !important;',
-              lineHeight: '1.5'
+              // fontSize: '.875em !important;',
+              // lineHeight: '1.5',
+              color: 'inherit'
             },
             '[data-rehype-pretty-code-title]': {
               color: 'rgb(228 228 231 / var(--tw-text-opacity)) !important;'
@@ -103,7 +91,7 @@ module.exports = {
               },
             },
           },
-        },
+        }
       },
     },
   },
