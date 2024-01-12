@@ -71,7 +71,7 @@ export const TALKS: Talk[] = [
     date: "2023-12-08",
     title: "Setup Miniprogram",
     place: "武汉",
-    url: "https://talks.lovchun.com/2023/setup-miniprogram",
+    preview: "https://talks.lovchun.com/2023/setup-miniprogram",
     download: "https://talks.lovchun.com/2023/setup-miniprogram/pdf",
   },
 ];
