@@ -69,8 +69,8 @@ module.exports = {
               '&::before': { content: `unset !important` },
               '&::after': { content: `unset !important` },
               fontWeight: 'normal',
-              // fontSize: '.875em !important;',
-              // lineHeight: '1.5',
+              fontSize: '13px !important;',
+              lineHeight: '1.5',
               color: 'inherit'
             },
             '[data-rehype-pretty-code-title]': {

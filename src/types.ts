@@ -55,6 +55,6 @@ export type Talk = {
   date: string;
   title: string;
   place: string;
-  url: string;
+  preview: string;
   download?: string
 };

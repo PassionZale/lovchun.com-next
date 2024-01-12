@@ -1,12 +1,12 @@
 ---
-title: 2023 总结
+title: 2023 End Of Year
 pubDatetime: 2023-12-31T04:06:31Z
 slug: 2023-end-of-year
 featured: true
 draft: false
 tags:
   - 生活
-description: 2023 我心中的 Top8。
+description: 1 次裁员，4 家公司，4 个仓库，15 篇博客，2 本书，458 次提交。
 ---
 
 > 2023，**1 次**裁员，**4 家**公司，**4 个**仓库，**15 篇**博客，**2 本**书，**458 次**提交。

@@ -16,8 +16,8 @@ const fetchRepoData = async (repo: string): Promise<Repository> => {
 };
 
 export const getFeaturedRepos = async (): Promise<Repository[]> => {
-  // we are using public api to get the data, so in case we reach the limit we will use fake data
-  if (process.env.NODE_ENV === 'development') {
+  // 开发环境使用模拟数据
+  if (import.meta.env.DEV) {
     return generateFakeData(REPOS.length);
   }
 

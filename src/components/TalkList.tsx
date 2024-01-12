@@ -6,7 +6,7 @@ type Props = {
 
 export default function TalkList({ talks }: Props) {
   return (
-    <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="lg:grid-cols-3 mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
       {talks.map((talk, index) => (
         <TalkCard talk={talk} key={`talk-${index}`} />
       ))}
@@ -16,30 +16,46 @@ export default function TalkList({ talks }: Props) {
 
 const TalkCard = ({ talk }: { talk: Talk }) => (
   <div className="py-2">
-    <a
-      href={talk.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-block text-lg font-medium text-skin-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0"
-    >
-      <h3 className="text-lg font-medium decoration-dashed hover:underline">
-        {talk.title}
-      </h3>
-    </a>
-    <p className="mt-2 flex items-center text-base ">
+    <h3 className="text-lg font-medium">{talk.title}</h3>
+
+    <div className="mt-2 flex items-center gap-x-4">
+      {talk.preview && (
+        <a
+          className="inline-block text-skin-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0"
+          href={talk.preview}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <p className="decoration-dashed hover:underline">在线预览</p>
+        </a>
+      )}
+      
+      {talk.download && (
+        <a
+          className="inline-block text-skin-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0"
+          href={talk.download}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <p className="decoration-dashed hover:underline">PDF</p>
+        </a>
+      )}
+    </div>
+
+    <p className="mt-2 flex items-center text-base">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className={`scale-90 inline-block h-6 w-6 fill-skin-base`}
+        className={`inline-block h-6 w-6 scale-90 fill-skin-base`}
         aria-hidden="true"
       >
         <path d="M7 11h2v2H7zm0 4h2v2H7zm4-4h2v2h-2zm0 4h2v2h-2zm4-4h2v2h-2zm0 4h2v2h-2z"></path>
         <path d="M5 22h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2zM19 8l.001 12H5V8h14z"></path>
       </svg>
-      <span className={`italic text-sm ml-2`}>{talk.date}</span>
+      <span className={`ml-2 text-sm opacity-80`}>{talk.date}</span>
     </p>
     <p className="mt-2 flex items-center text-base ">
       <svg
-        className="h-6 w-6 mr-2 fill-current scale-90 "
+        className="mr-2 h-6 w-6 scale-90 fill-current "
         viewBox="0 0 20 20"
         fill="currentColor"
         xmlns="http://www.w3.org/2000/svg"
