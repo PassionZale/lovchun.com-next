@@ -28,6 +28,10 @@ function reflectPreference() {
 
   document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
 
+  if (!currentTheme) {
+    localStorage.setItem("theme", themeValue);
+  }
+
   // Get a reference to the body element
   const body = document.body;
 
