@@ -2,6 +2,7 @@
 title: 嘿！我要走了
 description: 2015-2023 我的深漂完美结束啦！谢谢各位帮我完成这段《千奇百怪的漫长旅行》。
 pubDatetime: 2023-02-27T04:06:31Z
+modDatetime: 2024-01-15T04:06:31Z
 postSlug: shenzhen-drifters
 featured: true
 draft: false
@@ -120,13 +121,26 @@ tags:
 
 [lovchun.com-next](https://github.com/PassionZale/lovchun.com-next) 就变成了一个全新的静态博客。
 
-> mp-generator
+> @whouu/creat-app
 
-沉淀了数个小程序的项目改造及开发经验，写了一套小程序项目模板 [mp-generator](https://github.com/PassionZale/mp-generator)
+迭代了数次 `cli`，最终的形态 `@whouu/create-app`，来试试我吧：
+
+[create-app.lovchun.com](https://create-app.lovchun.com)
 
 ```shell
-// 试试我吧~
-npx create-mp-generator app
+# npm
+npm create @whouu/app <project-name>
+
+# yarn
+yarn create @whouu/app <project-name>
+
+# pnpm
+pnpm create @whouu/app <project-name>
+
+# cli
+npm i -g @whouu/create-app
+
+create-app <project-name>
 ```
 
 > 张佑佑
