@@ -121,11 +121,11 @@ tags:
 
 [lovchun.com-next](https://github.com/PassionZale/lovchun.com-next) 就变成了一个全新的静态博客。
 
-> @whouu/creat-app
+> @whouu/create-app
 
 迭代了数次 `cli`，最终的形态 `@whouu/create-app`，来试试我吧：
 
-[create-app.lovchun.com](https://create-app.lovchun.com)
+[在线文档](https://create-app.lovchun.com)
 
 ```shell
 # npm
