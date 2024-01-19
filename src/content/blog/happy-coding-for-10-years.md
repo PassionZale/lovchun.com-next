@@ -40,10 +40,12 @@ class HelloWorld {
 - 第一次查询数据库；
 - ...
 
-但是我还是很难习惯强类型语言，后面我将重心大部分放在了前端。
+但我还是很难习惯强类型语言，后面便将重心大部分放在了前端，
 
-`jQuery` 拯救了我的 `Javascript`，`Bootstrap` 拯救了我的 `CSS`，
+`jQuery` 拯救了我的 `Javascript`，`Bootstrap` 拯救了我的 `CSS`。
 
-**15 年 1 月**，我背着这台笔记本在深圳找工作，第一次接触到了 JS Framework：`Dojo`，
+**15 年 1 月**，我去了深圳，背着这台笔记本开始找工作，第一次接触到了 Javascript Framework：`Dojo`，
+
+慢慢的开始有了组件的概念，而不是用字符串去拼接 `innerHTML`。
 
 **16 年 3 月** 域名备案
