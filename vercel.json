@@ -14,6 +14,11 @@
       "source": "/posts/83089735-9b7e-4d49-bc98-43cd243e226e.html",
       "destination": "/posts/product-sku-model-design",
       "statusCode": 301
+    },
+    {
+      "source": "/posts/july-interview-experience.html",
+      "destination": "/posts/july-interview-experience",
+      "statusCode": 301
     }
   ]
 }
