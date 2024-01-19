@@ -7,6 +7,7 @@ const WrapperStyles = {
 };
 
 const Comment: React.FC<{ title: string }> = ({ title }) => {
+  const isProd = import.meta.env.PROD;
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
@@ -34,9 +35,13 @@ const Comment: React.FC<{ title: string }> = ({ title }) => {
   }, []);
 
   return (
-    <div className={'mb-8 pt-8'} style={WrapperStyles}>
-      <Giscus {...GISCUS} term={title} theme={theme} />
-    </div>
+    <>
+      {isProd && (
+        <div className={"mb-8 pt-8"} style={WrapperStyles}>
+          <Giscus {...GISCUS} term={title} theme={theme} />
+        </div>
+      )}
+    </>
   );
 };
 

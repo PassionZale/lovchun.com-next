@@ -20,10 +20,10 @@ export default function Datetime({
     <div className={`flex items-center opacity-80 ${className}`}>
       {modDatetime ? (
         <span className={`${size === "sm" ? "text-sm" : "text-base"}`}>
-          最近更新于:
+          最近更新于：
         </span>
       ) : (
-        <span className="sr-only">发布于:</span>
+        <span className="sr-only">发布于：</span>
       )}
       <span className={`${size === "sm" ? "text-sm" : "text-base"}`}>
         <FormattedDatetime
