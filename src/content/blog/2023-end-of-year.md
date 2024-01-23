@@ -2,7 +2,7 @@
 title: 2023 End Of Year
 pubDatetime: 2023-12-31T04:06:31Z
 slug: 2023-end-of-year
-featured: true
+featured: false
 draft: false
 tags:
   - 生活
