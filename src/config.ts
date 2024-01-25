@@ -59,8 +59,9 @@ export const GISCUS: GiscusProps = {
 
 export const REPOS: `${string}/${string}`[] = [
   "PassionZale/lovchun.com-next",
-  "PassionZale/geist-design",
   "PassionZale/talks",
+  "PassionZale/geist-design",
+  "PassionZale/geist-design-icons",
   "PassionZale/create-app",
   "PassionZale/type-challenges",
   "PassionZale/iMall",
