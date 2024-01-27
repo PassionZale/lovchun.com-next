@@ -1,7 +1,7 @@
 ---
 title: TS 类型体操
 pubDatetime: 2024-01-26T04:06:31Z
-modDatetime: 2024-01-26T04:06:31Z
+modDatetime: 2024-01-27T04:06:31Z
 slug: type-challenges
 featured: false
 draft: false
@@ -10,6 +10,10 @@ tags:
   - Typescript
 description: 我对 Type Challenges 题解的一些心得和拙见，持续更新中...
 ---
+
+<a href="https://tsch.lovchun.com" target="_blank">
+  <img src="https://tsch.lovchun.com/logo.svg" alt="type-challenges" />
+</a>
 
 ## Table of contents
 
@@ -161,12 +165,37 @@ function getColorHex(color: Color): string {
 
 ## 运算符
 
-`keyof` 总是能结合起来
+使用 `keyof` 提取 `interface` 的键后保存为联合类型：
 
-## K of T
+```ts
+interface User {
+  name: string;
+  age: number;
+}
+type UserProperties = keyof User;
+// UserProperties = "name" | "age"
+```
 
-## 递归
+使用 `typeof` 来引用变量或者属性的类型：
 
-## 等于
+```ts
+const foo = (arg1: string, arg2: number) => {};
 
-## infer
+type FooFunction = typeof foo;
+
+const tesla = ["tesla", "model 3", "model X", "model Y"] as const;
+
+type Tesla = typeof tuple;
+```
+
+使用 `in` 提取联合类型的值，主要用于对象和数组。
+
+> 不要用于 `interface`，否则会报错。
+
+```ts
+type name = "firstname" | "lastname";
+type TName = {
+  [key in name]: string;
+};
+// TName = { firstname: string, lastname: string }
+```
