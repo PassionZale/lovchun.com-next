@@ -3,7 +3,7 @@ title: 哇！我写了10 年代码
 pubDatetime: 2024-01-15T04:06:31Z
 modDatetime: 2024-01-22T04:06:31Z
 slug: happy-coding-for-10-years
-featured: true
+featured: false
 draft: false
 tags:
   - 生活
