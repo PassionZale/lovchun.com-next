@@ -353,3 +353,5 @@ const foo = `_abc`;
 // 推导出 -> 'abc'
 type FooType = RemoveUnderscore<typeof foo>;
 ```
+
+> 更多参考：[精读《Typescript infer 关键字》](https://github.com/ascoders/weekly/blob/master/%E5%89%8D%E6%B2%BF%E6%8A%80%E6%9C%AF/207.%E7%B2%BE%E8%AF%BB%E3%80%8ATypescript%20infer%20%E5%85%B3%E9%94%AE%E5%AD%97%E3%80%8B.md)
