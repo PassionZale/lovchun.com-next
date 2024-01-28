@@ -3,7 +3,7 @@ title: TS 类型体操
 pubDatetime: 2024-01-26T04:06:31Z
 modDatetime: 2024-01-27T04:06:31Z
 slug: type-challenges
-featured: false
+featured: true
 draft: false
 tags:
   - 指南
