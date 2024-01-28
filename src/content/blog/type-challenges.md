@@ -199,3 +199,157 @@ type TName = {
 };
 // TName = { firstname: string, lastname: string }
 ```
+
+## 类型约束
+
+使用 `extends` 来进行类型约束，通常结合泛型来对其进行约束：
+
+```ts
+// 限制泛型为一个对象
+type ObjectT<T extends object> = T;
+
+// Error: Type 'number' does not satisfy the constraint 'object'
+type MyObjectT1 = ObjectT<number>;
+// Ok
+type MyObjectT2 = ObjectT<{}>;
+
+// 限制泛型为一个数组
+type ArrayT<T extends { length: number }> = T;
+// or
+type ArrayT<T extends unknown[]> = T;
+
+// 限制泛型为一个元组
+type TupleT<T extends PropertyKey[]> = T;
+```
+
+在某些场景，也可以**粗暴**的将 `extends` 理解为 **“等于”**：
+
+```ts
+// 实现 Exclude
+// 如果 T "等于" U 则不返回，否则返回
+type MyExclude<T, U> = T extends U ? never : T;
+
+// 实现 If
+// 如果 C（条件）为 true，则返回 T，否则返回 F
+type If<C extends boolean, T, F> = C extends true ? T : F;
+
+type A = If<true, "a", "b">; // 推导出 -> 'a'
+```
+
+## 递归
+
+和 `Javascript` 中的递归类型，类型调用自身也可以完成递归：
+
+```ts
+type MyAwaited<T extends PromiseLike<unknown>> = T extends PromiseLike<infer U>
+  ? U extends PromiseLike<unknown>
+    ? MyAwaited<U>
+    : U
+  : never;
+
+type ExampleType = Promise<string>;
+
+// 推导出 -> 'string'
+type Result1 = MyAwaited<ExampleType>;
+// 推导出 -> 'string | boolean'
+type Result2 = Promise<Promise<Promise<string | boolean>>>;
+```
+
+## infer
+
+`infer` 常常和**条件类型**一起使用，先来看一下**条件类型**：
+
+```ts
+T extends U ? X : Y
+```
+
+在 `Typescript` 中没有 `if/else/switch/case`，所以只能用**三目运算符**来编写**条件类型**：
+
+```ts
+type MyType<T> = T extends string
+  ? "string"
+  : T extends number
+    ? "number"
+    : T extends boolean
+      ? "boolean"
+      : T extends undefined
+        ? "undefined"
+        : T extends Function
+          ? "function"
+          : "object";
+```
+
+使用 `infer` 就是将类型交给 `Typescript` 自行推断：
+
+```ts
+// 推断数组中 item 的类型
+type Item<T> = T extends (infer U)[] ? U : never;
+
+// string[]
+const arr1 = ["a", "b"];
+// 推导出 -> 'string'
+type Arr1 = Item<typeof arr1>;
+
+// number[]
+const arr2 = [1, 2];
+// 推导出 -> 'number'
+type Arr2 = Item<typeof arr2>;
+
+// (string | number | boolean)[]
+const arr3 = ["a", 1, false];
+// 推导出 -> 'string | number | boolean'
+type Arr3 = Item<typeof arr3>;
+
+const arr4 = ["a", 1, false, { foo: "bar" }];
+// 推导出 -> 'string | number | boolean | { foo: string; }'
+type Arr4 = Item<typeof arr4>;
+```
+
+> `infer` 所声明的类型，需要在条件类型的**子语句**中使用
+
+```ts
+// 👍 Ok
+type Item<T> = T extends (infer U)[] ? U : never;
+
+// ❌ 'infer' declarations are only permitted in the 'extends' clause of a conditional type
+type Item<T extends (infer U)[]> = U;
+```
+
+> 使用场景
+
+- 推断对象值的类型：
+
+```ts
+type ObjectValue<T> = T extends { x: infer U } ? U : never;
+```
+
+- 推断函数参数的类型：
+
+```ts
+// 参考内置的 Parameters<T> 类型
+type FuncParamType<T> = T extends (x: infer U) => unknown ? U : never;
+```
+
+- 推断函数返回值的类型：
+
+```ts
+// 参考内置的 ReturnType<T> 类型
+type FuncReturnType<T> = T extends (...args: never[]) => infer R ? R : never;
+```
+
+- 推断泛型参数的类型
+
+```ts
+type PromiseType<T> = T extends Promise<infer U> ? U : never;
+```
+
+- 推断模板字符的类型
+
+```ts
+type RemoveUnderscore<T> = T extends `_${infer R}` ? R : T;
+
+const foo = `_abc`;
+
+// 推导出 -> 'abc'
+type FooType = RemoveUnderscore<typeof foo>;
+```
