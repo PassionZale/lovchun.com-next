@@ -36,6 +36,12 @@ export const SOCIALS: SocialObjects = [
     linkTitle: `Send an email to ${SITE.author}`,
     active: true,
   },
+	{
+		name: "Discord",
+		href: "https://discord.com/invite/Hctmmmp3",
+		linkTitle: `Join ${SITE.author} in Discord`,
+		active: true
+	},
   {
     name: "Rss",
     href: "/rss.xml",
