@@ -1,14 +1,14 @@
 ---
 title: TS 类型体操
 pubDatetime: 2024-01-26T04:06:31Z
-modDatetime: 2024-01-27T04:06:31Z
+modDatetime: 2024-02-19T04:06:31Z
 slug: type-challenges
 featured: true
 draft: false
 tags:
   - 指南
   - Typescript
-description: 我对 Type Challenges 题解的一些心得和拙见，持续更新中...
+description: 我对 Type Challenges 题解的一些心得和拙见。
 ---
 
 <a href="https://tsch.lovchun.com" target="_blank">
