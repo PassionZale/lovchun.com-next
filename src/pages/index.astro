@@ -81,21 +81,21 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           如果你想更多的了解我和这个网站，可以前往
 
           <LinkButton
-            className="hover:text-skin-accent underline underline-offset-4 decoration-dashed"
+            className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
             href="/timeline"
           >
             时间轴
           </LinkButton>
 
-           或
+          或
 
           <LinkButton
-            className="hover:text-skin-accent underline underline-offset-4 decoration-dashed"
+            className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
             href="/about"
           >
             关于
           </LinkButton>
-           。
+          。
         </p>
 
         {
@@ -145,6 +145,36 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
     <Hr />
 
+    <section id="recent-posts">
+      <h2>📜 最近文章</h2>
+      <ul>
+        {
+          sortedPosts.map(
+            ({ data, slug }, index) =>
+              index < 5 && (
+                <Card
+                  href={`/posts/${slug}`}
+                  frontmatter={data}
+                  secHeading={false}
+                />
+              )
+          )
+        }
+      </ul>
+      <div class="all-posts-btn-wrapper">
+        <LinkButton href="/posts">
+          全部文章
+          <svg xmlns="http://www.w3.org/2000/svg"
+            ><path
+              d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
+            ></path>
+          </svg>
+        </LinkButton>
+      </div>
+    </section>
+
+    <Hr />
+
     {
       featuredPosts.length > 0 && (
         <>
@@ -164,38 +194,6 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         </>
       )
     }
-
-    <section id="recent-posts">
-      <h2>📜 最近文章</h2>
-      <ul>
-        {
-          sortedPosts
-            .filter(({ data }) => !data.featured)
-            .map(
-              ({ data, slug }, index) =>
-                index < 4 && (
-                  <Card
-                    href={`/posts/${slug}`}
-                    frontmatter={data}
-                    secHeading={false}
-                  />
-                )
-            )
-        }
-      </ul>
-      <div class="all-posts-btn-wrapper">
-        <LinkButton href="/posts">
-          全部文章
-          <svg xmlns="http://www.w3.org/2000/svg"
-            ><path
-              d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
-            ></path>
-          </svg>
-        </LinkButton>
-      </div>
-    </section>
-
-    <Hr />
 
     <CalendlyMeet />
   </main>
