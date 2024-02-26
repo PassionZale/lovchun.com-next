@@ -36,12 +36,12 @@ export const SOCIALS: SocialObjects = [
     linkTitle: `Send an email to ${SITE.author}`,
     active: true,
   },
-	{
-		name: "Discord",
-		href: "https://discord.com/invite/Hctmmmp3",
-		linkTitle: `Join ${SITE.author} in Discord`,
-		active: true
-	},
+  {
+    name: "Discord",
+    href: "https://discord.com/invite/Hctmmmp3",
+    linkTitle: `Join ${SITE.author} in Discord`,
+    active: true,
+  },
   {
     name: "Rss",
     href: "/rss.xml",
@@ -81,5 +81,12 @@ export const TALKS: Talk[] = [
     place: "武汉",
     preview: "https://talks.lovchun.com/2023/setup-miniprogram",
     download: "https://talks.lovchun.com/2023/setup-miniprogram/pdf",
+  },
+  {
+    date: "2024-03-10",
+    title: "Happy Coding For 10 Years",
+    place: "武汉",
+    preview: "https://talks.lovchun.com/2024/happy-coding-for-10-years",
+    download: "https://talks.lovchun.com/2024/happy-coding-for-10-years/pdf",
   },
 ];
