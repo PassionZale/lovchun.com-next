@@ -1,0 +1,13 @@
+{
+  "setup-miniprogram": {
+    "title": "专栏目录",
+    "desc": "专栏描述",
+    "image": ""
+  },
+
+  "setup-vue3-component-library": {
+    "title": "专栏目录",
+    "desc": "专栏描述",
+    "image": ""
+  }
+}

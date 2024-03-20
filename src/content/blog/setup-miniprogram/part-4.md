@@ -3,6 +3,7 @@ title: 构建小程序 - Generator
 description: 使用 gulp 增强你的工作流，制作一套页面和组件的生成器。
 pubDatetime: 2023-07-10T04:06:31Z
 postSlug: setup-miniprogram/part-4
+column: setup-miniprogram
 featured: false
 draft: false
 tags:
