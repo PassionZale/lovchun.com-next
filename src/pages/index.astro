@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { SOCIALS, TALKS } from "@config";
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
@@ -12,10 +12,26 @@ import GithubRepoCard from "@components/GithubRepoCard";
 import getSortedPosts from "@utils/getSortedPosts";
 import { getFeaturedRepos } from "@utils/getGithubRepos";
 import TalkList from "@components/TalkList";
+import ColumnCard from "@components/ColumnCard";
 import CalendlyMeet from "@components/CalendlyMeet.astro";
 
 const posts = await getCollection("blog");
 const featuredRepos = await getFeaturedRepos();
+
+const { data: columnEntry } = await getEntry("schema", "column");
+const columns = Object.keys(columnEntry)
+  .map(key => {
+    const filters = posts.filter(
+      ({ data }) => data.column === key && !data.draft
+    );
+
+    return {
+      ...columnEntry[key],
+      href: `/columns/${key}`,
+      count: filters.length,
+    };
+  })
+  .filter(item => item.count);
 
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
@@ -145,6 +161,24 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
     <Hr />
 
+    {
+      columns.length > 0 && (
+        <>
+          <section id="columns">
+            <h2>📣 专栏</h2>
+
+            <div class="mt-3 grid grid-cols-1 gap-4 pt-4">
+              {columns.map(column => (
+                <ColumnCard {...column} />
+              ))}
+            </div>
+          </section>
+
+          <Hr />
+        </>
+      )
+    }
+
     <section id="recent-posts">
       <h2>📜 最近文章</h2>
       <ul>
@@ -229,13 +263,15 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   #featured,
   #recent-posts,
   #oss,
-  #talks {
+  #talks,
+  #columns {
     @apply pb-6 pt-12;
   }
   #featured h2,
   #recent-posts h2,
   #oss h2,
-  #talks h2 {
+  #talks h2,
+  #columns h2 {
     @apply text-2xl font-semibold tracking-wide;
   }
   .all-posts-btn-wrapper {
