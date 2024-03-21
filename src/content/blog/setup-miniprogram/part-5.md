@@ -3,6 +3,7 @@ title: 构建小程序 - CI
 description: 结合 miniprogram-ci 进行自动化上传和预览。
 pubDatetime: 2023-07-17T04:06:31Z
 postSlug: setup-miniprogram/part-5
+column: setup-miniprogram
 featured: false
 draft: false
 tags:

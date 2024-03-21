@@ -7,7 +7,7 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import TimelineRender from "@components/TimelineRender";
 
-const timeline = await getEntry("json", "timeline");
+const timeline = await getEntry("schema", "timeline");
 ---
 
 <Layout title={`时间轴 | ${SITE.title}`}>

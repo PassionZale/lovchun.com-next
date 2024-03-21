@@ -1,0 +1,13 @@
+{
+  "setup-miniprogram": {
+    "title": "Setup Miniprogram",
+    "description": "基于数十个小程序项目所沉淀出的开发经验：如何使用 Gulpjs 编写开发框架，如何结合 miniprogram-ci 进行自动化上传和预览，如何结合 vscode 插件进行 lint 等等。",
+    "createDatetime": "2022-07-01"
+  },
+
+  "setup-vue3-component-library": {
+    "title": "Setup Vue3 Component Library",
+    "description": "基于 Vue3 + Typescript 构建组件库，囊括了依赖的取舍、图标库的处理、组件的划分、样式的设计、本地调试组件库、文档的编写、打包和发布。",
+    "createDatetime": "2023-11-20"
+  }
+}
