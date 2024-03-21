@@ -1,0 +1,74 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import getUniqueColumns from "@utils/getUniqueColumns";
+import getPostsByColumn from "@utils/getPostsByColumn";
+import Card from "@components/Card";
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  const columnEntry = await getEntry("schema", "column");
+
+  const columns = getUniqueColumns(columnEntry, posts);
+
+  return columns.map(item => {
+    return {
+      params: { column: item.slug },
+      props: { column: item, posts },
+    };
+  });
+}
+
+const { column, posts } = Astro.props;
+
+const postsByColumn = getPostsByColumn(posts, column);
+---
+
+<Layout title={`专栏: ${column.slug}`} description={column.description}>
+  <Header />
+
+  <div class="mx-auto flex w-full max-w-3xl justify-start px-2">
+    <button
+      class="focus-outline mb-2 mt-8 flex hover:opacity-75"
+      onclick="history.back()"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg"
+        ><path
+          d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
+        ></path>
+      </svg><span>返回</span>
+    </button>
+  </div>
+
+  <main id="main-content">
+    <h1
+      transition:name={column.slug}
+      class="text-2xl font-semibold"
+    >
+      {column.title}
+    </h1>
+
+    <div class="mb-4 mt-2">{column.description}</div>
+    <div class="mt-auto opacity-80 text-sm">
+      创建于&nbsp;{column.createDatetime}，共&nbsp;{column.count}&nbsp;篇文章。
+    </div>
+
+    <ul>
+      {
+        postsByColumn.map(({ data, slug }) => (
+          <Card href={`/posts/${slug}`} frontmatter={data} />
+        ))
+      }
+    </ul>
+  </main>
+
+	<Footer />
+</Layout>
+
+<style>
+  main {
+    @apply mx-auto w-full max-w-3xl px-4 pb-12;
+  }
+</style>

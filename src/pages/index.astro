@@ -14,27 +14,16 @@ import { getFeaturedRepos } from "@utils/getGithubRepos";
 import TalkList from "@components/TalkList";
 import ColumnCard from "@components/ColumnCard";
 import CalendlyMeet from "@components/CalendlyMeet.astro";
+import getUniqueColumns from "@utils/getUniqueColumns";
 
 const posts = await getCollection("blog");
+const columnEntry = await getEntry("schema", "column");
 const featuredRepos = await getFeaturedRepos();
 
-const { data: columnEntry } = await getEntry("schema", "column");
-const columns = Object.keys(columnEntry)
-  .map(key => {
-    const filters = posts.filter(
-      ({ data }) => data.column === key && !data.draft
-    );
-
-    return {
-      ...columnEntry[key],
-      href: `/columns/${key}`,
-      count: filters.length,
-    };
-  })
-  .filter(item => item.count);
 
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
+const columns = getUniqueColumns(columnEntry, posts)
 
 const socialCount = SOCIALS.filter(social => social.active).length;
 ---
@@ -47,51 +36,18 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         <h1>👋 Hello!</h1>
         <p>
           <span class="text-2xl">我是 <strong>张磊</strong></span>，
-          一名前端开发工程师 🙌，深漂7年，现工作于武汉，我喜欢使用 Vue 和
-          React，也曾使用 PHP 和 Nodejs
-          做过一段时间的全栈开发，除了编码之外，我还维护着博客，你可以在这个网站上浏览我所发布的文章。
+          一名前端开发工程师 🙌，深漂7年，现工作于武汉。
+        </p>
+
+        <p>我喜欢使用 Vue 和 React，</p>
+
+        <p>也曾使用 PHP 和 Nodejs 做过一段时间的全栈开发，</p>
+
+        <p>
+          除了编码之外，我还维护着博客，你可以在这个网站上浏览我所发布的文章。
         </p>
 
         <p>它通过 Astro 构建，部署于 Vercel。</p>
-
-        <p>
-          最近我正在通过
-
-          <LinkButton
-            className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
-            href="https://github.com/type-challenges/type-challenges"
-          >
-            type-challenges
-          </LinkButton>
-
-          这个项目来深入了解和学习 TypeScript，
-        </p>
-
-        <p>
-          你可以前往
-
-          <LinkButton
-            className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
-            href="https://tsch.lovchun.com"
-          >
-            tsch.lovchun.com
-          </LinkButton>
-
-          查看我的挑战记录，
-        </p>
-
-        <p>
-          或前往
-
-          <LinkButton
-            className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
-            href="/posts/type-challenges"
-          >
-            《TS 类型体操》
-          </LinkButton>
-
-          浏览我的挑战心得。
-        </p>
 
         <p>
           如果你想更多的了解我和这个网站，可以前往
@@ -117,7 +73,6 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         {
           socialCount > 0 && (
             <div class="social-wrapper">
-              <div class="social-links">社交链接：</div>
               <Socials />
             </div>
           )
