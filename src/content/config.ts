@@ -13,7 +13,7 @@ const blog = defineCollection({
       draft: z.boolean().optional(),
       tags: z.array(z.string()).default(["others"]),
       column: z
-        .enum(["setup-miniprogram", "setup-vue3-component-library"])
+        .enum(["setup-miniprogram", "setup-vue3-component-library", "youyou"])
         .optional(),
       ogImage: image()
         .refine(img => img.width >= 1200 && img.height >= 630, {

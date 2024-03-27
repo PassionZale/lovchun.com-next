@@ -4,7 +4,7 @@ import Hr from "./Hr.astro";
 import LinkButton from "./LinkButton.astro";
 
 export interface Props {
-  activeNav?: "posts" | "tags" | "about" | "search" | "timeline" | "youyou";
+  activeNav?: "posts" | "tags" | "about" | "search" | "timeline";
 }
 
 const { activeNav } = Astro.props;
@@ -68,11 +68,6 @@ const { activeNav } = Astro.props;
           <li>
             <a href="/timeline" class={activeNav === "timeline" ? "active" : ""}>
               时间轴
-            </a>
-          </li>
-					<li>
-            <a href="/youyou" class={activeNav === "youyou" ? "active" : ""}>
-              🐯佑佑
             </a>
           </li>
           <li>

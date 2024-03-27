@@ -43,16 +43,16 @@ const postsByColumn = getPostsByColumn(posts, column);
   </div>
 
   <main id="main-content">
-    <h1
-      transition:name={column.slug}
-      class="text-2xl font-semibold"
-    >
+    <h1 transition:name={column.slug} class="text-2xl font-semibold">
       {column.title}
     </h1>
 
     <div class="mb-4 mt-2">{column.description}</div>
-    <div class="mt-auto opacity-80 text-sm">
+    <div class="mt-auto text-sm opacity-80">
       创建于&nbsp;{column.createDatetime}，共&nbsp;{column.count}&nbsp;篇文章。
+      <span class="rounded bg-skin-accent px-2.5 py-0.5 text-xs text-white">
+        {column.status}
+      </span>
     </div>
 
     <ul>
@@ -64,7 +64,7 @@ const postsByColumn = getPostsByColumn(posts, column);
     </ul>
   </main>
 
-	<Footer />
+  <Footer />
 </Layout>
 
 <style>

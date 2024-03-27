@@ -6,6 +6,7 @@ export default function GithubRepoCard({
   title,
   description,
   createDatetime,
+  status,
   count,
   slug,
 }: Props) {
@@ -20,8 +21,11 @@ export default function GithubRepoCard({
           <span className="text-skin-accent">{title}</span>
         </div>
         <div className="mb-4 mt-2">{description}</div>
-        <div className="mt-auto opacity-80 text-sm">
-          创建于&nbsp;{createDatetime}，共&nbsp;{count}&nbsp;篇文章
+        <div className="mt-auto text-sm opacity-80">
+          创建于&nbsp;{createDatetime}，共&nbsp;{count}&nbsp;篇文章。
+          <span className="rounded bg-skin-accent px-2.5 py-0.5 text-xs text-white">
+            {status}
+          </span>
         </div>
       </a>
     </div>
