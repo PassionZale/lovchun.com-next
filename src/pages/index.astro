@@ -20,10 +20,9 @@ const posts = await getCollection("blog");
 const columnEntry = await getEntry("schema", "column");
 const featuredRepos = await getFeaturedRepos();
 
-
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
-const columns = getUniqueColumns(columnEntry, posts)
+const columns = getUniqueColumns(columnEntry, posts);
 
 const socialCount = SOCIALS.filter(social => social.active).length;
 ---
@@ -159,16 +158,18 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       <h2>📜 最近文章</h2>
       <ul>
         {
-          sortedPosts.map(
-            ({ data, slug }, index) =>
-              index < 5 && (
-                <Card
-                  href={`/posts/${slug}`}
-                  frontmatter={data}
-                  secHeading={false}
-                />
-              )
-          )
+          sortedPosts
+            .filter(({ data }) => !data.featured)
+            .map(
+              ({ data, slug }, index) =>
+                index < 5 && (
+                  <Card
+                    href={`/posts/${slug}`}
+                    frontmatter={data}
+                    secHeading={false}
+                  />
+                )
+            )
         }
       </ul>
       <div class="all-posts-btn-wrapper">
