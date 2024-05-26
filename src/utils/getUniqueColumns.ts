@@ -1,9 +1,14 @@
 import type { CollectionEntry } from "astro:content";
 
 interface Column {
+  /** 专栏标题 */
   title: string;
+  /** 专栏描述 */
   description: string;
+  /** 专栏创建日期 */
   createDatetime: string;
+  /** 专栏状态 */
+  status: string;
   slug: string;
   count: number;
 }
@@ -31,4 +36,4 @@ const getUniqueColumns = (
 
 export default getUniqueColumns;
 
-export type { Column }
+export type { Column };

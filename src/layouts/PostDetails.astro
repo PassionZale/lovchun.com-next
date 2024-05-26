@@ -36,7 +36,8 @@ const ogUrl = new URL(
 const layoutProps = {
   title,
   author,
-  description,
+	// description 为空字符串时，降级使用 title 占位
+  description: description || title,
   pubDatetime,
   modDatetime,
   canonicalURL,

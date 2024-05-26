@@ -6,6 +6,7 @@ import Card from "@components/Card";
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
+import { SITE } from "@config";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -26,7 +27,7 @@ const { column, posts } = Astro.props;
 const postsByColumn = getPostsByColumn(posts, column);
 ---
 
-<Layout title={`专栏: ${column.slug}`} description={column.description}>
+<Layout title={`专栏: ${column.title} | ${SITE.title}`} description={column.description}>
   <Header />
 
   <div class="mx-auto flex w-full max-w-3xl justify-start px-2">
@@ -43,16 +44,16 @@ const postsByColumn = getPostsByColumn(posts, column);
   </div>
 
   <main id="main-content">
-    <h1
-      transition:name={column.slug}
-      class="text-2xl font-semibold"
-    >
+    <h1 transition:name={column.slug} class="text-2xl font-semibold">
       {column.title}
     </h1>
 
     <div class="mb-4 mt-2">{column.description}</div>
-    <div class="mt-auto opacity-80 text-sm">
+    <div class="mt-auto text-sm opacity-80">
       创建于&nbsp;{column.createDatetime}，共&nbsp;{column.count}&nbsp;篇文章。
+      <span class="rounded bg-skin-accent px-2.5 py-0.5 text-xs text-white">
+        {column.status}
+      </span>
     </div>
 
     <ul>
@@ -64,7 +65,7 @@ const postsByColumn = getPostsByColumn(posts, column);
     </ul>
   </main>
 
-	<Footer />
+  <Footer />
 </Layout>
 
 <style>
