@@ -1,6 +1,7 @@
 ---
 title: Build & Deploy
 pubDatetime: 2024-06-13T04:06:31Z
+modDatetime: 2024-06-26T04:06:31Z
 slug: build-and-deploy
 featured: false
 draft: false
@@ -270,6 +271,78 @@ server {
   location / {
     try_files $uri $uri/ /index.html;
   }
+
+  # 静态资源文件 缓存30天；
+  location ~ \.(css|js|gif|jpg|jpeg|png|bmp|swf|ttf|woff|otf|ttc|pfa)$ {
+    expires 30d;
+  }
+
+  # `html` 不缓存
+  location ~ \.(html|htm)$ {
+    add_header Cache-Control "no-store, no-cache, must-relalidate";
+  }
+}
+```
+
+## 嵌套路径
+
+将前端部署在根路径非常简单，但是如果部署嵌套路径下，事情就会变得复杂。
+
+拿 `Vite + React18 + ReactRouter6` 举例，假设我们有一个项目，
+
+并期望将它们部署在嵌套路径下：`foo` 部署至 `http://domain.com/foo`。
+
+对于 `Vite` 而言，你需要设置它的 `base: '/foo'`：
+
+```ts title="vite.config.ts"
+import type { UserConfig } from "vite";
+
+export default (): UserConfig => {
+  base: "/foo";
+};
+```
+
+对于 `ReactRouter6` 而言，你还需要设置它的 `basename="/foo"`：
+
+~~如果你使用的是 `VueRourter` 就不需要了~~
+
+```ts title="App.tsx"
+<RouterProvider
+	router={createBrowserRouter(routes, { basename: "/foo" })}
+/>
+```
+
+配置完毕之后，当你的项目构建完毕之后，它就会正常的从 `/foo` 路径请求资源文件，
+
+对于 `Nginx`，我们还需要一些额外的配置：
+
+```nginx title="nginx.conf" "/foo" "/foo/bar"
+server {
+  listen 80;
+  server_name localhost;
+  root /var/www/html;
+  index index.php index.html index.htm;
+
+  location = /foo {
+		root /var/www/html/foo/dist;
+		try_files $uri $uri/ /foo/index.html;
+  }
+
+	location ~ ^/foo(.*) {
+		root /var/www/html/foo/dist;
+		try_files $1 $1/ /index.html =404;
+	}
+
+	# 多层嵌套路径同理
+	location = /foo/bar {
+		root /var/www/html/foo-bar/dist;
+		try_files $uri $uri/ /foo/bar/index.html;
+  }
+
+	location ~ ^/foo/bar(.*) {
+		root /var/www/html/foo/dist;
+		try_files $1 $1/ /index.html =404;
+	}
 
   # 静态资源文件 缓存30天；
   location ~ \.(css|js|gif|jpg|jpeg|png|bmp|swf|ttf|woff|otf|ttc|pfa)$ {
