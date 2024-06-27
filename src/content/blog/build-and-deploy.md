@@ -1,7 +1,7 @@
 ---
 title: Build & Deploy
 pubDatetime: 2024-06-13T04:06:31Z
-modDatetime: 2024-06-26T04:06:31Z
+modDatetime: 2024-06-27T04:06:31Z
 slug: build-and-deploy
 featured: false
 draft: false
@@ -354,4 +354,227 @@ server {
     add_header Cache-Control "no-store, no-cache, must-relalidate";
   }
 }
+```
+
+## 更新提示
+
+“解压文件”和“容器化”这两种部署方式，就是我们常说的：**增量部署**和**全量部署**。
+
+**增量部署** 通常不会出什么大问题，因为每次发版之后，旧的静态资源文件还在，
+
+**全量部署** 则不然，每次发版之后，旧的静态资源文件已全部删除。
+
+如果你的项目使用了路由懒加载，用户在发版前已经打开了应用，
+
+发版完成后，若用户点击了未访问过的路由，往往会出现白屏，
+
+虽然我们已经设置了 `index.html` 不缓存，
+
+但是需要用户刷新一次应用才会重新获取新版本的静态资源文件。
+
+> 如何在前端部署成功之后给出更新提示？
+
+想要给出更新提示，前端就需要知道当前客户端的版本号落后于最新版本号，
+
+**在每次路由变化时，获取最新版本号，比对新旧版本号是否一致。**
+
+这里的版本号不是指 `major.minor.patch`，而是指 `buildId`，
+
+我们在构建时，将 `{ version: timestamp }{:json}` 写入到 `public/version.json` 中，
+
+通过 `define` 定义全局常量 `define: { __APP_VERSION__: timestamp }{:json}`，
+
+如果你也使用 `vite`，我们可以简单编写一个插件来完成这一步：
+
+```js title="/plugins/buildVersion.js"
+import path from "node:path";
+import fs from "node:fs";
+
+const writeVersion = async (versionFile, content) => {
+  fs.writeFile(versionFile, content, err => {
+    if (err) throw err;
+  });
+};
+
+export default options => {
+  let configPath;
+  return {
+    name: "buildVersion",
+    configResolved(resolvedConfig) {
+      configPath = resolvedConfig.publicDir;
+    },
+    async buildStart() {
+      const file = configPath + path.sep + "version.json";
+      const content = JSON.stringify({ version: options.version });
+      if (fs.existsSync(configPath)) {
+        writeVersion(file, content);
+      } else {
+        fs.mkdir(configPath, err => {
+          if (err) throw err;
+          writeVersion(file, content);
+        });
+      }
+    },
+  };
+};
+```
+
+```ts title="vite.config.ts" {4}
+import { defineConfig } from "vite";
+import buildVersionPlugin from "./plugins/buildVersion";
+
+const appVersion = new Date().getTime();
+
+export const ViteConfig = defineConfig({
+  define: {
+    __APP_VERSION__: appVersion,
+  },
+  plugins: [
+    {
+      ...buildVersionPlugin({
+        version: appVersion,
+      }),
+      apply: "build",
+    },
+  ],
+});
+```
+
+我们还需要更改 `nginx.conf`，设置 `*.json` 也不缓存：
+
+```diff titile="nginx.conf"
+- location ~ \.(html|htm)$ {
++ location ~ \.(html|htm|json)$ {
+	add_header Cache-Control "no-store, no-cache, must-relalidate";
+}
+```
+
+使用 `axios` 或者 `fetch`，在 `vue-router` 每次路由变化时，获取最新的版本号并进行比对，
+
+由于 `*.json` 不会被缓存，所以我们总能获取到最新的文件：
+
+```js "__APP_VERSION__ !== jons.version"
+router.beforeEach(async ({ next }) => {
+  const res = await fetch("/version.json");
+
+  if (res.ok) {
+    const json = await res.json();
+
+    if (json.version && __APP_VERSION__ !== json.version) {
+      Modal.confirm({
+        title: "发现新版本",
+        onOk: () => window.location.reload(),
+      });
+
+      return;
+    }
+  }
+
+  next();
+});
+```
+
+`react-router@6` 并没有 `beforeEach` 这类钩子函数，通过封装 `useNavigate` 也可以实现这种拦截效果：
+
+```ts title="useNavigate.ts"
+import { Modal } from "antd";
+import axios from "axios";
+import { useCallback } from "react";
+import {
+  NavigateOptions,
+  To,
+  useNavigate as _useNavigate,
+} from "react-router-dom";
+
+export function useNavigate() {
+  const navigate = _useNavigate();
+
+  return useCallback(
+    async (to: To, options?: NavigateOptions) => {
+      if (import.meta.env.PROD) {
+        try {
+          const res = await axios.get("/version.json");
+
+          if (res.data.version && res.data.version !== __APP_VERSION__) {
+            Modal.info({
+              autoFocusButton: null,
+              title: "版本升级提示",
+              content: "检测到版本更新，请刷新页面。",
+              okText: "刷新",
+              onOk: () => window.location.reload(),
+            });
+
+            return;
+          }
+        } catch (error) {
+          // emtpy
+        }
+      }
+
+      navigate(to, options);
+    },
+    [navigate]
+  );
+}
+```
+
+**这样做虽然可以解决问题，但是大部分版本比对是无效的。**
+
+**应该没有哪个项目天天发生产吧？**
+
+那么每次路由切换所产生的 `Get /version.json{:shell}` 除了浪费带宽，没有任何实质的意义...
+
+`vite@4` 提供了 `vite:preloadError` 用来[处理加载报错](https://cn.vitejs.dev/guide/build.html#load-error-handling)，
+
+所以我们只需要监听这个错误，而后封装一个容器组件即可，`vue` 同理：
+
+```tsx title="PreloadErrorWrapper.tsx"
+import { Modal, Result, Button } from "antd";
+import { memo, useCallback, useEffect, useState } from "react";
+
+const PreloadErrorWrapper = memo((props: React.PropsWithChildren) => {
+  const [existError, setExistError] = useState(false);
+
+  const listener = useCallback<EventListener>(event => {
+    event.preventDefault();
+
+    console.warn(event);
+
+    setExistError(true);
+
+    Modal.confirm({
+      autoFocusButton: null,
+      title: "版本升级",
+      content: "检测到版本更新，请刷新页面！",
+      okText: "刷新",
+      onOk: () => window.location.reload(),
+    });
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("vite:preloadError", listener);
+
+    return () => window.removeEventListener("vite:preloadError", listener);
+  }, [listener]);
+
+  return (
+    <>
+      {existError ? (
+        <Result
+          title="版本升级"
+          subTitle="检测到版本更新，请刷新页面！"
+          extra={
+            <Button type="primary" onClick={() => window.location.reload()}>
+              刷新
+            </Button>
+          }
+        />
+      ) : (
+        props.children
+      )}
+    </>
+  );
+});
+
+export default PreloadErrorWrapper;
 ```
