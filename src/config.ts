@@ -67,7 +67,7 @@ export const REPOS: `${string}/${string}`[] = [
   "PassionZale/lovchun.com-next",
   "PassionZale/talks",
   "PassionZale/geist-design",
-  "PassionZale/geist-design-icons",
+  "PassionZale/release-viewer",
   "PassionZale/create-app",
   "PassionZale/type-challenges",
   "PassionZale/iMall",
