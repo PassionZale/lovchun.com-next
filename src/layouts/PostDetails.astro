@@ -75,7 +75,7 @@ const layoutProps = {
       {tags.map(tag => <Tag tag={slugifyStr(tag)} />)}
     </ul>
 
-    <Comment title={title} client:load />
+    <Comment title={title} client:only="react" />
 
     <div class="flex justify-end">
       <button
