@@ -12,3 +12,7 @@ Articles & happiness I want to share
 - [ ] Videos
 	- [ ] video for [happy coding for 10 years](https://talks.lovchun.com/2024/happy-coding-for-10-years)
 	- [ ] video for youyou
+- [ ] how to build docs
+	- posts
+	- talks
+	- videos
