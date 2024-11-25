@@ -7,7 +7,9 @@ Articles & happiness I want to share
 
 ## TODO
 
+- [ ] pick 10 of 2023 photos
 - [ ] /posts/youyou/2023
+- [ ] pick 10 of 2024 photos
 - [ ] /posts/youyou/2024
 - [ ] Videos
 	- [ ] video for [happy coding for 10 years](https://talks.lovchun.com/2024/happy-coding-for-10-years)
