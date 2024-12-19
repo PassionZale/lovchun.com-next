@@ -13,8 +13,6 @@ description: Whistle + SwitchyOmega 抓包 & 调试。
 
 如果你已经熟练使用 [Fiddler](https://www.telerik.com/fiddler)，可以跳过此文。
 
-## Table of contents
-
 ## 背景
 
 回武汉一段时间后，遇到了一些奇奇怪怪的项目。

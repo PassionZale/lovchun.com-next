@@ -9,8 +9,6 @@ tags:
   - 指南
 ---
 
-## Table of contents
-
 ## 区分货品（SPU）和商品（SKU）
 
 SPU = Standard Product Unit （标准化产品单元）：

@@ -7,6 +7,7 @@ import Datetime from "@components/Datetime";
 import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
 import Comment from "@components/Comment";
+import TOC from "@components/Toc.astro";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -17,6 +18,7 @@ const { post } = Astro.props;
 const {
   title,
   author,
+	toc,
   description,
   ogImage,
   canonicalURL,
@@ -25,7 +27,7 @@ const {
   tags,
 } = post.data;
 
-const { Content } = await post.render();
+const { Content, headings } = await post.render();
 
 const ogImageUrl = typeof ogImage === "string" ? ogImage : ogImage?.src;
 const ogUrl = new URL(
@@ -67,6 +69,7 @@ const layoutProps = {
       size="lg"
       className="my-2"
     />
+		{!!headings.length && toc && <TOC headings={headings} />}
     <article id="article" role="article" class="prose mx-auto mt-8 max-w-3xl">
       <Content />
     </article>

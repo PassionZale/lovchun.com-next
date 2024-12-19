@@ -191,6 +191,11 @@
   }
 }
 
+html .toc-list {
+  max-height: 78vh;
+  overflow-y: auto;
+}
+
 @layer components {
   .display-none {
     @apply hidden;

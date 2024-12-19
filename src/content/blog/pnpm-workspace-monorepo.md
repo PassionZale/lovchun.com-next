@@ -10,8 +10,6 @@ tags:
   - 面试
 ---
 
-## Table of contents
-
 ## 前言
 
 > 源码：[https://github.com/PassionZale/papa-interview.git](https://github.com/PassionZale/papa-interview.git)

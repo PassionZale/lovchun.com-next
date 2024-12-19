@@ -12,6 +12,7 @@ const blog = defineCollection({
       featured: z.boolean().optional(),
       draft: z.boolean().optional(),
       tags: z.array(z.string()).default(["others"]),
+			toc: z.boolean().optional().default(true),
       column: z
         .enum(["setup-miniprogram", "setup-vue3-component-library", "youyou"])
         .optional(),

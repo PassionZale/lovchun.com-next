@@ -9,8 +9,6 @@ tags:
   - 指南
 ---
 
-## Table of contents
-
 ## 配置 staticfiles
 
 打开 `setting.py`，将 `django.contrib.staticfiles` 加入至 `INSTALLED_APPS` 中：

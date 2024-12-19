@@ -6,12 +6,11 @@ postSlug: setup-vue3-component-library/plopjs
 column: setup-vue3-component-library
 featured: false
 draft: false
+toc: false
 tags:
   - 指南
   - Vue.js
 ---
-
-## Table of contents
 
 ## 目录
 

@@ -11,8 +11,6 @@ tags:
   - Vue.js
 ---
 
-## Table of contents
-
 ## 目录
 
 - [**《构建 Vue3 组件库 - 如何开始》**](/posts/setup-vue3-component-library/how-to-start)

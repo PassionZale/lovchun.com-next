@@ -17,8 +17,6 @@ description: 通过 ArrayBuffer、Blob、File、FileReader、URL 等处理 Base6
 > - `FormData().append()` 可用于上传
 > - `URL.createObjectURL()` 可用于下载
 
-## Table of contents
-
 ## 原生 Base64 编码和解码
 
 从 IE10+浏览器开始，所有浏览器就原生提供了 Base64 编码解码方法，不仅可以用于浏览器环境，Service Worker 环境也可以使用。
