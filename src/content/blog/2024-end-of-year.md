@@ -1,6 +1,6 @@
 ---
 title: 2024 End Of Year
-pubDatetime: 2024-12-31T04:06:31Z
+pubDatetime: 2024-12-22T04:06:31Z
 slug: 2024-end-of-year
 featured: false
 draft: false
