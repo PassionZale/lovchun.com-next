@@ -8,30 +8,37 @@ const WrapperStyles = {
 
 const Comment: React.FC<{ title: string }> = ({ title }) => {
   const isProd = import.meta.env.PROD;
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  const [theme, setTheme] = useState(() => {
+    const currentTheme = localStorage.getItem("theme");
+    const browserTheme = window.matchMedia("(prefers-color-scheme: dark)")
+      .matches
+      ? "dark"
+      : "light";
+
+    return currentTheme || browserTheme;
+  });
 
   useEffect(() => {
-    const getCurrentTheme = () =>
-      localStorage.getItem("theme") as "light" | "dark";
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = ({ matches }: MediaQueryListEvent) => {
+      setTheme(matches ? "dark" : "light");
+    };
 
-    const currentTheme = getCurrentTheme();
+    mediaQuery.addEventListener("change", handleChange);
 
-    if (currentTheme) {
-      setTheme(currentTheme);
-    }
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
-    const observer = new MutationObserver(() => {
-      const currentTheme = getCurrentTheme();
+  useEffect(() => {
+    const themeButton = document.querySelector("#theme-btn");
+    const handleClick = () => {
+      setTheme(prevTheme => (prevTheme === "dark" ? "light" : "dark"));
+    };
 
-      setTheme(currentTheme);
-    });
+    themeButton?.addEventListener("click", handleClick);
 
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
-    });
-
-    return () => observer.disconnect();
+    return () => themeButton?.removeEventListener("click", handleClick);
   }, []);
 
   return (

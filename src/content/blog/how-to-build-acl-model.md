@@ -9,8 +9,6 @@ tags:
   - 指南
 ---
 
-## Table of contents
-
 ## 前言
 
 一个基本的 ACCESS CONTROL LIST 会基于 “用户”、“角色”、“权限”三个模型：

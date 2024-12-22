@@ -15,8 +15,6 @@ description: 我对 Type Challenges 题解的一些心得和拙见。
   <img src="https://tsch.lovchun.com/logo.svg" alt="type-challenges" />
 </a>
 
-## Table of contents
-
 ## any
 
 使用 `any` 标记某个变量的类型时，相当于关闭了类型检查。

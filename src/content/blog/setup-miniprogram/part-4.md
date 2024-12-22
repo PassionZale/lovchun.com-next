@@ -13,8 +13,6 @@ tags:
 
 ![gulp-enhance-your-work-flow](/images/setup-miniprogram/gulp-enhance-your-work-flow.png)
 
-## Table of contents
-
 ## 目录
 
 - [**《构建小程序 - 插件、目录、开发者工具、配置》**](/posts/setup-miniprogram/part-1)

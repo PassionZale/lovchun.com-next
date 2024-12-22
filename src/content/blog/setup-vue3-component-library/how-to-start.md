@@ -6,6 +6,7 @@ postSlug: setup-vue3-component-library/how-to-start
 column: setup-vue3-component-library
 featured: false
 draft: false
+toc: false
 tags:
   - 指南
   - Vue.js
@@ -22,8 +23,6 @@ tags:
 > 通过下方的[**目录**](#目录)可以快速浏览整个专题，
 >
 > 通过下方的[**源码**](#源码)可以查看原始代码和文档实例。
-
-## Table of contents
 
 ## 目录
 

@@ -11,8 +11,6 @@ tags:
 
 ![nginx ingress](/images/front-end-gray-release-landing-scheme/nginx-ingress.png)
 
-## Table of contents
-
 ## 原理
 
 > 基于 `Nginx Ingress Controller`

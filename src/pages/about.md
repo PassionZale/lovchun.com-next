@@ -3,8 +3,6 @@ layout: ../layouts/AboutLayout.astro
 title: "关于"
 ---
 
-## Table of contents
-
 ## lovchun.com
 
 - `love` 缺省字母 `e` ；
@@ -92,8 +90,6 @@ draft: false
 tags:
   - Vue.js
 ---
-
-## Table of contents
 ```
 
 ### SyntaxHighlight
