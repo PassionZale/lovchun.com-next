@@ -143,7 +143,7 @@ emm...简单说就是更合理，更好掌控，更利于本地开发。
 
 它的 `content collection` 设计的非常出色，
 
-我第一次知道原来可以定义 `collection` 的 `schema`，结合 `zod` 进行校验，
+我第一次知道原来可以定义 `collection` 的 `schema` 可以结合 `zod` 进行校验，
 
 我第一次体验到原来 `md` 可以编译的这么稳定、这么快！
 
