@@ -1,10 +1,10 @@
 ---
 title: 2024 End Of Year
 pubDatetime: 2024-12-22T04:06:31Z
+modDatetime: 2024-12-23T04:06:31Z
 slug: 2024-end-of-year
 featured: false
 draft: false
-toc: false
 tags:
   - 生活
 description: 3 个仓库，6 篇博客，893 次提交。
@@ -129,7 +129,7 @@ emm...简单说就是更合理，更好掌控，更利于本地开发。
 
 ### Astro
 
-**Fullstack Document App** 就是我对它的评价！
+**FullStack Document App** 就是我对它的评价！
 
 在当前这个时间点，你如果想找到一个**多平台集成**、**文件路由系统**、**内容管理**、**全栈**等，
 
@@ -226,3 +226,79 @@ export default defineConfig((options) => {
 现在有了孩子，手机上的照片就多了起来，这一张我觉得 2024 最棒的照片，**奶奶和佑佑**的合照。
 
 ![warmth](/images/2024-end-of-year/warmth.jpg)
+
+## 开源项目
+
+### TS Type Challenge
+
+今年深入的使用了 `Typescript`，磕磕绊绊的刷了大部分[类型体操](https://github.com/type-challenges/type-challenges)的题目，
+
+你可以在这里查阅我的挑战记录 [https://tsch.lovchun.com/](https://tsch.lovchun.com/)。
+
+### TS FullStack App
+
+我在很早的时候，使用 [Nextjs](https://nextjs.org/) 和 [Nestjs](https://nestjs.com/) 分别搭建了
+
+- 客户端 [mp-operation-website](https://github.com/PassionZale/mp-operation-website)
+- 服务端 [mp-operation-api](https://github.com/PassionZale/mp-operation-api)
+
+用来改造公司小程序的项目，在 `build` 之后通过 `ssh` 上传到服务端，而后客户端展示发布记录，
+
+开发、测试、产品可以方便的浏览各个环境的发布记录和更新说明。
+
+今年，我重新开发了 [Release Viewer - micro platform to preview all release logs.](https://github.com/PassionZale/release-viewer)
+
+它是一个基于 [Nextjs](https://nextjs.org/) 的全栈项目，服务端和客户端的技术栈大概如下：
+
+#### Server
+
+| repo                                             | remark                                  |
+| ------------------------------------------------ | --------------------------------------- |
+| [prisma](https://github.com/prisma/prisma)       | ORM                                    |
+| [jose](https://github.com/panva/jose)            | JWT Sign, Verify, Parse                 |
+| [bcryptjs](https://github.com/dcodeIO/bcrypt.js) | Password Hashed, Verify                 |
+| [zod](https://github.com/colinhacks/zod)         | schema validation for API Request Input |
+
+#### Client
+
+| repo                                                          | remark                               |
+| ------------------------------------------------------------- | ------------------------------------ |
+| [shadcn-ui](https://github.com/shadcn-ui/ui)                  | UI Design                            |
+| [next-themes](https://github.com/pacocoursey/next-themes)     | Theme                                |
+| [zustand](https://github.com/pmndrs/zustand)                  | Gloabl State Manage                  |
+| [qs](https://github.com/ljharb/qs)                            | format Get query params              |
+| [@tabler/icons-react](https://github.com/tabler/tabler-icons) | Icons                                |
+| [dayjs](https://github.com/iamkun/dayjs)                      | Datetime humanize                    |
+| [zod](https://github.com/colinhacks/zod)                      | schema validation form Form onSubmit |
+
+## 2025 计划
+
+### Astro upgrade
+
+如果明年 Astro 发布新版本，我就将博客 [lovchun.com-next](https://github.com/PassionZale/lovchun.com-next) 升级一下。
+
+### 《佑佑》
+
+专栏一直没有时间写，正常的进度应该有 2022、2023、2024 三篇了，
+
+现在 2022 刚完成，2023 WIP，2024 进度零...
+
+我想改变一下书写的方式，毕竟年底回忆一年的时间轴实在太难了，
+
+我决定以后每年年底挑出 10 张和佑佑有关的照片，然后针对这些照片完成专栏。
+
+### 《Setup Document App》
+
+我已经用很多方式搭建过文档应用了，到现在为止，至少搭建过 5 个应用。
+
+如何编写文档应用，这是我计划春节期间完成的专栏，希望我能将这些经验沉淀出来。
+
+### 视屏
+
+我最后还想制作视频，可能会发布到网上，也可能会一直封存在硬盘。
+
+我有一个 [演讲](https://github.com/PassionZale/talks) 的仓库，是基于 `slidev` 的 `monorepo`，
+
+十一期间尝试过“一镜到底”对着幻灯片录制演讲的视频，我对着镜头，属于半天吐不出个字的水平，
+
+期望我能迈出第一步！
