@@ -22,6 +22,7 @@ export type SocialIcons = {
 export type SocialMedia =
   | "Github"
   | "Rss"
+	| "Bilibili"
   | "Facebook"
   | "Instagram"
   | "LinkedIn"
