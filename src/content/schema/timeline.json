@@ -12,6 +12,10 @@
     "year": 2024,
     "stories": [
 			{
+				"title": "cursor",
+				"content": "2024/12/31 全网都是\"我用 cursor 写了一个 xxx\"，看着想吐..."
+			},
+			{
 				"title": "release-viewer",
 				"content": "2024/10/18 我的首个 Typescript Fullstack 项目终于完成！"
 			},

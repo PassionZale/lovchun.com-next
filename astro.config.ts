@@ -4,10 +4,12 @@ import react from "@astrojs/react";
 import remarkToc from "remark-toc";
 import remarkGemoji from "remark-gemoji";
 import rehypePrettyCode from "rehype-pretty-code";
+import rehypeUnwrapImages from "rehype-unwrap-images";
+import rehypeFigure from "@microflash/rehype-figure";
 import { rehypeAccessibleEmojis } from "rehype-accessible-emojis";
 import sitemap from "@astrojs/sitemap";
 import { SITE } from "./src/config";
-import moonlightTheme from './public/assets/moonlight-ii.json';
+import moonlightTheme from "./public/assets/moonlight-ii.json";
 
 import type { RehypePlugins } from "@astrojs/markdown-remark";
 
@@ -23,11 +25,10 @@ export default defineConfig({
   ],
   markdown: {
     syntaxHighlight: false,
-    remarkPlugins: [
-      remarkToc,
-      remarkGemoji,
-    ],
+    remarkPlugins: [remarkToc, remarkGemoji],
     rehypePlugins: [
+      rehypeUnwrapImages,
+			// rehypeFigure,
       [
         rehypePrettyCode,
         {
