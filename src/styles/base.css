@@ -125,20 +125,28 @@
   .prose a {
     @apply break-words hover:!text-skin-accent;
   }
-	.prose img[alt*=".left"] {
-		width: 33%;
-		height: auto;
-		min-width: 150px;
-		float: left;
-	}
-	.prose img[alt*=".thumb"] { 
-		width: 33%; 
-		height: auto;
-		min-width: 150px;
-	}
-	.prose img[alt*=".bordered"] { 
-		border: 1px solid black;
-	}
+  .prose img[alt*=".left"] {
+    width: 33%;
+    height: auto;
+    min-width: 150px;
+    float: left;
+    margin-right: 1rem;
+  }
+  .prose img[alt*=".right"] {
+    width: 33%;
+    height: auto;
+    min-width: 150px;
+    float: right;
+    margin-left: 1rem;
+  }
+  .prose img[alt*=".thumb"] {
+    width: 33%;
+    height: auto;
+    min-width: 150px;
+  }
+  .prose img[alt*=".bordered"] {
+    border: 1px solid black;
+  }
   .prose thead th:first-child,
   tbody td:first-child,
   tfoot td:first-child {
