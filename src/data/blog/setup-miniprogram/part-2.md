@@ -1,8 +1,8 @@
 ---
 title: 构建小程序 - 异常、通讯、技巧
 description: 分享一些小程序中自定义异常、页面之前的通讯以及实际开发中沉淀的技巧。
-pubDatetime: 2022-07-03T04:06:31Z
-postSlug: setup-miniprogram/part-2
+pubDatetime: 2022-07-03
+slug: setup-miniprogram/part-2
 column: setup-miniprogram
 featured: false
 draft: false

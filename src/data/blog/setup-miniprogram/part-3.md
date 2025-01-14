@@ -1,8 +1,8 @@
 ---
 title: 构建小程序 - 框架、Gulpjs、Task
 description: 实际项目中，如何实用 Gulpjs 组装小程序开发框架，如何设计脚本目录，如何编写 Gulp Task。
-pubDatetime: 2023-07-09T04:06:31Z
-postSlug: setup-miniprogram/part-3
+pubDatetime: 2023-07-09
+slug: setup-miniprogram/part-3
 column: setup-miniprogram
 featured: false
 draft: false

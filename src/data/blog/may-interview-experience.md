@@ -1,8 +1,8 @@
 ---
 title: 五月面经
 description: 2023 前端是个巨难的一年，裸辞到顺利入职，焦焦虑虑，共勉吧。
-pubDatetime: 2023-05-28T04:06:31Z
-postSlug: may-interview-experience
+pubDatetime: 2023-05-28
+slug: may-interview-experience
 featured: false
 draft: false
 tags:

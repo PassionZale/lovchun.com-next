@@ -1,8 +1,8 @@
 ---
 title: 商品多规格多属性模型设计思路
 description: 不涉及多仓库那种特别复杂的需求，简单阐述下自己对整个商品表模型的设计和理解。
-pubDatetime: 2018-03-05T04:06:31Z
-postSlug: product-sku-model-design
+pubDatetime: 2018-03-05
+slug: product-sku-model-design
 featured: true
 draft: false
 tags:

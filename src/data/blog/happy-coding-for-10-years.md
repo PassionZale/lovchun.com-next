@@ -1,7 +1,7 @@
 ---
 title: 哇！我写了10 年代码
-pubDatetime: 2024-01-15T04:06:31Z
-modDatetime: 2024-01-22T04:06:31Z
+pubDatetime: 2024-01-15
+modDatetime: 2024-01-22
 slug: happy-coding-for-10-years
 featured: false
 draft: false

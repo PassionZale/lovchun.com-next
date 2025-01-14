@@ -1,8 +1,8 @@
 ---
 title: 构建 Vue3 组件库 - 调试
 description: 本地如何实时的调试组件库。
-pubDatetime: 2023-11-25T04:06:31Z
-postSlug: setup-vue3-component-library/debug
+pubDatetime: 2023-11-25
+slug: setup-vue3-component-library/debug
 column: setup-vue3-component-library
 featured: false
 draft: false

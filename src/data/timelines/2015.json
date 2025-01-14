@@ -1,0 +1,14 @@
+{
+	"id": 2015,
+	"year": 2015,
+	"stories": [
+		{
+			"title": "程序员🐒",
+			"content": "正式成为一名程序员, 主要技术栈: PHP/Dojo/jQuery/Requirejs/Bootstrap"
+		},
+		{
+			"title": "深圳",
+			"content": "2015/01/21 开始深飘"
+		}
+	]
+}

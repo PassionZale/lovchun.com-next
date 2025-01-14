@@ -1,8 +1,8 @@
 ---
 title: 构建 Vue3 组件库 - 文档
 description: 如何使用 vitepress 搭建文档。
-pubDatetime: 2023-11-26T04:06:31Z
-postSlug: setup-vue3-component-library/doc
+pubDatetime: 2023-11-26
+slug: setup-vue3-component-library/doc
 column: setup-vue3-component-library
 featured: false
 draft: false

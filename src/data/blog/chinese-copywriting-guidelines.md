@@ -1,8 +1,8 @@
 ---
 title: 中文文案排版指北
 description: 统一中文文案、排版的相关用法，降低团队成员之间的沟通成本，增强网站气质。
-pubDatetime: 2023-06-04T04:06:31Z
-postSlug: chinese-copywriting-guidelines
+pubDatetime: 2023-06-04
+slug: chinese-copywriting-guidelines
 featured: false
 draft: false
 tags:

@@ -1,8 +1,8 @@
 ---
 title: 构建小程序 - 插件、目录、开发者工具、配置
 description: 推荐一些有趣且实用的 vscode插件、目录结构设计、微信开发者工具配置等。
-pubDatetime: 2022-07-01T04:06:31Z
-postSlug: setup-miniprogram/part-1
+pubDatetime: 2022-07-01
+slug: setup-miniprogram/part-1
 column: setup-miniprogram
 featured: false
 draft: false

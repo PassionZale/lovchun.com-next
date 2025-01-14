@@ -1,7 +1,7 @@
 ---
 title: Build & Deploy
-pubDatetime: 2024-06-13T04:06:31Z
-modDatetime: 2024-06-27T04:06:31Z
+pubDatetime: 2024-06-13
+modDatetime: 2024-06-27
 slug: build-and-deploy
 featured: false
 draft: false

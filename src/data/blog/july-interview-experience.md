@@ -1,8 +1,8 @@
 ---
 title: 七月面经
 description: 裸辞在七月，跑面试真的热炸！以每天 1-2 家公司的进度，7.15 - 7.24 面了 10 家公司...
-pubDatetime: 2019-07-27T04:06:31Z
-postSlug: july-interview-experience
+pubDatetime: 2019-07-27
+slug: july-interview-experience
 featured: false
 draft: false
 tags:

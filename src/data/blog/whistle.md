@@ -1,6 +1,6 @@
 ---
 title: Whistle
-pubDatetime: 2024-02-20T04:06:31Z
+pubDatetime: 2024-02-20
 slug: whistle
 featured: false
 draft: false

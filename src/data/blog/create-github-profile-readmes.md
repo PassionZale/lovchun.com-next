@@ -1,8 +1,8 @@
 ---
 title: GitHub Profile READMEs
 description: 创建并完善 GitHub Profile READMEs，为你的首页添砖加瓦。
-pubDatetime: 2022-03-27T04:06:31Z
-postSlug: create-github-profile-readmes
+pubDatetime: 2022-03-27
+slug: create-github-profile-readmes
 featured: false
 draft: false
 toc: false

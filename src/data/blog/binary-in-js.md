@@ -1,6 +1,6 @@
 ---
 title: JS 中的二进制
-pubDatetime: 2022-08-17T04:06:31Z
+pubDatetime: 2022-08-17
 slug: binary-in-js
 featured: false
 draft: false

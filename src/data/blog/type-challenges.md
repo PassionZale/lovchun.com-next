@@ -1,7 +1,7 @@
 ---
 title: TS 类型体操
-pubDatetime: 2024-01-26T04:06:31Z
-modDatetime: 2024-02-19T04:06:31Z
+pubDatetime: 2024-01-26
+modDatetime: 2024-02-19
 slug: type-challenges
 featured: true
 draft: false

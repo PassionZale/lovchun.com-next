@@ -1,8 +1,8 @@
 ---
 title: 前端灰度发布落地方案
 description: 基于 Nginx Ingress Controller 使用 canary-* 注解完成前端灰度与基线的流量转发。
-pubDatetime: 2022-07-22T04:06:31Z
-postSlug: front-end-gray-release-landing-scheme
+pubDatetime: 2022-07-22
+slug: front-end-gray-release-landing-scheme
 featured: true
 draft: false
 tags:

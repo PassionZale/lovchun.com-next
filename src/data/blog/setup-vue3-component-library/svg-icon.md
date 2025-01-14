@@ -1,8 +1,8 @@
 ---
 title: 构建 Vue3 组件库 - 图标
 description: 在我看来，组件库的编码不是从 <Button /> 开始，而是从 <Icon /> 开始。
-pubDatetime: 2023-11-22T04:06:31Z
-postSlug: setup-vue3-component-library/svg-icon
+pubDatetime: 2023-11-22
+slug: setup-vue3-component-library/svg-icon
 column: setup-vue3-component-library
 featured: false
 draft: false

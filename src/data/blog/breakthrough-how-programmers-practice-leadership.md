@@ -1,8 +1,8 @@
 ---
 title: 突破，程序员如何练就领导力
 description: 《突破，程序员如何练就领导力》第一部分相关总结，包括：第1章 从技术思维到领导思维，第2章 突破自我，团队制胜的模式。
-pubDatetime: 2022-03-20T04:06:31Z
-postSlug: breakthrough-how-programmers-practice-leadership
+pubDatetime: 2022-03-20
+slug: breakthrough-how-programmers-practice-leadership
 featured: false
 draft: false
 tags:

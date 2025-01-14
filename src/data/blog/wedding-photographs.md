@@ -1,8 +1,8 @@
 ---
 title: 在《天长地久》拍婚纱照
 description: 婚纱影楼有很多种，分享一下我在《天长地久》拍婚纱照的过程，￥7500，5：30从家出发，21:00结束坐班车回家，超累🙄
-pubDatetime: 2017-11-30T04:06:31Z
-postSlug: wedding-photographs
+pubDatetime: 2017-11-30
+slug: wedding-photographs
 featured: false
 draft: false
 tags:

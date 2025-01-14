@@ -1,8 +1,8 @@
 ---
 title: monorepo
 description: 使用 pnpm workspace 构建 monorepo。
-pubDatetime: 2023-05-01T04:06:31Z
-postSlug: pnpm-workspace-monorepo
+pubDatetime: 2023-05-01
+slug: pnpm-workspace-monorepo
 featured: false
 draft: false
 tags:

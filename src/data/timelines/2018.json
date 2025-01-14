@@ -1,0 +1,10 @@
+{
+	"id": 2018,
+	"year": 2018,
+	"stories": [
+		{
+			"title": "变强了一些",
+			"content": "SPA 应用风起云涌，深度的使用 Gulp/Vuejs/Webpack 等前端新鲜技术"
+		}
+	]
+}

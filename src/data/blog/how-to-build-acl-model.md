@@ -1,8 +1,8 @@
 ---
 title: ACL - Access Control List
 description: 构建 ACCESS CONTROL LIST 模型。
-pubDatetime: 2018-03-30T04:06:31Z
-postSlug: how-to-build-acl-model
+pubDatetime: 2018-03-30
+slug: how-to-build-acl-model
 featured: false
 draft: false
 tags:

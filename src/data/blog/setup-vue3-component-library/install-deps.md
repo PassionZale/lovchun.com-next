@@ -1,8 +1,8 @@
 ---
 title: 构建 Vue3 组件库 - 安装依赖
 description: vue3+ts 需要哪些依赖，如何配置。
-pubDatetime: 2023-11-21T04:06:31Z
-postSlug: setup-vue3-component-library/install-deps
+pubDatetime: 2023-11-21
+slug: setup-vue3-component-library/install-deps
 column: setup-vue3-component-library
 featured: false
 draft: false

@@ -1,6 +1,6 @@
 ---
 title: 2023 End Of Year
-pubDatetime: 2023-12-31T04:06:31Z
+pubDatetime: 2023-12-31
 slug: 2023-end-of-year
 featured: false
 draft: false

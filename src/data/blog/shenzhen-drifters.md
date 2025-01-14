@@ -1,9 +1,9 @@
 ---
 title: 嘿！我要走了
 description: 2015-2023 我的深漂完美结束啦！谢谢各位帮我完成这段《千奇百怪的漫长旅行》。
-pubDatetime: 2023-02-27T04:06:31Z
-modDatetime: 2024-01-15T04:06:31Z
-postSlug: shenzhen-drifters
+pubDatetime: 2023-02-27
+modDatetime: 2024-01-15
+slug: shenzhen-drifters
 featured: true
 draft: false
 tags:
