@@ -2,6 +2,11 @@ import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
+import {
+  transformerNotationDiff,
+  transformerNotationFocus,
+  transformerMetaHighlight,
+} from "@shikijs/transformers";
 import { SITE } from "./src/config";
 
 export default defineConfig({
@@ -21,6 +26,11 @@ export default defineConfig({
       // For more themes, visit https://shiki.style/themes
       themes: { light: "min-light", dark: "dracula" },
       wrap: true,
+      transformers: [
+        transformerNotationDiff(),
+        transformerNotationFocus(),
+        transformerMetaHighlight(),
+      ],
     },
   },
   vite: {

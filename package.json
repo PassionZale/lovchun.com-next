@@ -22,6 +22,7 @@
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.4",
     "@resvg/resvg-js": "^2.6.2",
+    "@shikijs/transformers": "^1.26.2",
     "@tailwindcss/typography": "^0.5.16",
     "@types/lodash.kebabcase": "^4.1.9",
     "@types/react": "^19.0.6",
