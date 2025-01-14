@@ -1,0 +1,8 @@
+{
+	"$schema": "../../../.astro/collections/columns.schema.json",
+	"slug": "/columns/setup-miniprogram",
+	"title": "Setup Miniprogram",
+	"description": "基于数十个小程序项目所沉淀出的开发经验：如何使用 Gulpjs 编写开发框架，如何结合 miniprogram-ci 进行自动化上传和预览，如何结合 vscode 插件进行 lint 等等。",
+	"createDatetime": "2022-07-01",
+	"status": "已完结"
+}
