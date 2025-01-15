@@ -5,7 +5,7 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import LinkButton from "@components/LinkButton.astro";
 import Hr from "@components/Hr.astro";
-import Card from "@components/Card";
+import PostCard from "@components/PostCard";
 import Socials from "@components/Socials.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import { SITE, SOCIALS } from "@config";
@@ -75,9 +75,9 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           <section id="featured">
             <h2>Featured</h2>
             <ul>
-              {featuredPosts.map(({ data, slug }) => (
-                <Card
-                  href={`/posts/${slug}/`}
+              {featuredPosts.map(({ data, id }) => (
+                <PostCard
+                  href={`/posts/${id}/`}
                   frontmatter={data}
                   secHeading={false}
                 />
@@ -95,10 +95,10 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           <h2>Recent Posts</h2>
           <ul>
             {recentPosts.map(
-              ({ data, slug }, index) =>
+              ({ data, id }, index) =>
                 index < SITE.postPerIndex && (
-                  <Card
-                    href={`/posts/${slug}/`}
+                  <PostCard
+                    href={`/posts/${id}/`}
                     frontmatter={data}
                     secHeading={false}
                   />
