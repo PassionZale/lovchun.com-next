@@ -7,7 +7,7 @@ export const SITE: Site = {
   desc: "Articles & happiness I want to share.",
   title: "Lei Zhang",
   lightAndDarkMode: true,
-  postPerIndex: 4,
+  postPerIndex: 5,
   postPerPage: 8,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
   showArchives: true,

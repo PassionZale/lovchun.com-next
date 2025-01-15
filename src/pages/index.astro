@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { SITE, SOCIALS, TALKS } from "@config";
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
@@ -7,10 +8,19 @@ import LinkButton from "@components/LinkButton.astro";
 import Hr from "@components/Hr.astro";
 import PostCard from "@components/PostCard";
 import Socials from "@components/Socials.astro";
+import CalendlyMeet from "@components/CalendlyMeet.astro";
+import RepoCard from "@components/RepoCard";
+import TalkList from "@components/TalkList";
+import ColumnCard from "@components/ColumnCard";
+import getUniqueColumns from "@utils/getUniqueColumns";
+import { getFeaturedRepos } from "@utils/getGithubRepos";
 import getSortedPosts from "@utils/getSortedPosts";
-import { SITE, SOCIALS } from "@config";
 
 const posts = await getCollection("blog");
+const columns = await getCollection("columns");
+
+const featuredRepos = await getFeaturedRepos();
+const relatedColumns = getUniqueColumns(columns, posts);
 
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
@@ -23,102 +33,177 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   <Header />
   <main id="main-content">
     <section id="hero">
-      <h1>Mingalaba</h1>
-      <a
-        target="_blank"
-        href="/rss.xml"
-        class="rss-link"
-        aria-label="rss feed"
-        title="RSS Feed"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
-          ><path
-            d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"
-          ></path><path
-            d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"
-          ></path><circle cx="6" cy="18" r="2"></circle>
-        </svg>
-        <span class="sr-only">RSS Feed</span>
-      </a>
+      <div class="flex flex-1 flex-col sm:pr-6">
+        <h1>👋 Hello!</h1>
+        <p>
+          <span class="text-2xl">我是 <strong>张磊</strong></span>，
+          一名前端开发工程师 🙌，深漂7年，现工作于武汉。
+        </p>
 
-      <p>
-        AstroPaper is a minimal, responsive, accessible and SEO-friendly Astro
-        blog theme. This theme follows best practices and provides accessibility
-        out of the box. Light and dark mode are supported by default. Moreover,
-        additional color schemes can also be configured.
-      </p>
-      <p>
-        Read the blog posts or check
-        <LinkButton
-          className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
-          href="https://github.com/satnaing/astro-paper#readme"
-        >
-          README
-        </LinkButton> for more info.
-      </p>
-      {
-        // only display if at least one social link is enabled
-        socialCount > 0 && (
-          <div class="social-wrapper">
-            <div class="social-links">Social Links:</div>
-            <Socials />
-          </div>
-        )
-      }
+        <p>我喜欢使用 Vue 和 React，</p>
+
+        <p>也曾使用 PHP 和 Nodejs 做过一段时间的全栈开发，</p>
+
+        <p>
+          除了编码之外，我还维护着博客，你可以在这个网站上浏览我所发布的文章，
+        </p>
+
+        <p>它通过 Astro 构建，部署于 Vercel。</p>
+
+        <p>
+          如果你想更多的了解我和这个网站，可以前往
+
+          <LinkButton
+            className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
+            href="/timeline"
+          >
+            时间轴
+          </LinkButton>
+
+          或
+
+          <LinkButton
+            className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
+            href="/about"
+          >
+            关于
+          </LinkButton>
+          。
+        </p>
+
+        <p>工作中我是一名程序员，生活中我是一名新晋奶爸，</p>
+
+        <p>如果你也有孩子或者想了解有孩子之后的生活，</p>
+
+        <p>
+          可以前往
+
+          <LinkButton
+            className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
+            href="/columns/youyou"
+          >
+            佑佑
+          </LinkButton>
+
+          ，浏览我与孩子的生活片段。
+        </p>
+
+        {
+          socialCount > 0 && (
+            <div class="social-wrapper">
+              <Socials />
+            </div>
+          )
+        }
+      </div>
     </section>
 
     <Hr />
 
     {
+      featuredRepos.length > 0 && (
+        <>
+          <section id="oss">
+            <h2>👨‍💻 开源项目</h2>
+
+            <div class="mt-3 grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2">
+              {featuredRepos.map(repo => (
+                <RepoCard {...repo} />
+              ))}
+            </div>
+          </section>
+
+          <div class="all-posts-btn-wrapper">
+            <LinkButton href="https://github.com/PassionZale">
+              查看更多
+              <svg xmlns="http://www.w3.org/2000/svg">
+                <path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z" />
+              </svg>
+            </LinkButton>
+          </div>
+
+          <Hr />
+        </>
+      )
+    }
+
+    <section id="talks">
+      <h2>🎙️ 演讲</h2>
+      <TalkList talks={TALKS} />
+    </section>
+
+    <Hr />
+
+    {
+      columns.length > 0 && (
+        <>
+          <section id="columns">
+            <h2>📣 专栏</h2>
+
+            <div class="mt-3 grid grid-cols-1 gap-4 pt-4">
+              {relatedColumns.map(column => (
+                <ColumnCard {...column} />
+              ))}
+            </div>
+          </section>
+
+          <Hr />
+        </>
+      )
+    }
+
+    {
       featuredPosts.length > 0 && (
         <>
           <section id="featured">
-            <h2>Featured</h2>
+            <h2>✨ 精选</h2>
             <ul>
               {featuredPosts.map(({ data, id }) => (
                 <PostCard
-                  href={`/posts/${id}/`}
+                  href={`/posts/${id}`}
                   frontmatter={data}
                   secHeading={false}
                 />
               ))}
             </ul>
           </section>
-          {recentPosts.length > 0 && <Hr />}
+
+          <Hr />
         </>
       )
     }
 
-    {
-      recentPosts.length > 0 && (
-        <section id="recent-posts">
-          <h2>Recent Posts</h2>
-          <ul>
-            {recentPosts.map(
-              ({ data, id }, index) =>
-                index < SITE.postPerIndex && (
-                  <PostCard
-                    href={`/posts/${id}/`}
-                    frontmatter={data}
-                    secHeading={false}
-                  />
-                )
-            )}
-          </ul>
-        </section>
-      )
-    }
+    <section id="recent-posts">
+      <h2>📜 最近文章</h2>
+      <ul>
+        {
+          recentPosts.map(
+            ({ data, id }, index) =>
+              index < SITE.postPerIndex && (
+                <PostCard
+                  href={`/posts/${id}`}
+                  frontmatter={data}
+                  secHeading={false}
+                />
+              )
+          )
+        }
+      </ul>
+      <div class="all-posts-btn-wrapper">
+        <LinkButton href="/posts">
+          全部文章
+          <svg xmlns="http://www.w3.org/2000/svg"
+            ><path
+              d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
+            ></path>
+          </svg>
+        </LinkButton>
+      </div>
+    </section>
 
-    <div class="all-posts-btn-wrapper">
-      <LinkButton href="/posts/">
-        All Posts
-        <svg xmlns="http://www.w3.org/2000/svg"
-          ><path
-            d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
-          ></path>
-        </svg>
-      </LinkButton>
-    </div>
+    <Hr />
+
+    <CalendlyMeet />
   </main>
 
   <Footer />
@@ -128,6 +213,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   /* ===== Hero Section ===== */
   #hero {
     @apply pb-6 pt-8;
+    /* @apply pb-12 pt-12; */
   }
   #hero h1 {
     @apply my-4 inline-block text-3xl font-bold sm:my-8 sm:text-5xl;
@@ -150,11 +236,17 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
   /* ===== Featured & Recent Posts Sections ===== */
   #featured,
-  #recent-posts {
+  #recent-posts,
+  #oss,
+  #talks,
+  #columns {
     @apply pb-6 pt-12;
   }
   #featured h2,
-  #recent-posts h2 {
+  #recent-posts h2,
+  #oss h2,
+  #talks h2,
+  #columns h2 {
     @apply text-2xl font-semibold tracking-wide;
   }
   .all-posts-btn-wrapper {
