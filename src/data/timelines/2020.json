@@ -1,22 +1,23 @@
 {
-	"id": 2020,
-	"year": 2020,
-	"stories": [
-		{
-			"title": "Docker",
-			"content": "Docker 部署真香, 再也不用担心把服务器环境弄的乱七八糟了"
-		},
-		{
-			"title": "Nestjs",
-			"content": "一款 Typescript Nodejs Framework, 使用它写了小程序流水线 API"
-		},
-		{
-			"title": "CLI",
-			"content": "开始着手开发脚手架, 写了一些非常有意思的小玩意, 主要服务于小程序原生开发的框架/自动化等"
-		},
-		{
-			"title": "COVID-19",
-			"content": "由于新冠, 近小半年的时间都是远程办公, 远程办公居然还更累, 几乎 24h on call, 身在武汉, 全家平安度过最疫情严重的时期, 回想一下真的非常幸运"
-		}
-	]
+  "$schema": "../../../.astro/collections/timelines.schema.json",
+  "id": 2020,
+  "year": 2020,
+  "stories": [
+    {
+      "title": "Docker",
+      "content": "Docker 部署真香, 再也不用担心把服务器环境弄的乱七八糟了"
+    },
+    {
+      "title": "Nestjs",
+      "content": "一款 Typescript Nodejs Framework, 使用它写了小程序流水线 API"
+    },
+    {
+      "title": "CLI",
+      "content": "开始着手开发脚手架, 写了一些非常有意思的小玩意, 主要服务于小程序原生开发的框架/自动化等"
+    },
+    {
+      "title": "COVID-19",
+      "content": "由于新冠, 近小半年的时间都是远程办公, 远程办公居然还更累, 几乎 24h on call, 身在武汉, 全家平安度过最疫情严重的时期, 回想一下真的非常幸运"
+    }
+  ]
 }

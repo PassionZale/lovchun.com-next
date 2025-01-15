@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../.astro/collections/timelines.schema.json",
   "id": 2022,
   "year": 2022,
   "stories": [

@@ -1,10 +1,11 @@
 {
-	"id": 2013,
-	"year": 2013,
-	"stories": [
-		{
-			"title": "步入社会🏢",
-			"content": "2009 - 2013 大学毕业咯"
-		}
-	]
+  "$schema": "../../../.astro/collections/timelines.schema.json",
+  "id": 2013,
+  "year": 2013,
+  "stories": [
+    {
+      "title": "步入社会🏢",
+      "content": "2009 - 2013 大学毕业咯"
+    }
+  ]
 }

@@ -1,14 +1,15 @@
 {
-	"id": 2019,
-	"year": 2019,
-	"stories": [
-		{
-			"title": "灵智数科",
-			"content": "入职灵智, 开始接触 React/Miniprogram"
-		},
-		{
-			"title": "驾照🤣",
-			"content": "历史 1 年, 终于拿到驾照"
-		}
-	]
+  "$schema": "../../../.astro/collections/timelines.schema.json",
+  "id": 2019,
+  "year": 2019,
+  "stories": [
+    {
+      "title": "灵智数科",
+      "content": "入职灵智, 开始接触 React/Miniprogram"
+    },
+    {
+      "title": "驾照🤣",
+      "content": "历史 1 年, 终于拿到驾照"
+    }
+  ]
 }

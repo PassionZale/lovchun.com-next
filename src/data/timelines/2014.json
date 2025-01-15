@@ -1,10 +1,11 @@
 {
-	"id": 2014,
-	"year": 2014,
-	"stories": [
-		{
-			"title": "接触编程👨🏻‍💻",
-			"content": "Java: SpringMVC/SSH2"
-		}
-	]
+  "$schema": "../../../.astro/collections/timelines.schema.json",
+  "id": 2014,
+  "year": 2014,
+  "stories": [
+    {
+      "title": "接触编程👨🏻‍💻",
+      "content": "Java: SpringMVC/SSH2"
+    }
+  ]
 }

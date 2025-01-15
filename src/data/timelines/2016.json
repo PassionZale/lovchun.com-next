@@ -1,10 +1,11 @@
 {
-	"id": 2016,
-	"year": 2016,
-	"stories": [
-		{
-			"title": "Linux",
-			"content": "开始折腾服务器、域名, 零零散散的组装自己前后端技术栈"
-		}
-	]
+  "$schema": "../../../.astro/collections/timelines.schema.json",
+  "id": 2016,
+  "year": 2016,
+  "stories": [
+    {
+      "title": "Linux",
+      "content": "开始折腾服务器、域名, 零零散散的组装自己前后端技术栈"
+    }
+  ]
 }
