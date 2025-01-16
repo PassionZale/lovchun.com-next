@@ -1,7 +1,5 @@
 import type { Column } from "@utils/getUniqueColumns";
 
-interface Props extends Column {}
-
 export default function GithubRepoCard({
   title,
   description,
@@ -9,7 +7,7 @@ export default function GithubRepoCard({
   status,
   count,
   slug,
-}: Props) {
+}: Column) {
   return (
     <div className="flex h-full flex-col rounded border-2 border-skin-fill/50 p-4 transition-all hover:scale-[1.01] hover:bg-skin-card-muted/40">
       <a

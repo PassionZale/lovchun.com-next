@@ -1,12 +1,13 @@
 ---
+
 ---
 
 <!-- vercel analytics -->
 <script is:inline>
   window.va =
     window.va ||
-    function () {
-      (window.vaq = window.vaq || []).push(arguments);
+    function (...args) {
+      (window.vaq = window.vaq || []).push(...args);
     };
 </script>
 <script is:inline defer src="/_vercel/insights/script.js"></script>
@@ -16,7 +17,7 @@
   window.si =
     window.si ||
     function () {
-      (window.siq = window.siq || []).push(arguments);
+      (window.siq = window.siq || []).push(...args);
     };
 </script>
 <script is:inline defer src="/_vercel/speed-insights/script.js"></script>

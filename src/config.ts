@@ -4,16 +4,24 @@ import type { Site, SocialObjects, Talk } from "./types";
 export const SITE: Site = {
   website: "https://www.lovchun.com",
   author: "Lei Zhang",
-  desc: "Articles & life for my live.",
+  profile: "https://www.lovchun.com",
+  desc: "Articles & happiness I want to share.",
   title: "Lei Zhang",
-  // ogImage: "ogImage.jpg",
   lightAndDarkMode: true,
+  postPerIndex: 5,
   postPerPage: 8,
+  scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
+  showArchives: true,
+  editPost: {
+    url: "https://github.com/PassionZale/lovchun.com-next/edit/main/src/data/blog",
+    text: "编辑此页",
+    appendFilePath: true,
+  },
 };
 
 export const LOCALE = {
-  lang: "zh-CN", // html lang code. Set this empty and default will be "en"
-  langTag: ["zh-CN"], // BCP 47 Language Tags. Set this empty [] to use the environment default
+  lang: "zh-CN",
+  langTag: ["zh-CN"],
 } as const;
 
 export const LOGO_IMAGE = {
@@ -50,24 +58,11 @@ export const SOCIALS: SocialObjects = [
   },
 ];
 
-export const GISCUS: GiscusProps = {
-  repo: "PassionZale/lovchun.com-next",
-  repoId: "R_kgDOG450fA",
-  categoryId: "DIC_kwDOG450fM4COJ-Y",
-  mapping: "og:title",
-  theme: "preferred_color_scheme",
-  reactionsEnabled: "1",
-  emitMetadata: "0",
-  inputPosition: "top",
-  lang: "zh-CN",
-  loading: "lazy",
-};
-
 export const REPOS: `${string}/${string}`[] = [
   "PassionZale/lovchun.com-next",
   "PassionZale/talks",
   "PassionZale/geist-design",
-  "PassionZale/release-viewer",
+  "PassionZale/geist-design-icons",
   "PassionZale/create-app",
   "PassionZale/type-challenges",
   "PassionZale/iMall",
@@ -90,3 +85,16 @@ export const TALKS: Talk[] = [
     download: "https://talks.lovchun.com/2024/happy-coding-for-10-years/pdf",
   },
 ];
+
+export const GISCUS: GiscusProps = {
+  repo: "PassionZale/lovchun.com-next",
+  repoId: "R_kgDOG450fA",
+  categoryId: "DIC_kwDOG450fM4COJ-Y",
+  mapping: "og:title",
+  theme: "preferred_color_scheme",
+  reactionsEnabled: "1",
+  emitMetadata: "0",
+  inputPosition: "top",
+  lang: "zh-CN",
+  loading: "lazy",
+};

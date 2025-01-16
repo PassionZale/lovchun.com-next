@@ -1,7 +1,8 @@
+const itemKey = "lovchun.com-next.theme";
 const primaryColorScheme = ""; // "light" | "dark"
 
 // Get theme data from local storage
-const currentTheme = localStorage.getItem("theme");
+const currentTheme = localStorage.getItem(itemKey);
 
 function getPreferTheme() {
   // return theme value in local storage if it is set
@@ -19,7 +20,7 @@ function getPreferTheme() {
 let themeValue = getPreferTheme();
 
 function setPreference() {
-  localStorage.setItem("theme", themeValue);
+  localStorage.setItem(itemKey, themeValue);
   reflectPreference();
 }
 
@@ -27,10 +28,6 @@ function reflectPreference() {
   document.firstElementChild.setAttribute("data-theme", themeValue);
 
   document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
-
-  if (!currentTheme) {
-    localStorage.setItem("theme", themeValue);
-  }
 
   // Get a reference to the body element
   const body = document.body;

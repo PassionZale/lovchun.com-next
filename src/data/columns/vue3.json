@@ -1,0 +1,8 @@
+{
+	"$schema": "../../../.astro/collections/columns.schema.json",
+	"slug": "setup-vue3-component-library",
+	"title": "Setup Vue3 Component Library",
+	"description": "基于 Vue3 + Typescript 构建组件库，囊括了依赖的取舍、图标库的处理、组件的划分、样式的设计、本地调试组件库、文档的编写、打包和发布。",
+	"createDatetime": "2023-11-20",
+	"status": "已完结"
+}

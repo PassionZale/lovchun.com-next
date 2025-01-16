@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../.astro/collections/timelines.schema.json",
+  "id": 2023,
+  "year": 2023,
+  "stories": [
+    {
+      "title": "Talks",
+      "content": "2023/12/08 第一次用 slidev 搭建幻灯片《Setup Miniprogram》"
+    },
+    {
+      "title": "组件库",
+      "content": "2023/11/10 磕磕绊绊写完了首个组件库"
+    },
+    {
+      "title": "重新稳定",
+      "content": "2023/07/05 裁员后又经过3次跳槽，重新稳定下来，开始新的工作"
+    },
+    {
+      "title": "开猿节流",
+      "content": "2023/02/28 武汉分公司倒闭了"
+    }
+  ]
+}

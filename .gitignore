@@ -5,11 +5,6 @@ dist/
 # dependencies
 node_modules/
 
-# lock
-package-lock.json
-yarn-lock.json
-pnpm-lock.json
-
 # logs
 npm-debug.log*
 yarn-debug.log*
@@ -18,13 +13,6 @@ pnpm-debug.log*
 
 # vercel
 .vercel
-
-# vscode
-/.vscode/*
-!/.vscode/settings.json
-!/.vscode/extensions.json
-!/.vscode/launch.json
-
 
 # environment variables
 .env
@@ -35,9 +23,6 @@ pnpm-debug.log*
 
 # ignore .astro directory
 .astro
-
-# ignore Jampack cache files
-.jampack/
 
 # yarn
 .yarn/*

@@ -1,7 +1,7 @@
 ---
-import { ViewTransitions } from "astro:transitions";
 import { LOCALE, SITE } from "@config";
-import VercelInsights from '@components/VercelInsights.astro';
+import { ClientRouter } from "astro:transitions";
+import VercelInsights from "@components/VercelInsights.astro";
 import "inter-ui/inter.css";
 import "@styles/base.css";
 import "@styles/highlight.css";
@@ -9,33 +9,56 @@ import "@styles/highlight.css";
 export interface Props {
   title?: string;
   author?: string;
+  profile?: string;
   description?: string;
   ogImage?: string;
   canonicalURL?: string;
   pubDatetime?: Date;
-  modDatetime?: Date;
+  modDatetime?: Date | null;
+  scrollSmooth?: boolean;
 }
 
 const {
   title = SITE.title,
   author = SITE.author,
+  profile = SITE.profile,
   description = SITE.desc,
   ogImage = SITE.ogImage,
   canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
   pubDatetime,
   modDatetime,
+  scrollSmooth = true,
 } = Astro.props;
 
-const isProd = import.meta.env.PROD
+const isProd = import.meta.env.PROD;
 
 const socialImageURL = new URL(
   ogImage ?? SITE.ogImage ?? "og.png",
   Astro.url.origin
 ).href;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: `${title}`,
+  image: `${socialImageURL}`,
+  datePublished: `${pubDatetime?.toISOString()}`,
+  ...(modDatetime && { dateModified: modDatetime.toISOString() }),
+  author: [
+    {
+      "@type": "Person",
+      name: `${author}`,
+      url: `${profile}`,
+    },
+  ],
+};
 ---
 
 <!doctype html>
-<html lang=`${LOCALE.lang ?? "en"}`>
+<html
+  lang=`${LOCALE.lang ?? "en"}`
+  class={`${scrollSmooth && "scroll-smooth"}`}
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -99,16 +122,20 @@ const socialImageURL = new URL(
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
 
+    <!-- Google JSON-LD Structured data -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    />
+
     <meta name="msapplication-TileColor" content="#000000" />
     <meta name="theme-color" content="#000000" />
 
-    <ViewTransitions />
+    <ClientRouter />
 
-    <script is:inline src="/toggle-theme.js"></script>
+    <script is:inline src="/toggle-theme.js" async></script>
 
-    {
-      isProd && <VercelInsights />
-    }
+    {isProd && <VercelInsights />}
   </head>
   <body>
     <slot />

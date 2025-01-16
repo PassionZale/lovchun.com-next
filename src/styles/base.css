@@ -51,7 +51,7 @@
         "Helvetica Neue",
         sans-serif;
     }
-  }
+  }	
 
   :root,
   html[data-theme="light"] {
@@ -70,9 +70,6 @@
     --color-card-muted: 138, 51, 2;
     --color-border: 171, 75, 8;
   }
-  html {
-    scroll-behavior: smooth;
-  }
   #sun-svg,
   html[data-theme="dark"] #moon-svg {
     display: none;
@@ -82,70 +79,59 @@
     display: block;
   }
   body {
-    @apply flex min-h-[100svh] flex-col bg-skin-fill text-skin-base 
-    selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted;
+    @apply flex min-h-[100svh] flex-col bg-skin-fill font-mono text-skin-base selection:bg-skin-accent/70 selection:text-skin-inverted;
   }
   section,
   footer {
     @apply mx-auto max-w-3xl px-4;
   }
   a {
-    @apply outline-2 outline-offset-1 outline-skin-fill 
-    focus-visible:no-underline focus-visible:outline-dashed;
+    @apply outline-2 outline-offset-1 outline-skin-fill focus-visible:no-underline focus-visible:outline-dashed;
   }
   svg {
     @apply inline-block h-6 w-6 fill-skin-base group-hover:fill-skin-accent;
   }
   svg.icon-tabler {
-    @apply inline-block h-6 w-6 scale-125 fill-transparent 
-    stroke-current stroke-2 opacity-90 group-hover:fill-transparent 
-    sm:scale-110;
+    @apply inline-block h-6 w-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110;
   }
   .prose {
     @apply prose-headings:!mb-3 prose-headings:!text-skin-base 
-    prose-h3:italic prose-p:!text-skin-base 
-    prose-a:!text-skin-base prose-a:!decoration-dashed prose-a:underline-offset-8
-    hover:prose-a:text-skin-accent prose-blockquote:!border-l-skin-accent
-    prose-blockquote:border-opacity-50 prose-blockquote:opacity-80
-    prose-figcaption:!text-skin-base prose-figcaption:opacity-70
-    prose-strong:!text-skin-base
-
-    
-    prose-code:rounded prose-code:bg-skin-card 
-    prose-code:bg-opacity-75 prose-code:p-1 
-    prose-code:before:!content-[''] prose-code:after:!content-['']
-    prose-ol:!text-skin-base 
-    prose-ul:overflow-x-clip prose-ul:!text-skin-base prose-li:marker:!text-skin-accent
-    prose-table:text-skin-base prose-th:border
-    prose-th:border-skin-line prose-td:border 
-    prose-td:border-skin-line prose-img:mx-auto 
-    prose-img:!mt-2 prose-img:border-2 
-    prose-img:border-skin-line prose-hr:!border-skin-line;
+		prose-h3:italic prose-p:!text-skin-base 
+		prose-a:!text-skin-base prose-a:!decoration-dashed
+		prose-a:underline-offset-8 hover:prose-a:text-skin-accent 
+		prose-blockquote:!border-l-skin-accent/50 prose-blockquote:opacity-80 
+		prose-figcaption:text-skin-base prose-figcaption:opacity-70 
+		prose-strong:!text-skin-base 
+		prose-code:rounded 
+		prose-code:bg-skin-card/75 
+		prose-code:p-1 
+		prose-code:before:!content-none 
+		prose-code:after:!content-none 
+		prose-ol:!text-skin-base 
+		prose-ul:overflow-x-clip 
+		prose-ul:!text-skin-base 
+		prose-li:marker:!text-skin-accent 
+		prose-table:text-skin-base 
+		prose-th:border 
+		prose-th:border-skin-line 
+		prose-td:border 
+		prose-td:border-skin-line 
+		prose-img:!my-2 prose-img:mx-auto prose-img:border-2 prose-img:border-skin-line prose-hr:!border-skin-line;
   }
   .prose a {
     @apply break-words hover:!text-skin-accent;
   }
-  .prose img[alt*=".left"] {
-    width: 33%;
-    height: auto;
-    min-width: 150px;
-    float: left;
-    margin-right: 1rem;
+	.prose pre {
+    @apply rounded-lg !px-0;
   }
-  .prose img[alt*=".right"] {
-    width: 33%;
-    height: auto;
-    min-width: 150px;
-    float: right;
-    margin-left: 1rem;
+	.prose code {
+    font-family: "JetBrains Mono";
   }
-  .prose img[alt*=".thumb"] {
-    width: 33%;
-    height: auto;
-    min-width: 150px;
+	.prose pre > code {
+    counter-reset: line;
   }
-  .prose img[alt*=".bordered"] {
-    border: 1px solid black;
+  .prose figcaption + pre {
+    @apply !rounded-t-none;
   }
   .prose thead th:first-child,
   tbody td:first-child,
@@ -163,19 +149,6 @@
   }
   .prose h2#table-of-contents + p {
     @apply hidden;
-  }
-  .prose pre {
-    @apply rounded-lg !px-0;
-  }
-  .prose code {
-    font-family: "JetBrains Mono";
-    /* @apply text-sm md:text-base !leading-loose; */
-  }
-  .prose pre > code {
-    counter-reset: line;
-  }
-  .prose figcaption + pre {
-    @apply !rounded-t-none;
   }
 
   /* ===== scrollbar ===== */
@@ -203,6 +176,10 @@
     @apply bg-skin-card-muted;
   }
 
+  /* ===== Code Blocks & Syntax Highlighting ===== */
+  /* pre:has(code) {
+    @apply border border-skin-line;
+  } */
   code,
   blockquote {
     word-wrap: break-word;
@@ -213,51 +190,11 @@
   }
 }
 
-html .toc-list {
-  max-height: 70vh;
-  overflow-y: auto;
-}
-
 @layer components {
   .display-none {
     @apply hidden;
   }
   .focus-outline {
     @apply outline-2 outline-offset-1 outline-skin-fill focus-visible:no-underline focus-visible:outline-dashed;
-  }
-}
-
-.wave {
-  display: inline-block;
-  margin-left: 0.1em;
-  animation: 5s ease 1s infinite normal none running wave-animations;
-  transform-origin: 65% 80%;
-  will-change: transform;
-}
-
-@keyframes wave-animations {
-  0% {
-    transform: rotate(0deg);
-  }
-  5% {
-    transform: rotate(14deg);
-  }
-  10% {
-    transform: rotate(-8deg);
-  }
-  15% {
-    transform: rotate(14deg);
-  }
-  20% {
-    transform: rotate(-4deg);
-  }
-  25% {
-    transform: rotate(10deg);
-  }
-  30% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(0deg);
   }
 }

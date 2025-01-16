@@ -1,47 +1,30 @@
+import type socialIcons from "@assets/socialIcons";
+
 export type Site = {
-  website: string;
+	website: string;
   author: string;
+  profile: string;
   desc: string;
   title: string;
   ogImage?: string;
   lightAndDarkMode: boolean;
+  postPerIndex: number;
   postPerPage: number;
+  scheduledPostMargin: number;
+  showArchives?: boolean;
+  editPost?: {
+    url?: URL["href"];
+    text?: string;
+    appendFilePath?: boolean;
+  };
 };
 
 export type SocialObjects = {
-  name: SocialMedia;
+  name: keyof typeof socialIcons;
   href: string;
   active: boolean;
   linkTitle: string;
 }[];
-
-export type SocialIcons = {
-  [social in SocialMedia]: string;
-};
-
-export type SocialMedia =
-  | "Github"
-  | "Rss"
-	| "Bilibili"
-  | "Facebook"
-  | "Instagram"
-  | "LinkedIn"
-  | "Mail"
-  | "Twitter"
-  | "Twitch"
-  | "YouTube"
-  | "WhatsApp"
-  | "Snapchat"
-  | "Pinterest"
-  | "TikTok"
-  | "CodePen"
-  | "Discord"
-  | "GitLab"
-  | "Reddit"
-  | "Skype"
-  | "Steam"
-  | "Telegram"
-  | "Mastodon";
 
 export type Repository = {
   name: string;
@@ -57,5 +40,5 @@ export type Talk = {
   title: string;
   place: string;
   preview: string;
-  download?: string
+  download?: string;
 };

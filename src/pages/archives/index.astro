@@ -1,0 +1,87 @@
+---
+import { getCollection } from "astro:content";
+import PostCard from "@components/PostCard";
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
+import { SITE } from "@config";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import getPostsByGroupCondition from "@utils/getPostsByGroupCondition";
+
+if (!SITE.showArchives) {
+  return Astro.redirect("/404");
+}
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+
+const MonthMap: Record<string, string> = {
+  "1": "一月",
+  "2": "二月",
+  "3": "三月",
+  "4": "四月",
+  "5": "五月",
+  "6": "六月",
+  "7": "七月",
+  "8": "八月",
+  "9": "九月",
+  "10": "十月",
+  "11": "十一月",
+  "12": "十二月",
+};
+---
+
+<Layout title={`归档 | ${SITE.title}`}>
+  <Header activeNav="archives" />
+  <Main
+    pageTitle="归档"
+    pageDesc="我已存档的所有文章。"
+    pageBreadcrumbs={[{ title: "归档", slug: "archives" }]}
+  >
+    {
+      Object.entries(
+        getPostsByGroupCondition(posts, post =>
+          post.data.pubDatetime.getFullYear()
+        )
+      )
+        .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
+        .map(([year, yearGroup]) => (
+          <div>
+            <span class="text-2xl font-bold">{year}</span>
+            <sup class="text-sm">{yearGroup.length}</sup>
+            {Object.entries(
+              getPostsByGroupCondition(
+                yearGroup,
+                post => post.data.pubDatetime.getMonth() + 1
+              )
+            )
+              .sort(([monthA], [monthB]) => Number(monthB) - Number(monthA))
+              .map(([month, monthGroup]) => (
+                <div class="flex flex-col sm:flex-row">
+                  <div class="mt-6 min-w-36 text-lg sm:my-6">
+                    <span class="font-bold">{MonthMap[month]}</span>
+                    <sup class="text-xs">{monthGroup.length}</sup>
+                  </div>
+                  <ul>
+                    {monthGroup
+                      .sort(
+                        (a, b) =>
+                          Math.floor(
+                            new Date(b.data.pubDatetime).getTime() / 1000
+                          ) -
+                          Math.floor(
+                            new Date(a.data.pubDatetime).getTime() / 1000
+                          )
+                      )
+                      .map(({ data, id }) => (
+                        <PostCard href={`/posts/${id}`} frontmatter={data} />
+                      ))}
+                  </ul>
+                </div>
+              ))}
+          </div>
+        ))
+    }
+  </Main>
+
+  <Footer />
+</Layout>

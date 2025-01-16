@@ -1,5 +1,3 @@
-import colors from 'tailwindcss/colors.js';
-
 function withOpacity(variableName) {
   return ({ opacityValue }) => {
     if (opacityValue !== undefined) {
@@ -11,10 +9,9 @@ function withOpacity(variableName) {
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: ["selector", "[data-theme='dark']"],
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
-    // Remove the following screen breakpoint or add other breakpoints
-    // if one breakpoint is not enough for you
     screens: {
       sm: "640px",
 			lg: "1280px",
@@ -56,43 +53,26 @@ module.exports = {
         },
         transparent: "transparent",
       },
+      stroke: {
+        skin: {
+          accent: withOpacity("--color-accent")
+        }
+      },
       fontFamily: {
-        mono: ["Inter", "monospace"],
+				mono: ["Inter", "monospace"],
       },
 
       typography: {
         DEFAULT: {
           css: {
             pre: {
-              background: 'rgba(205, 200, 255, 0.05)',
+              color: false,
             },
             code: {
-              '&::before': { content: `unset !important` },
-              '&::after': { content: `unset !important` },
-              fontWeight: 'normal',
-              fontSize: '13px !important;',
-              lineHeight: '1.5',
-              color: 'inherit'
-            },
-            '[data-rehype-pretty-code-title]': {
-              color: 'rgb(228 228 231 / var(--tw-text-opacity)) !important;'
-            },
-            '[data-rehype-pretty-code-fragment]:nth-of-type(2) pre': {
-              '[data-line]::before': {
-                content: 'counter(line)',
-                counterIncrement: 'line',
-                display: 'inline-block',
-                width: '1rem',
-                marginRight: '1rem',
-                textAlign: 'right',
-                color: colors.slate[600],
-              },
-              '[data-highlighted-line]::before': {
-                color: colors.slate[400],
-              },
+              color: false,
             },
           },
-        }
+        },
       },
     },
   },

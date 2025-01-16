@@ -1,3 +1,4 @@
+import type { CollectionEntry } from "astro:content";
 import React from "react";
 
 const Divider: React.FC<{ hidden?: boolean }> = ({ hidden }) => (
@@ -39,14 +40,9 @@ const Story: React.FC<{ title: string; children: React.ReactNode }> = ({
   );
 };
 
-type DataType = {
-  year: number;
-  stories: { title: string; content: string }[];
-};
-
-const TimelineRender: React.FC<{ sourceData: DataType[] }> = ({
-  sourceData,
-}) => {
+const TimelineRender: React.FC<{
+  sourceData: CollectionEntry<"timelines">["data"][];
+}> = ({ sourceData }) => {
   const { length } = sourceData;
 
   return (

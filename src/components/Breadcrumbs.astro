@@ -34,7 +34,7 @@ breadcrumbList[0] === "tags" &&
   <ul>
     <li>
       <a href="/">首页</a>
-      <span aria-hidden="true">&gt;</span>
+      <span aria-hidden="true">&raquo;</span>
     </li>
     {
       breadcrumbs
@@ -51,7 +51,7 @@ breadcrumbList[0] === "tags" &&
             ) : (
               <li>
                 <a href={`/${breadcrumb.slug}`}>{breadcrumb.title}</a>
-                <span aria-hidden="true">&gt;</span>
+                <span aria-hidden="true">&raquo;</span>
               </li>
             )
           )
@@ -68,7 +68,7 @@ breadcrumbList[0] === "tags" &&
             ) : (
               <li>
                 <a href={`/${breadcrumb}`}>{breadcrumb}</a>
-                <span aria-hidden="true">&gt;</span>
+                <span aria-hidden="true">&raquo;</span>
               </li>
             )
           )

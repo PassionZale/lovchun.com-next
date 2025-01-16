@@ -1,37 +1,28 @@
-import type { CollectionEntry } from "astro:content";
+import type { CollectionEntry, InferEntrySchema } from "astro:content";
 
-interface Column {
-  /** 专栏标题 */
-  title: string;
-  /** 专栏描述 */
-  description: string;
-  /** 专栏创建日期 */
-  createDatetime: string;
-  /** 专栏状态 */
-  status: string;
-  slug: string;
+interface Column extends InferEntrySchema<"columns"> {
+  /** 文章总数 */
   count: number;
 }
 
 const getUniqueColumns = (
-  columnEntry: CollectionEntry<"schema">,
+  columns: CollectionEntry<"columns">[],
   posts: CollectionEntry<"blog">[]
 ) => {
-  const columns: Column[] = Object.keys(columnEntry.data)
-    .map(key => {
+  const columnsWithPostsCount: Column[] = columns
+    .map(column => {
       const filters = posts.filter(
-        ({ data }) => data.column === key && !data.draft
+        ({ data }) => data.column === column.data.slug && !data.draft
       );
 
       return {
-        ...columnEntry.data[key],
-        slug: key,
+        ...column.data,
         count: filters.length,
       };
     })
-    .filter(item => item.count);
+    .filter(item => item.count > 0);
 
-  return columns;
+  return columnsWithPostsCount;
 };
 
 export default getUniqueColumns;

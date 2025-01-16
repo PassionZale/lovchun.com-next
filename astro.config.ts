@@ -1,19 +1,12 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
-import remarkToc from "remark-toc";
-import remarkGemoji from "remark-gemoji";
-import rehypePrettyCode from "rehype-pretty-code";
-import rehypeUnwrapImages from "rehype-unwrap-images";
-import rehypeFigure from "@microflash/rehype-figure";
-import { rehypeAccessibleEmojis } from "rehype-accessible-emojis";
 import sitemap from "@astrojs/sitemap";
+import rehypePrettyCode from "rehype-pretty-code";
+import { transformerCopyButton } from "@rehype-pretty/transformers";
 import { SITE } from "./src/config";
-import moonlightTheme from "./public/assets/moonlight-ii.json";
+import moonlight from "./public/assets/moonlight-ii.json";
 
-import type { RehypePlugins } from "@astrojs/markdown-remark";
-
-// https://astro.build/config
 export default defineConfig({
   site: SITE.website,
   integrations: [
@@ -21,22 +14,27 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     react(),
-    sitemap(),
+    sitemap({
+      filter: page => SITE.showArchives || !page.endsWith("/archives"),
+    }),
   ],
   markdown: {
     syntaxHighlight: false,
-    remarkPlugins: [remarkToc, remarkGemoji],
+    remarkPlugins: [],
     rehypePlugins: [
-      rehypeUnwrapImages,
-			// rehypeFigure,
       [
         rehypePrettyCode,
         {
-          theme: moonlightTheme,
+          theme: moonlight,
+          transformers: [
+            transformerCopyButton({
+              visibility: "hover",
+              feedbackDuration: 3_000,
+            }),
+          ],
         },
       ],
-      rehypeAccessibleEmojis,
-    ] as unknown as RehypePlugins,
+    ],
   },
   vite: {
     optimizeDeps: {

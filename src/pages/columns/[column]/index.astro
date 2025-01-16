@@ -1,8 +1,8 @@
 ---
-import { getCollection, getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import getUniqueColumns from "@utils/getUniqueColumns";
 import getPostsByColumn from "@utils/getPostsByColumn";
-import Card from "@components/Card";
+import PostCard from "@components/PostCard";
 import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
@@ -10,14 +10,14 @@ import { SITE } from "@config";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  const columnEntry = await getEntry("schema", "column");
+  const columns = await getCollection("columns");
 
-  const columns = getUniqueColumns(columnEntry, posts);
+  const relatedColumns = getUniqueColumns(columns, posts);
 
-  return columns.map(item => {
+  return relatedColumns.map(column => {
     return {
-      params: { column: item.slug },
-      props: { column: item, posts },
+      params: { column: column.slug },
+      props: { column, posts },
     };
   });
 }
@@ -27,7 +27,10 @@ const { column, posts } = Astro.props;
 const postsByColumn = getPostsByColumn(posts, column);
 ---
 
-<Layout title={`专栏: ${column.title} | ${SITE.title}`} description={column.description}>
+<Layout
+  title={`专栏: ${column.title} | ${SITE.title}`}
+  description={column.description}
+>
   <Header />
 
   <div class="mx-auto flex w-full max-w-3xl justify-start px-2">
@@ -58,8 +61,8 @@ const postsByColumn = getPostsByColumn(posts, column);
 
     <ul>
       {
-        postsByColumn.map(({ data, slug }) => (
-          <Card href={`/posts/${slug}`} frontmatter={data} />
+        postsByColumn.map(({ data, id }) => (
+          <PostCard href={`/posts/${id}`} frontmatter={data} />
         ))
       }
     </ul>

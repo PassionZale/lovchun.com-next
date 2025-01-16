@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../.astro/collections/timelines.schema.json",
+  "id": 2025,
+  "year": 2025,
+  "stories": [
+    {
+      "title": "帕拉米韦和左氧氟沙星",
+      "content": "2025/01/01 24年元旦发烧打这俩，今年元旦，剧情又再次上演..."
+    }
+  ]
+}

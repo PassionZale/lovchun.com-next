@@ -6,7 +6,7 @@ type Props = {
 
 export default function TalkList({ talks }: Props) {
   return (
-    <div className="lg:grid-cols-3 mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {talks.map((talk, index) => (
         <TalkCard talk={talk} key={`talk-${index}`} />
       ))}
@@ -29,7 +29,7 @@ const TalkCard = ({ talk }: { talk: Talk }) => (
           <p className="decoration-dashed hover:underline">在线预览</p>
         </a>
       )}
-      
+
       {talk.download && (
         <a
           className="inline-block text-skin-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0"
@@ -53,7 +53,7 @@ const TalkCard = ({ talk }: { talk: Talk }) => (
       </svg>
       {talk.date}
     </p>
-    <p className="mt-2 flex items-center text-base ">
+    <p className="mt-2 flex items-center text-base">
       <svg
         className="mr-2 h-6 w-6 scale-90 fill-current"
         viewBox="0 0 20 20"

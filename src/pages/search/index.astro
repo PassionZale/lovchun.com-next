@@ -1,0 +1,35 @@
+---
+import { getCollection } from "astro:content";
+import { SITE } from "@config";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import SearchBar from "@components/Search";
+import getSortedPosts from "@utils/getSortedPosts";
+
+// Retrieve all published articles
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+const sortedPosts = getSortedPosts(posts);
+
+// List of items to search in
+const searchList = sortedPosts.map(({ data, id }) => ({
+  title: data.title,
+  description: data.description,
+  data,
+  slug: id,
+}));
+---
+
+<Layout title={`搜索 | ${SITE.title}`}>
+  <Header activeNav="search" />
+  <Main
+    pageTitle="搜索"
+    pageDesc="搜索任意文章 ..."
+    pageBreadcrumbs={[{ title: "搜索", slug: "search" }]}
+  >
+    <SearchBar client:load searchList={searchList} />
+  </Main>
+  <Footer />
+</Layout>
+
