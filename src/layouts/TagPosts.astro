@@ -1,0 +1,42 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import PostCard from "@components/PostCard";
+import Pagination from "@components/Pagination.astro";
+import { SITE } from "@config";
+import type { Page } from "astro";
+import type { CollectionEntry } from "astro:content";
+
+export interface Props {
+  page: Page<CollectionEntry<"blog">>;
+  tag: string;
+  tagName: string;
+}
+
+const { page, tag, tagName } = Astro.props;
+---
+
+<Layout title={`标签: ${tagName} | ${SITE.title}`}>
+  <Header activeNav="tags" />
+  <Main
+    pageTitle={[`标签: `, `${tagName}`]}
+    titleTransition={tag}
+		pageDesc={`所有带有"${tagName}"的文章：`}
+    pageBreadcrumbs={[{ title: "标签", slug: "tags" }, { title: tagName, slug: `tags/${tagName}`}]}		
+  >
+    <h1 slot="title" transition:name={tag}>{`Tag:${tag}`}</h1>
+    <ul>
+      {
+        page.data.map(({ data, id }) => (
+          <PostCard href={`/posts/${id}`} frontmatter={data} />
+        ))
+      }
+    </ul>
+  </Main>
+
+  <Pagination {page} />
+
+  <Footer noMarginTop={page.lastPage > 1} />
+</Layout>
