@@ -91,24 +91,20 @@ export default function SearchBar({ searchList }: Props) {
         </span>
         <input
           className="block w-full rounded border border-skin-fill/40 bg-skin-fill py-3 pl-10 pr-3 placeholder:italic focus:border-skin-accent focus:outline-none"
-          placeholder="Search for anything..."
+          placeholder="搜索标题或简介..."
           type="text"
           name="search"
           value={inputVal}
           onChange={handleChange}
           autoComplete="off"
-          // autoFocus
+          autoFocus
           ref={inputRef}
         />
       </label>
 
       {inputVal.length > 1 && (
         <div className="mt-8">
-          Found {searchResults?.length}
-          {searchResults?.length && searchResults?.length === 1
-            ? " result"
-            : " results"}{" "}
-          for '{inputVal}'
+					通过 '{inputVal}' 筛选到 {searchResults?.length} 条结果：
         </div>
       )}
 
