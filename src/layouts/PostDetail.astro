@@ -91,7 +91,7 @@ const nextPost =
       editPost={editPost}
       postId={post.id}
     />
-    {headings.length && toc && <TOC headings={headings} />}
+    {headings.length && toc ? <TOC headings={headings} /> : null}
     <article id="article" class="prose mx-auto mt-8 max-w-3xl">
       <Content />
     </article>
