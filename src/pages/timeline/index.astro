@@ -1,0 +1,28 @@
+---
+import { SITE } from "@config";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import TimelineRender from "@components/TimelineRender";
+import { getCollection } from "astro:content";
+
+const timelines = await getCollection("timelines");
+
+const sourceData = timelines.map(({ data }) => data).sort((a, b) => b.year - a.year);
+
+const currentYear = new Date().getFullYear();
+---
+
+<Layout title={`时间轴 | ${SITE.title}`}>
+  <Header activeNav="timeline" />
+  <Main
+    pageTitle="时间轴"
+    pageDesc={`我的故事 @ 1991-${currentYear}`}
+    pageBreadcrumbs={[{ title: "时间轴", slug: "timeline" }]}
+  >
+    <TimelineRender sourceData={sourceData} />
+  </Main>
+
+  <Footer />
+</Layout>
