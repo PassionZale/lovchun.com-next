@@ -1,8 +1,7 @@
 {
   "git": {
     "deploymentEnabled": {
-      "dev": false,
-			"astro@v5": false
+      "dev": false
     }
   },
   "redirects": [
