@@ -1,0 +1,34 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Pagination from "@components/Pagination.astro";
+import PostCard from "@components/PostCard";
+import { SITE } from "@config";
+import type { Page } from "astro";
+import type { CollectionEntry } from "astro:content";
+
+export interface Props {
+  page: Page<CollectionEntry<"blog">>;
+}
+
+const { page } = Astro.props;
+---
+
+<Layout title={`文章 | ${SITE.title}`}>
+  <Header activeNav="posts" />
+  <Main pageTitle="文章" pageDesc="我发布过的全部文章。">
+    <ul>
+      {
+        page.data.map(({ data, id }) => (
+          <PostCard href={`/posts/${id}`} frontmatter={data} />
+        ))
+      }
+    </ul>
+  </Main>
+
+  <Pagination {page} />
+
+  <Footer noMarginTop={page.lastPage > 1} />
+</Layout>

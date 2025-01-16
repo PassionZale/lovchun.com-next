@@ -1,3 +1,4 @@
+import type { GiscusProps } from "@giscus/react";
 import type { Site, SocialObjects, Talk } from "./types";
 
 export const SITE: Site = {
@@ -84,3 +85,16 @@ export const TALKS: Talk[] = [
     download: "https://talks.lovchun.com/2024/happy-coding-for-10-years/pdf",
   },
 ];
+
+export const GISCUS: GiscusProps = {
+  repo: "PassionZale/lovchun.com-next",
+  repoId: "R_kgDOG450fA",
+  categoryId: "DIC_kwDOG450fM4COJ-Y",
+  mapping: "og:title",
+  theme: "preferred_color_scheme",
+  reactionsEnabled: "1",
+  emitMetadata: "0",
+  inputPosition: "top",
+  lang: "zh-CN",
+  loading: "lazy",
+};
