@@ -14,7 +14,7 @@ export const SITE: Site = {
   showArchives: true,
   editPost: {
     url: "https://github.com/PassionZale/lovchun.com-next/edit/main/src/data/blog",
-    text: "修改",
+    text: "编辑此页",
     appendFilePath: true,
   },
 };

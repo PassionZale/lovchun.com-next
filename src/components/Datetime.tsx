@@ -1,4 +1,4 @@
-import { LOCALE, SITE } from "@config";
+import { SITE } from "@config";
 import type { CollectionEntry } from "astro:content";
 
 interface DatetimeProps {
@@ -21,7 +21,7 @@ export default function Datetime({
   modDatetime,
   size = "sm",
   className = "",
-	editPost,
+  editPost,
   postId,
 }: Props) {
   return (
@@ -39,13 +39,13 @@ export default function Datetime({
         <path d="M5 22h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2zM19 8l.001 12H5V8h14z"></path>
       </svg>
       {modDatetime && modDatetime > pubDatetime ? (
-        <span className={`italic ${size === "sm" ? "text-sm" : "text-base"}`}>
+        <span className={`${size === "sm" ? "text-sm" : "text-base"}`}>
           最近更新于:
         </span>
       ) : (
         <span className="sr-only">发布于:</span>
       )}
-      <span className={`italic ${size === "sm" ? "text-sm" : "text-base"}`}>
+      <span className={`${size === "sm" ? "text-sm" : "text-base"}`}>
         <FormattedDatetime
           pubDatetime={pubDatetime}
           modDatetime={modDatetime}
@@ -57,15 +57,13 @@ export default function Datetime({
 }
 
 const FormattedDatetime = ({ pubDatetime, modDatetime }: DatetimeProps) => {
-  const myDatetime = new Date(modDatetime ? modDatetime : pubDatetime);
+  const datetime = new Date(modDatetime ? modDatetime : pubDatetime);
 
-  const date = myDatetime.toLocaleDateString(LOCALE.langTag, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-
-  return <time dateTime={myDatetime.toISOString()}>{date}</time>;
+  return (
+    <time dateTime={datetime.toISOString()}>
+      {datetime.toJSON().slice(0, 10)}
+    </time>
+  );
 };
 
 const EditPost = ({ editPost, postId }: EditPostProps) => {
@@ -98,7 +96,7 @@ const EditPost = ({ editPost, postId }: EditPostProps) => {
             <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
             <path d="M16 5l3 3" />
           </svg>
-          <span className="text-base italic">{editPostText}</span>
+          <span className="text-base">{editPostText}</span>
         </a>
       </>
     )
