@@ -1,13 +1,13 @@
 ---
 title: "Let's Encrypt - 免费的 SSL 证书"
-description: 将 codeigniter-restserver、php-jwt 集成至 CodeIgniter 3，接口业务等实现。
+description: 使用 acme.sh 通过 Let's Encrypt 为网站增加 SSL 证书。
 pubDatetime: 2018-03-27
 slug: let-us-encrypt
 featured: false
 draft: false
 tags:
   - 指南
-	- SSL
+  - PHP
 ---
 
 ## Let's Encrypt
