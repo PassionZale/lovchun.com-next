@@ -1,0 +1,8 @@
+{
+	"$schema": "../../../.astro/collections/columns.schema.json",
+	"slug": "career-change",
+	"title": "转行程序员",
+	"description": "2015、2016、2017 转行程序员的这三年。",
+	"createDatetime": "2017-12-31",
+	"status": "已完结"
+}

@@ -20,7 +20,13 @@ const getUniqueColumns = (
         count: filters.length,
       };
     })
-    .filter(item => item.count > 0);
+    .filter(item => item.count > 0)
+    .sort((a, b) => {
+      return (
+        Math.floor(new Date(b.createDatetime).getTime() / 1000) -
+        Math.floor(new Date(a.createDatetime).getTime() / 1000)
+      );
+    });
 
   return columnsWithPostsCount;
 };
