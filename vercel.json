@@ -10,6 +10,16 @@
       "destination": "/posts/product-sku-model-design",
       "statusCode": 301
     },
+		{
+			"source": "/posts/build-jwt-restfull-api-server-in-codeigniter-1.html",
+      "destination": "/posts/build-jwt-restfull-api-server-in-codeigniter/prerequisites",
+      "statusCode": 301
+		},
+		{
+			"source": "/posts/build-jwt-restfull-api-server-in-codeigniter-2.html",
+      "destination": "/posts/build-jwt-restfull-api-server-in-codeigniter/implement",
+      "statusCode": 301
+		},
     {
       "source": "/posts/83089735-9b7e-4d49-bc98-43cd243e226e.html",
       "destination": "/posts/product-sku-model-design",
