@@ -10,7 +10,7 @@ import { SITE } from "@config";
 
 const posts = await getCollection("blog");
 
-let tags = getUniqueTags(posts);
+const tags = getUniqueTags(posts);
 ---
 
 <Layout title={`标签 | ${SITE.title}`}>
@@ -21,7 +21,7 @@ let tags = getUniqueTags(posts);
     pageBreadcrumbs={[{ title: "标签", slug: "tags" }]}
   >
     <ul>
-      {tags.map(({ tag }) => <Tag {tag} size="lg" />)}
+      {tags.map(({ tag }) => <Tag tag={tag} size="lg" />)}
     </ul>
   </Main>
   <Footer />

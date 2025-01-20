@@ -10,20 +10,21 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts = await getCollection("blog");
   const tags = getUniqueTags(posts);
 
-  return tags.flatMap(({ tag, tagName }) => {
+  return tags.flatMap(({ tag, slugifyTag }) => {
     const tagPosts = getPostsByTag(posts, tag);
 
     return paginate(tagPosts, {
-      params: { tag },
-      props: { tagName },
+      params: { slugifyTag },
+      props: { tag },
       pageSize: SITE.postPerPage,
     });
   });
 }
 
 const params = Astro.params;
-const { tag } = params;
-const { page, tagName } = Astro.props;
+const { slugifyTag } = params;
+
+const { page, tag } = Astro.props;
 ---
 
-<TagPosts {page} {tag} {tagName} />
+<TagPosts {page} {tag} {slugifyTag} />

@@ -10,6 +10,8 @@ title: "关于"
 我基于 [AstroPaper](https://github.com/satnaing/astro-paper) 并自定义或重写了一些功能和模块：
 
 - 字体调整，使文章更适合中文的展示；
+- 移除了 `Google Fonts` 和 `Google Analyze`；
+- 增加 `VercelInsights` 用于访问统计；
 - 代码块字体采用 `JetBrains Mono`；
 - 代码高亮采用 [rehype-pretty-code](https://github.com/rehype-pretty/rehype-pretty-code)，而不是 [Astro Syntax Highlighting](https://docs.astro.build/en/guides/syntax-highlighting/)；
 - 汉化了 [AstroPaper](https://github.com/satnaing/astro-paper) 中的英文内容；
@@ -24,8 +26,8 @@ title: "关于"
   <img src="/assets/dev.svg" class="sm:w-1/2 mx-auto" alt="coding dev illustration">
 </div>
 
-如果你喜欢 [lovchun.com](https://www.lovchun.com)，你可以 🌟 / 👨‍💻 [lovchun.com-next](https://github.com/PassionZale/lovchun.com-next)。
+如果你喜欢 [lovchun.com](https://www.lovchun.com)，你可以 🌟 / 👨‍💻 [lovchun.com-next](https://github.com/PassionZale/lovchun.com-next)，
 
-如果你有任何建议，也可以通过 [lovchun.com-next Discussions](https://github.com/PassionZale/lovchun.com-next/discussions) 或者 [邮箱](mailto:contact@satnaing.dev) 联系我。
+如果你有任何建议，也可以通过 [Discussions](https://github.com/PassionZale/lovchun.com-next/discussions) 或者 [邮箱](mailto:contact@satnaing.dev) 联系我。
 
 **🤝 感谢访问我的站点！**
