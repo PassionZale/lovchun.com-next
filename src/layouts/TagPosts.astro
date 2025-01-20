@@ -12,21 +12,21 @@ import type { CollectionEntry } from "astro:content";
 export interface Props {
   page: Page<CollectionEntry<"blog">>;
   tag: string;
-  tagName: string;
+  slugifyTag: string;
 }
 
-const { page, tag, tagName } = Astro.props;
+const { page, tag, slugifyTag } = Astro.props;
 ---
 
-<Layout title={`标签: ${tagName} | ${SITE.title}`}>
+<Layout title={`标签: ${tag} | ${SITE.title}`}>
   <Header activeNav="tags" />
   <Main
-    pageTitle={[`标签: `, `${tagName}`]}
+    pageTitle={[`标签: `, `${tag}`]}
     titleTransition={tag}
-		pageDesc={`所有带有"${tagName}"的文章：`}
-    pageBreadcrumbs={[{ title: "标签", slug: "tags" }, { title: tagName, slug: `tags/${tagName}`}]}		
+		pageDesc={`所有带有"${tag}"的文章：`}
+    pageBreadcrumbs={[{ title: "标签", slug: "tags" }, { title: tag, slug: `tags/${slugifyTag}`}]}		
   >
-    <h1 slot="title" transition:name={tag}>{`Tag:${tag}`}</h1>
+    <h1 slot="title" transition:name={slugifyTag}>{`标签: ${tag}`}</h1>
     <ul>
       {
         page.data.map(({ data, id }) => (
