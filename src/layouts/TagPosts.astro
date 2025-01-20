@@ -22,7 +22,7 @@ const { page, tag, slugifyTag } = Astro.props;
   <Header activeNav="tags" />
   <Main
     pageTitle={[`标签: `, `${tag}`]}
-    titleTransition={tag}
+    titleTransition={slugifyTag}
 		pageDesc={`所有带有"${tag}"的文章：`}
     pageBreadcrumbs={[{ title: "标签", slug: "tags" }, { title: tag, slug: `tags/${slugifyTag}`}]}		
   >
