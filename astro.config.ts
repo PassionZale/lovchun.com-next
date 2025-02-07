@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
+import remarkGemoji from "remark-gemoji";
 import rehypePrettyCode from "rehype-pretty-code";
 import { transformerCopyButton } from "@rehype-pretty/transformers";
 import { SITE } from "./src/config";
@@ -20,7 +21,9 @@ export default defineConfig({
   ],
   markdown: {
     syntaxHighlight: false,
-    remarkPlugins: [],
+    remarkPlugins: [
+			remarkGemoji,
+		],
     rehypePlugins: [
       [
         rehypePrettyCode,
