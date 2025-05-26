@@ -417,7 +417,7 @@ export const createStream = async (req: NextRequest, onDone: () => void) => {
 
 ### controller
 
-完成 `servers` 的封装后，定义 `controller` 用来给前端调用：
+完成 `service` 的封装后，定义 `controller` 用来给客户端调用：
 
 ````ts title="api/chat/route.ts"
 import { NextRequest, NextResponse } from "next/server";
