@@ -69,9 +69,9 @@ tags:
 
   ```html
   <reference>
-    - [lovchun.com](https://www.lovchun.com) -
-    [SSE](https://www.lovchun.com/posts/create-agent-chat-app/sse) -
-    [解析和渲染](https://www.lovchun.com/posts/create-agent-chat-app/parser-and-render)
+    - [lovchun.com](https://www.lovchun.com) 
+    - [SSE](https://www.lovchun.com/posts/create-agent-chat-app/sse) 
+    - [解析和渲染](https://www.lovchun.com/posts/create-agent-chat-app/parser-and-render)
   </reference>
   ```
 
