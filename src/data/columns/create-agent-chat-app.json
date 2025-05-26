@@ -1,0 +1,8 @@
+{
+	"$schema": "../../../.astro/collections/columns.schema.json",
+	"slug": "create-agent-chat-app",
+	"title": "Create Agent Chat App",
+	"description": "如何与 LLM 进行 SSE 通讯，Output 解析和渲染，交互优化，状态管理。",
+	"createDatetime": "2025-05-01",
+	"status": "WIP"
+}
