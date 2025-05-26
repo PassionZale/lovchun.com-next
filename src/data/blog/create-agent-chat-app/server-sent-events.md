@@ -564,8 +564,4 @@ export const requestStreamingChat = async (params: ChatRequest) => {
 
 ---
 
-**🫶 辛苦你看到了最后。**
-
-一个前后端基于 `SSE` 交互，并打通大模型的 **样例代码** 基本就完成了，
-
-当然它还远远不够，如果有任何建议，可以通过 [Discussions](https://github.com/PassionZale/lovchun.com-next/discussions) 或者 [邮箱](mailto:contact@satnaing.dev) 联系我。
+一个前后端基于 `SSE` 交互，并打通大模型的 **样板代码** 基本就完成了。
