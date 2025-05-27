@@ -1,6 +1,6 @@
 ---
 title: 状态管理
-description: Chat App 全局状态设计。
+description: Agent Chat App 全局状态设计。
 pubDatetime: 2025-05-05
 slug: create-agent-chat-app/state-manage
 column: create-agent-chat-app

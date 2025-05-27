@@ -1,8 +1,7 @@
 {
   "git": {
     "deploymentEnabled": {
-      "dev": false,
-			"feature/create-agent-chat-app": false
+      "dev": false
     }
   },
   "redirects": [
