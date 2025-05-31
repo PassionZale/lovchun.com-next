@@ -27,3 +27,6 @@ https://help.aliyun.com/zh/model-studio/qwen-tts?scm=20140722.H_2879134._.OR_hel
 - .mp3 文件名按照录音贴名称定义
 - 录个母语的三字金、唱歌等？
 
+
+- `mom.mp3` cosyvoice-v2-youyou-f286e5edaba04c70a0fe231acd5420c0
+
